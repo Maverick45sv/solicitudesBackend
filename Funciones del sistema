@@ -1,0 +1,29 @@
+Sistema de Control de Solicitudes UPES
+
+Modulos
+
+1. Administración.
+2. Telemetria.
+3. Registro Académico
+
+
+Funciones en Módulo de Administración
+* Gestion de Usuarios.
+* Gestion de Roles.
+* Gestion de Menu.
+* Gestion de Archivos Base.
+
+Funciones en Módulo de Telemetria
+* Gestion de Procesos.     
+* Gestion de Documentos.
+* Gestion de Atributos de Proceso.
+* Gestion de Estaciones.
+* Gestion de Acciones.
+
+Funciones en Módulo de Registro Académico
+* Gestion de Solicitudes.
+* Gestion de Personas.
+* Gestión de Facultad.
+* Gestión de Carreras.
+
+
