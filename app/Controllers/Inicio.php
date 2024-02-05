@@ -15,7 +15,7 @@ class Inicio extends BaseController
     {
         $usuarioModel = model(UsuarioModel::class);
         $session = session();
-        $session->destroy();       
+        //$session->destroy();       
         $datos=array("usuario" => 0);  
         $where="nombre = '".$this->request->getPost('user')."' AND clave= '".$this->request->getPost('pass')."'";
         $validar=$usuarioModel->where($where)->first(); 

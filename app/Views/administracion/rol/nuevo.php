@@ -3,9 +3,9 @@
     <?= $menu ?>
 <?= $this->endSection() ?>
 <?= $this->section('content') ?>
-    <h2>Nuevo Registro Sexo</h2>
-    <a href="<?= base_url('admin/sexo');?>" class="btn btn-success" ><i class="bi bi-arrow-return-left"></i> Regresar</a><br><br>
-    <form action="<?= base_url('admin/sexo/save');?>" method="post">
+    <h2>Nuevo Registro Rol</h2>
+    <a href="<?= base_url('admin/rol');?>" class="btn btn-success" ><i class="bi bi-arrow-return-left"></i> Regresar</a><br><br>
+    <form action="<?= base_url('admin/rol/save');?>" method="post">
         <?= csrf_field() ?>
         <div class="form-group">
             <label for="nombre">Nombre</label>

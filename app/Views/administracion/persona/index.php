@@ -3,10 +3,10 @@
     <?= $menu ?>
 <?= $this->endSection() ?>
 <?= $this->section('content') ?>
-    <h2>Registro Sexo</h2>
+    <h2>Registro Persona</h2>
     <div class="row" >
         <div class="col text-right">
-            <a href="sexo/new" class="btn btn-success "><i class="bi bi-cloud-plus"></i> Nuevo Registro</a>
+            <a href="persona/new" class="btn btn-success "><i class="bi bi-cloud-plus"></i> Nuevo Registro</a>
         </div>
     </div>
     <br><br>
@@ -15,6 +15,11 @@
             <tr>
                 <td>Id</td>
                 <td>Nombre</td>
+                <td>Apellido</td>
+                <td>DUI</td>
+                <td>Sexo</td>
+                <td>Genero</td>
+                <td>Creado</td>
                 <td>Acciones</td>
             </tr>
         </thead>
@@ -26,8 +31,13 @@
                     <tr>
                         <td><?= $data->id ?></td>
                         <td><?= $data->nombre ?></td>
+                        <td><?= $data->apellido ?></td>
+                        <td><?= $data->dui ?></td>
+                        <td><?= $data->sexo ?></td>
+                        <td><?= $data->genero ?></td>
+                        <td><?= $data->creado ?></td>
                         <td>
-                            <a href="sexo/edit/<?= $data->id ?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                            <a href="persona/edit/<?= $data->id ?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
                             <button onclick="Eliminar(<?= $data->id ?>)" class="btn btn-danger"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>           
@@ -51,7 +61,7 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "<?= base_url('admin/sexo/delete');?>/"+id,          
+                        url: "<?= base_url('admin/persona/delete');?>/"+id,          
                         type: "get",
                         dataType: "json",
                         //data: 

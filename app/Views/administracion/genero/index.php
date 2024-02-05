@@ -3,10 +3,10 @@
     <?= $menu ?>
 <?= $this->endSection() ?>
 <?= $this->section('content') ?>
-    <h2>Registro Sexo</h2>
+    <h2>Registro Genero</h2>
     <div class="row" >
         <div class="col text-right">
-            <a href="sexo/new" class="btn btn-success "><i class="bi bi-cloud-plus"></i> Nuevo Registro</a>
+            <a href="genero/new" class="btn btn-success "><i class="bi bi-cloud-plus"></i> Nuevo Registro</a>
         </div>
     </div>
     <br><br>
@@ -27,7 +27,7 @@
                         <td><?= $data->id ?></td>
                         <td><?= $data->nombre ?></td>
                         <td>
-                            <a href="sexo/edit/<?= $data->id ?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                            <a href="genero/edit/<?= $data->id ?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
                             <button onclick="Eliminar(<?= $data->id ?>)" class="btn btn-danger"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>           
@@ -51,7 +51,7 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "<?= base_url('admin/sexo/delete');?>/"+id,          
+                        url: "<?= base_url('admin/genero/delete');?>/"+id,          
                         type: "get",
                         dataType: "json",
                         //data: 

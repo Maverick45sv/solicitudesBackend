@@ -3,15 +3,16 @@
     <?= $menu ?>
 <?= $this->endSection() ?>
 <?= $this->section('content') ?>
-    <h2>Nuevo Registro Sexo</h2>
+    <h2>Editar Registro Sexo</h2>
     <a href="<?= base_url('admin/sexo');?>" class="btn btn-success" ><i class="bi bi-arrow-return-left"></i> Regresar</a><br><br>
-    <form action="<?= base_url('admin/sexo/save');?>" method="post">
+    <form action="<?= base_url('admin/sexo/update');?>" method="post">
+    <input type="hidden" name="id" value="<?= $sexo->id ?>">
         <?= csrf_field() ?>
         <div class="form-group">
             <label for="nombre">Nombre</label>
-            <input type="text" class="form-control" name="nombre" placeholder="Nombre">
+            <input type="text" class="form-control" name="nombre" placeholder="Nombre" value="<?= $sexo->nombre ?>">
         </div>
         <br><br>
-        <input class="btn btn-success" type="submit" value="Guardar">
+        <input class="btn btn-success" type="submit" value="Modificar">
     </form>
 <?= $this->endSection() ?>

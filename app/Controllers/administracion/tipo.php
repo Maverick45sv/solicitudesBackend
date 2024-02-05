@@ -3,22 +3,22 @@
 namespace App\Controllers\administracion;
 
 use App\Controllers\BaseController;
-use \App\Models\GeneroModel;
+use \App\Models\TipoModel;
 
-class Genero extends BaseController
+class Tipo extends BaseController
 {
     public function inicio()
     {        
-        $session=session();
+        $session = session();
         if (!$session->get('usuario')){
             return redirect()->route('/');
-        }            
-        $generoModel = model(GeneroModel::class);
+        }       
+        $tipoModel = model(TipoModel::class);
         $datos = array(
-            "todos" => $generoModel->findAll(),
+            "todos" => $tipoModel->findAll(),
             "menu" => menu(),
         );
-        return view('administracion/genero/index', $datos);
+        return view('administracion/tipo/index', $datos);
     }
 
     public function nuevo()
@@ -26,12 +26,12 @@ class Genero extends BaseController
         $session=session();
         if (!$session->get('usuario')){
             return redirect()->route('/');
-        }     
-        $generoModel = model(GeneroModel::class);  
+        }    
+        $tipoModel = model(TipoModel::class); 
         $datos = array(           
             "menu" => menu(),
-        );        
-        return view('administracion/genero/nuevo', $datos);
+        );       
+        return view('administracion/tipo/nuevo', $datos);
    
     }
 
@@ -41,10 +41,10 @@ class Genero extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $generoModel = model(GeneroModel::class);
+        $tipoModel = model(TipoModel::class);
         $data = array('nombre' => $this->request->getPost('nombre')); 
-        $generoModel->insert($data);
-        return redirect()->to('admin/genero/');          
+        $tipoModel->insert($data);
+        return redirect()->to('admin/tipo/');          
     }
 
     public function editar($id)
@@ -53,12 +53,12 @@ class Genero extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $generoModel = model(GeneroModel::class);        
+        $tipoModel = model(TipoModel::class);        
         $datos = array(
-            "genero" => $generoModel->find($id),
+            "tipo" => $tipoModel->find($id),
             "menu" => menu(),
         );
-        return view('administracion/genero/editar', $datos);    
+        return view('administracion/tipo/editar', $datos);    
     }
 
     public function actualizar()
@@ -67,11 +67,11 @@ class Genero extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $generoModel = model(GeneroModel::class);
+        $tipoModel = model(TipoModel::class);
         $data = array('nombre' => $this->request->getPost('nombre')); 
         $id = $this->request->getPost('id');
-        $generoModel->update($id, $data);
-        return redirect()->to('admin/genero/');          
+        $tipoModel->update($id, $data);
+        return redirect()->to('admin/tipo/');          
     }
 
     public function eliminar($id)
@@ -79,9 +79,9 @@ class Genero extends BaseController
         $session=session();
         if (!$session->get('usuario')){
             return redirect()->route('/');
-        }         
-        $generoModel = model(GeneroModel::class);  
-        $generoModel->delete($id);
+        }        
+        $tipoModel = model(TipoModel::class);  
+        $tipoModel->delete($id);
         return $this->response->setJson(['msg'=>'ok']);     
     }
 }

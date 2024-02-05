@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="<?= base_url('public/bootstrap/css/bootstrap.min.css');?>" >
     <link rel="stylesheet" type="text/css" href="<?= base_url('public/datatable/datatables.min.css');?>" >
     <link rel="stylesheet" type="text/css" href="<?= base_url('public/bootstrap/icons-1.11/font/bootstrap-icons.min.css');?>" >
+    <link rel="stylesheet" type="text/css" href="<?= base_url('public/sweetalert/sweet.css');?>" >
 </head>
 <body>
     <!-- menu -->
@@ -20,4 +21,5 @@
 <script src="<?= base_url('public/bootstrap/js/bootstrap.min.js')?>"></script>
 <script src="<?= base_url('public/datatable/datatables.min.js')?>"></script>
 <script src="<?= base_url('public/js/table.js')?>"></script>
+<script src="<?= base_url('public/sweetalert/sweet.js')?>"></script>
 </html>

@@ -3,22 +3,22 @@
 namespace App\Controllers\administracion;
 
 use App\Controllers\BaseController;
-use \App\Models\GeneroModel;
+use \App\Models\RolModel;
 
-class Genero extends BaseController
+class Rol extends BaseController
 {
     public function inicio()
     {        
-        $session=session();
+        $session = session();
         if (!$session->get('usuario')){
             return redirect()->route('/');
-        }            
-        $generoModel = model(GeneroModel::class);
+        }       
+        $rolModel = model(RolModel::class);
         $datos = array(
-            "todos" => $generoModel->findAll(),
+            "todos" => $rolModel->findAll(),
             "menu" => menu(),
         );
-        return view('administracion/genero/index', $datos);
+        return view('administracion/rol/index', $datos);
     }
 
     public function nuevo()
@@ -26,12 +26,12 @@ class Genero extends BaseController
         $session=session();
         if (!$session->get('usuario')){
             return redirect()->route('/');
-        }     
-        $generoModel = model(GeneroModel::class);  
+        }    
+        $rolModel = model(RolModel::class); 
         $datos = array(           
             "menu" => menu(),
-        );        
-        return view('administracion/genero/nuevo', $datos);
+        );       
+        return view('administracion/rol/nuevo', $datos);
    
     }
 
@@ -41,10 +41,10 @@ class Genero extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $generoModel = model(GeneroModel::class);
+        $rolModel = model(RolModel::class);
         $data = array('nombre' => $this->request->getPost('nombre')); 
-        $generoModel->insert($data);
-        return redirect()->to('admin/genero/');          
+        $rolModel->insert($data);
+        return redirect()->to('admin/rol/');          
     }
 
     public function editar($id)
@@ -53,12 +53,12 @@ class Genero extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $generoModel = model(GeneroModel::class);        
+        $rolModel = model(RolModel::class);        
         $datos = array(
-            "genero" => $generoModel->find($id),
+            "rol" => $rolModel->find($id),
             "menu" => menu(),
         );
-        return view('administracion/genero/editar', $datos);    
+        return view('administracion/rol/editar', $datos);    
     }
 
     public function actualizar()
@@ -67,11 +67,11 @@ class Genero extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $generoModel = model(GeneroModel::class);
+        $rolModel = model(RolModel::class);
         $data = array('nombre' => $this->request->getPost('nombre')); 
         $id = $this->request->getPost('id');
-        $generoModel->update($id, $data);
-        return redirect()->to('admin/genero/');          
+        $rolModel->update($id, $data);
+        return redirect()->to('admin/rol/');          
     }
 
     public function eliminar($id)
@@ -79,9 +79,9 @@ class Genero extends BaseController
         $session=session();
         if (!$session->get('usuario')){
             return redirect()->route('/');
-        }         
-        $generoModel = model(GeneroModel::class);  
-        $generoModel->delete($id);
+        }        
+        $rolModel = model(RolModel::class);  
+        $rolModel->delete($id);
         return $this->response->setJson(['msg'=>'ok']);     
     }
 }
