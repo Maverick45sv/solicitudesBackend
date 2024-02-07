@@ -49,6 +49,7 @@ class Usuario extends BaseController
             return redirect()->route('/');
         }    
         $usuarioModel = model(UsuarioModel::class);
+        $personaModel = model(PersonaModel::class); 
         $correoModel = model(CorreoModel::class);
         $correo = $correoModel->find($this->request->getPost('correo'));
         $clave = generarContrasenia(6);
@@ -58,7 +59,16 @@ class Usuario extends BaseController
             'correo' => $correo->correo,
             'clave' => $clave,
         ); 
-        $usuarioModel->insert($data);
+        if ($usuarioModel->save($data) === false) {
+            $datos = array(           
+                "menu" => menu(),
+                "persona" => $personaModel->find($this->request->getPost('persona')),  
+                "correos" => $correoModel->where('id_persona', $this->request->getPost('persona'))->findAll(), 
+                'errors' => $usuarioModel->errors(),         
+            );   
+            return view('administracion/usuario/nuevo', $datos);
+        }
+        //$usuarioModel->insert($data);
         return redirect()->to('admin/persona/usuario/'.$this->request->getPost('persona'));
           
     }

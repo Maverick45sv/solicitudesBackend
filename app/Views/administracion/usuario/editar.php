@@ -14,7 +14,7 @@
         </div>       
         <div class="form-group">
             <label for="correo">Correo:</label>
-            <select name="correo" class="form-control">
+            <select name="correo" class="form-control" required>
                 <?php foreach ($correos as $data): ?>
                     <?php if ($data->correo == $usuario->correo): ?>
                         <option value="<?= $data->id ?>" selected><?= $data->correo ?></option>
