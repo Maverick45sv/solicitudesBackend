@@ -7,6 +7,10 @@ use App\Controllers\administracion\genero;
 use App\Controllers\administracion\tipo;
 use App\Controllers\administracion\rol;
 use App\Controllers\administracion\persona;
+use App\Controllers\administracion\correo;
+use App\Controllers\administracion\telefono;
+use App\Controllers\administracion\usuario;
+use App\Controllers\administracion\menu;
 
 /**
  * @var RouteCollection $routes
@@ -49,6 +53,16 @@ $routes->group('/admin/rol', static function ($routes) {
     $routes->get('edit/(:num)', [Rol::class, 'editar']);
     $routes->post('update/', [Rol::class, 'actualizar']);
     $routes->get('delete/(:num)', [Rol::class, 'eliminar']);
+    $routes->get('option/(:num)', [Rol::class, 'menu']);
+});
+
+$routes->group('/admin/menu', static function ($routes) {
+    $routes->get('/', [Menu::class, 'inicio']);
+    $routes->get('new/', [Menu::class, 'nuevo']);
+    $routes->post('save/', [Menu::class, 'guardar']);
+    $routes->get('edit/(:num)', [Menu::class, 'editar']);
+    $routes->post('update/', [Menu::class, 'actualizar']);
+    $routes->get('delete/(:num)', [Menu::class, 'eliminar']);
 });
 
 $routes->group('/admin/persona', static function ($routes) {
@@ -58,4 +72,20 @@ $routes->group('/admin/persona', static function ($routes) {
     $routes->get('edit/(:num)', [Persona::class, 'editar']);
     $routes->post('update/', [Persona::class, 'actualizar']);
     $routes->get('delete/(:num)', [Persona::class, 'eliminar']);
+    $routes->get('mail/(:num)', [Correo::class, 'inicio']);
+    $routes->get('mail/new/(:num)', [Correo::class, 'nuevo']);
+    $routes->post('mail/save', [Correo::class, 'guardar']);
+    $routes->get('mail/edit/(:num)', [Correo::class, 'editar']);
+    $routes->post('mail/update', [Correo::class, 'actualizar']);
+    $routes->get('mail/delete/(:num)', [Correo::class, 'eliminar']);
+    $routes->get('telefono/(:num)', [Telefono::class, 'inicio']);
+    $routes->get('telefono/new/(:num)', [Telefono::class, 'nuevo']);
+    $routes->post('telefono/save', [Telefono::class, 'guardar']);
+    $routes->get('telefono/edit/(:num)', [Telefono::class, 'editar']);
+    $routes->post('telefono/update', [Telefono::class, 'actualizar']);
+    $routes->get('telefono/delete/(:num)', [Telefono::class, 'eliminar']);
+    $routes->get('usuario/(:num)', [Usuario::class, 'inicio']);
+    $routes->post('usuario/save', [Usuario::class, 'guardar']);
+    $routes->post('usuario/update', [Usuario::class, 'actualizar']);
+    $routes->get('usuario/delete_rol/(:num)', [Usuario::class, 'eliminarRol']);
 });

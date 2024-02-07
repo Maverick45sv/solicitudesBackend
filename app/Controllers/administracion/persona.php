@@ -58,6 +58,7 @@ class Persona extends BaseController
         return redirect()->to('admin/persona/');          
     }
 
+   
     public function editar($id)
     {
         $session=session();

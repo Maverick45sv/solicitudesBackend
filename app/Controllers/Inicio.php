@@ -25,7 +25,10 @@ class Inicio extends BaseController
                 'email'     => $validar->correo,
             ];
             $session->set($newdata);
-            $datos=array("usuario" => $validar);
+            $datos=array(
+                "menu" => menu(),
+                "usuario" => $validar
+            );
             return view('inicio', $datos);
         }       
         return redirect()->back();       

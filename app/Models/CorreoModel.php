@@ -4,14 +4,14 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UsuarioModel extends Model {
+class CorreoModel extends Model {
    
-    protected $table = 'usuario';
+    protected $table = 'correo';
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
     protected $returnType     = 'object';
     protected $useSoftDeletes = false; 
-    protected $allowedFields = ['nombre', 'clave', 'correo', 'id_persona']; 
+    protected $allowedFields = ['correo', 'id_persona', 'id_tipo']; 
     protected bool $allowEmptyInserts = false;
 
     // Dates
@@ -38,5 +38,13 @@ class UsuarioModel extends Model {
     protected $beforeDelete   = [];
     protected $afterDelete    = []; */
   
+   function buscarTodos($id_persona){
+        $sql="SELECT correo.*,  tipo.nombre as tipo
+        FROM correo JOIN persona on correo.id_persona=persona.id 
+        JOIN tipo on correo.id_tipo=tipo.id
+        WHERE persona.id = " . $id_persona;
+        $query = $this->db->query($sql);
+        return $query->getResult();
    
+   }
 }

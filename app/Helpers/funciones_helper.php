@@ -26,6 +26,7 @@ function menu(){
                         <li><a class="dropdown-item" href="http://localhost/solicitudesbackend/admin/genero">Genero</a></li>
                         <li><a class="dropdown-item" href="http://localhost/solicitudesbackend/admin/tipo">Tipo</a></li>
                         <li><a class="dropdown-item" href="http://localhost/solicitudesbackend/admin/rol">Rol</a></li>
+                        <li><a class="dropdown-item" href="http://localhost/solicitudesbackend/admin/menu">Menu</a></li>
                         <li><a class="dropdown-item" href="http://localhost/solicitudesbackend/admin/persona">Personas</a></li>
                     </ul>
                     </li>
@@ -33,4 +34,14 @@ function menu(){
                 </div>
             </div>
             </nav>';
+}
+
+function generarContrasenia($length){
+    $key = "";
+    $pattern = "1234567890abcdefghijklmnopqrstuvwxyz";
+    $max = strlen($pattern)-1;
+    for($i = 0; $i < $length; $i++){
+        $key .= substr($pattern, mt_rand(0,$max), 1);
+    }
+    return $key;
 }

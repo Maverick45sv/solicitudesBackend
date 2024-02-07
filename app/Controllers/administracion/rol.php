@@ -4,6 +4,7 @@ namespace App\Controllers\administracion;
 
 use App\Controllers\BaseController;
 use \App\Models\RolModel;
+use \App\Models\MenuModel;
 
 class Rol extends BaseController
 {
@@ -83,5 +84,21 @@ class Rol extends BaseController
         $rolModel = model(RolModel::class);  
         $rolModel->delete($id);
         return $this->response->setJson(['msg'=>'ok']);     
+    }
+
+    public function menu($id){
+        $session=session();
+        if (!$session->get('usuario')){
+            return redirect()->route('/');
+        }        
+        $rolModel = model(RolModel::class); 
+        $menuModel = model(MenuModel::class);
+        $datos = array(
+            "rol" => $rolModel->find($id),
+            "todos" => $menuModel->buscarOrdenMenu(),
+            "menu" => menu(),
+        );
+        return view('administracion/rol/menu', $datos);    
+
     }
 }
