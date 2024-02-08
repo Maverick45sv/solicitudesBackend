@@ -5,6 +5,7 @@ namespace App\Controllers\administracion;
 use App\Controllers\BaseController;
 use \App\Models\RolModel;
 use \App\Models\MenuModel;
+use \App\Models\RolMenuModel;
 
 class Rol extends BaseController
 {
@@ -93,12 +94,29 @@ class Rol extends BaseController
         }        
         $rolModel = model(RolModel::class); 
         $menuModel = model(MenuModel::class);
+        $rolmenuModel = model(RolMenuModel::class);
         $datos = array(
             "rol" => $rolModel->find($id),
-            "todos" => $menuModel->buscarOrdenMenu(),
-            "menu" => menu(),
+            "habilitados" => $rolmenuModel->buscarMenuRol($id),
+            "todos" => $menuModel->buscarCompleto(),
+            "menu" => menu($session->get('idusuario')),
         );
-        return view('administracion/rol/menu', $datos);    
+        return view('administracion/rol/menu', $datos);   
 
     }
+
+    public function asignar($id, $idrol){
+        $rolmenuModel = model(RolMenuModel::class);
+        $data = array('id_menu' => $id, 'id_rol'=>$idrol); 
+        $rolmenuModel->insert($data);
+        return $this->response->setJson(['msg'=>'ok']);     
+    }
+
+    public function quitar($id, $idrol){
+        $rolmenuModel = model(RolMenuModel::class);  
+        $menu = $rolmenuModel->where('id_menu='.$id." AND id_rol=".$idrol)->first();        
+        $rolmenuModel->delete($menu->id);
+        return $this->response->setJson(['msg'=>'ok']);     
+    }
+
 }

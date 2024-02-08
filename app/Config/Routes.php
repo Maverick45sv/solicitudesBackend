@@ -54,6 +54,9 @@ $routes->group('/admin/rol', static function ($routes) {
     $routes->post('update/', [Rol::class, 'actualizar']);
     $routes->get('delete/(:num)', [Rol::class, 'eliminar']);
     $routes->get('option/(:num)', [Rol::class, 'menu']);
+    $routes->get('option/asign/(:num)/(:num)', [Rol::class, 'asignar']);
+    $routes->get('option/delete/(:num)/(:num)', [Rol::class, 'quitar']);
+    
 });
 
 $routes->group('/admin/menu', static function ($routes) {

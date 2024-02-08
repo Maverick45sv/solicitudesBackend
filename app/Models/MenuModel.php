@@ -71,4 +71,10 @@ class menuModel extends Model {
 
         return $array;  
    }
+
+   function buscarCompleto(){
+    $sql1="SELECT m.id, m.nombre, m.descripcion, n.nombre as padre 
+    FROM menu m JOIN menu n on m.padre=n.id ";
+    return $this->db->query($sql1)->getResult();
+   }
 }

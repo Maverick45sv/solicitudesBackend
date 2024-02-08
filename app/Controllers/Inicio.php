@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use \App\Models\UsuarioModel;
+use \App\Models\UsuarioRolModel;
 
 class Inicio extends BaseController
 {
@@ -14,15 +15,18 @@ class Inicio extends BaseController
     public function inicio()
     {
         $usuarioModel = model(UsuarioModel::class);
+        $usuariorolModel = model(UsuarioRolModel::class);
         $session = session();
         //$session->destroy();       
         $datos=array("usuario" => 0);  
         $where="nombre = '".$this->request->getPost('user')."' AND clave= '".$this->request->getPost('pass')."'";
         $validar=$usuarioModel->where($where)->first(); 
         if($validar and $validar->activo){
+            
             $newdata = [
                 'usuario'  => $validar->nombre,
-                'email'     => $validar->correo,
+                'idusuario'  => $validar->id,
+                'email'     => $validar->correo
             ];
             $session->set($newdata);
             $datos=array(

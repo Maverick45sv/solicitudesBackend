@@ -28,6 +28,7 @@
                         <td><?= $data->nombre ?></td>
                         <td>
                             <a href="rol/edit/<?= $data->id ?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                            <a href="rol/option/<?= $data->id ?>" class="btn btn-success"><i class="bi bi-menu-down"></i></a>
                             <button onclick="Eliminar(<?= $data->id ?>)" class="btn btn-danger"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>           
