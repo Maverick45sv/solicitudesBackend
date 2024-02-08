@@ -21,13 +21,21 @@ class PersonaModel extends Model {
     //protected $updatedField  = 'updated_at';
     //protected $deletedField  = 'deleted_at';
 
-    /* Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
+     // Validation
+     protected $validationRules      = [
+          'nombre'     => 'required',
+          'apellido'     => 'required',        
+          'dui'        => 'required|is_unique[persona.dui]',      
+      ];
+      protected $validationMessages   = [       
+          'dui' => [
+              'is_unique' => 'Ya existe un usuario con ese numero de DUI.',
+          ],
+      ];
+      protected $skipValidation       = false;
+      protected $cleanValidationRules = true;
 
-    // Callbacks
+    /* Callbacks
     protected $allowCallbacks = true;
     protected $beforeInsert   = [];
     protected $afterInsert    = [];

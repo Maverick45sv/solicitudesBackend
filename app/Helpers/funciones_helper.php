@@ -1,5 +1,7 @@
 <?php
 
+use \App\Models\UsuarioModel;
+
 //FUNCION PARA VALIDAR SI EL USUARIO ESTA LOGUEADO
 
 function validar($session){
@@ -9,7 +11,11 @@ function validar($session){
 }
 
 function menu(){
-    return '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    $model = new UsuarioModel();
+
+    return  $model->construirMenu(1);
+   /* return '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="http://localhost/solicitudesbackend/">Inicio</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +39,7 @@ function menu(){
                 </ul>
                 </div>
             </div>
-            </nav>';
+            </nav>';*/
 }
 
 function generarContrasenia($length){

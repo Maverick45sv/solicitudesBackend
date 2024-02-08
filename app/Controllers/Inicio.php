@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use \App\Models\UsuarioModel;
+use \App\Models\MenuModel;
+
 
 class Inicio extends BaseController
 {
@@ -14,6 +16,7 @@ class Inicio extends BaseController
     public function inicio()
     {
         $usuarioModel = model(UsuarioModel::class);
+        $menuModel = model(MenuModel::class);
         $session = session();
         //$session->destroy();       
         $datos=array("usuario" => 0);  
@@ -25,8 +28,11 @@ class Inicio extends BaseController
                 'email'     => $validar->correo,
             ];
             $session->set($newdata);
+           
+            $menu = $usuarioModel->construirMenu(1);
+           
             $datos=array(
-                "menu" => menu(),
+                "menu" => $menu,
                 "usuario" => $validar
             );
             return view('inicio', $datos);

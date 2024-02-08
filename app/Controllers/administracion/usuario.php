@@ -138,4 +138,21 @@ class Usuario extends BaseController
         $urolModel->delete($id);
         return $this->response->setJson(['msg'=>'ok']);     
     }
+
+    public function resetear(){
+        $clave = generarContrasenia(6);
+        $email = \Config\Services::email();
+
+        $email->setFrom('sergio.argueta@upes.edu.sv', 'Sergio Argueta');
+        $email->setTo('sergio.argueta@ues.edu.sv');
+       // $email->setCC('another@another-example.com');
+       // $email->setBCC('them@their-example.com');
+        $mensaje="Se ha hecho un reseteo de contrasenia en el sistema de solicitudes UPES\n";
+        $mensaje=$mensaje . 'Su nueva clave es:'.$clave;
+        $email->setSubject('Reseteo de Contrasenia');
+        $email->setMessage($mensaje);
+
+        $email->send();
+        return $this->response->setJson(['msg'=>'ok']);    
+    }
 }

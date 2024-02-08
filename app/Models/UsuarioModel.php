@@ -48,5 +48,32 @@ class UsuarioModel extends Model {
     protected $beforeDelete   = [];
     protected $afterDelete    = []; */
   
+    
+    function construirMenu($id_rol, $padre = NULL){
+        $menu = '';
+        if($padre){
+            $sql = "SELECT * FROM menu WHERE padre = $padre";                 
+        }else{
+            $sql = "SELECT * FROM menu WHERE padre IS NULL";   
+        }
+        $query = $this->db->query($sql);         
+        $opciones = $query->getResult();
+        foreach($opciones as $data){
+            $menu .= '<li><a href="'.$data->enlace.'">'.$data->nombre.'</a>';  
+
+            $sql_b = "SELECT * FROM menu WHERE padre = $data->id";
+            $query = $this->db->query($sql_b);         
+            $opcion = $query->getResult();            
+            if(\count($opcion) > 0){
+                $menu .= '<ul class="dl-submenu">'.$this->construirMenu($id_rol, $data->id)."</ul>";
+            }else{
+                $menu .= '</li>';
+            }      
+
+        }
+                
+       
+    return $menu;    
+ }
    
 }

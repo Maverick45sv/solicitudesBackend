@@ -5,6 +5,13 @@
 <?= $this->section('content') ?>
     <h2>Nuevo Registro Persona</h2>
     <a href="<?= base_url('admin/persona');?>" class="btn btn-success" ><i class="bi bi-arrow-return-left"></i> Regresar</a><br><br>
+    <?php if (! empty($errors)): ?>
+        <div class="alert alert-danger">
+        <?php foreach ($errors as $field => $error): ?>
+            <p><i class="bi-x-octagon-fill"></i> <?= esc($error) ?></p>
+        <?php endforeach ?>
+        </div>
+    <?php endif ?>
     <form action="<?= base_url('admin/persona/save');?>" method="post">
         <?= csrf_field() ?>
         <div class="form-group">

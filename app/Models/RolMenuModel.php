@@ -46,12 +46,6 @@ class RolMenuModel extends Model {
         $query = $this->db->query($sql);
         return $query->getResult();   
    }
-
-   function buscarRolesFaltantes($id_usuario){
-        $sql="SELECT * FROM rol WHERE id NOT IN 
-        (SELECT id_rol FROM usuario_rol WHERE id_usuario = $id_usuario)";
-        $query = $this->db->query($sql);
-        return $query->getResult();  
-   }
+  
    
 }
