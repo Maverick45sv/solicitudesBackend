@@ -42,8 +42,6 @@ class Persona extends BaseController
 
     public function guardar()
     {
-        $sexoModel = model(SexoModel::class);
-        $generoModel = model(GeneroModel::class); 
         $session=session();
         if (!$session->get('usuario')){
             return redirect()->route('/');
@@ -56,15 +54,7 @@ class Persona extends BaseController
             'id_sexo' => $this->request->getPost('sexo'),
             'id_genero' => $this->request->getPost('genero'),
         ); 
-        if ($usuarioModel->save($data) === false) {
-            $datos = array(           
-                "menu" => menu(),
-                "sexo" => $sexoModel->findAll(),
-                "genero" => $generoModel->findAll(),
-                'errors' => $usuarioModel->errors(),         
-            );   
-            return view('administracion/usuario/nuevo', $datos);
-        }
+        $personaModel->insert($data);
         return redirect()->to('admin/persona/');          
     }
 

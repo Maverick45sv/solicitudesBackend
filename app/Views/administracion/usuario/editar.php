@@ -3,11 +3,7 @@
     <?= $menu ?>
 <?= $this->endSection() ?>
 <?= $this->section('content') ?>
-    <h2>Registro Usuario <?= $usuario->nombre ?></h2> 
-    <div class="offset-md-9 col-md-3">
-    <button class="btn btn-success" onclick="resetear()"><i class="bi bi-key-fill"></i> Resetear contrasenia</button><br><br>
-    </div>  
-    
+    <h2>Registro Usuario <?= $usuario->nombre ?></h2>   
     <form action="<?= base_url('admin/persona/usuario/update');?>" method="post">
         <input type="hidden" name="id" value="<?= $usuario->id ?>">
         <input type="hidden" name="persona" value="<?= $persona->id ?>">
@@ -93,18 +89,6 @@
                             location.reload();
                         }
                     });
-                }
-            });
-        }
-
-        function resetear(){
-            $.ajax({
-                url: "<?= base_url('admin/persona/usuario/reset' . "/" . $usuario->id)?>",          
-                type: "get",
-                dataType: "json",
-                //data: 
-                success: function(data) { 
-                    //location.reload();
                 }
             });
         }
