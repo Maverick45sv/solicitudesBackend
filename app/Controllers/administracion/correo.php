@@ -20,7 +20,7 @@ class Correo extends BaseController
         $datos = array(
             "todos" => $correoModel->buscarTodos($id),
             "persona" => $personaModel->find($id),
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
         );
         return view('administracion/correo/index', $datos);
     }
@@ -34,7 +34,7 @@ class Correo extends BaseController
         $personaModel = model(PersonaModel::class);
         $tipoModel = model(TipoModel::class); 
         $datos = array(           
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
             "persona" => $personaModel->find($id),
             "tipo" => $tipoModel->findAll(),
         );       
@@ -70,7 +70,7 @@ class Correo extends BaseController
         $correo = $correoModel->find($id);
         
         $datos = array(           
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
             "correo" => $correo,
             "persona" => $personaModel->find($correo->id_persona),
             "tipo" => $tipoModel->findAll(),

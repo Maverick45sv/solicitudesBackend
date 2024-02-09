@@ -18,7 +18,7 @@ class Persona extends BaseController
         $personaModel = model(PersonaModel::class);
         $datos = array(
             "todos" => $personaModel->buscarTodos(),
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
         );
         return view('administracion/persona/index', $datos);
     }
@@ -32,7 +32,7 @@ class Persona extends BaseController
         $sexoModel = model(SexoModel::class);
         $generoModel = model(GeneroModel::class); 
         $datos = array(           
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
             "sexo" => $sexoModel->findAll(),
             "genero" => $generoModel->findAll(),
         );       
@@ -69,7 +69,7 @@ class Persona extends BaseController
         $sexoModel = model(SexoModel::class);
         $generoModel = model(GeneroModel::class); 
         $datos = array(           
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
             "persona" => $personaModel->find($id),
             "sexo" => $sexoModel->findAll(),
             "genero" => $generoModel->findAll(),

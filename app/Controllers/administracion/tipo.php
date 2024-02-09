@@ -16,7 +16,7 @@ class Tipo extends BaseController
         $tipoModel = model(TipoModel::class);
         $datos = array(
             "todos" => $tipoModel->findAll(),
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
         );
         return view('administracion/tipo/index', $datos);
     }
@@ -29,7 +29,7 @@ class Tipo extends BaseController
         }    
         $tipoModel = model(TipoModel::class); 
         $datos = array(           
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
         );       
         return view('administracion/tipo/nuevo', $datos);
    
@@ -56,7 +56,7 @@ class Tipo extends BaseController
         $tipoModel = model(TipoModel::class);        
         $datos = array(
             "tipo" => $tipoModel->find($id),
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
         );
         return view('administracion/tipo/editar', $datos);    
     }

@@ -16,7 +16,7 @@ class Genero extends BaseController
         $generoModel = model(GeneroModel::class);
         $datos = array(
             "todos" => $generoModel->findAll(),
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
         );
         return view('administracion/genero/index', $datos);
     }
@@ -29,7 +29,7 @@ class Genero extends BaseController
         }     
         $generoModel = model(GeneroModel::class);  
         $datos = array(           
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
         );        
         return view('administracion/genero/nuevo', $datos);
    
@@ -56,7 +56,7 @@ class Genero extends BaseController
         $generoModel = model(GeneroModel::class);        
         $datos = array(
             "genero" => $generoModel->find($id),
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
         );
         return view('administracion/genero/editar', $datos);    
     }

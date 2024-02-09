@@ -18,7 +18,7 @@ class Rol extends BaseController
         $rolModel = model(RolModel::class);
         $datos = array(
             "todos" => $rolModel->findAll(),
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
         );
         return view('administracion/rol/index', $datos);
     }
@@ -31,7 +31,7 @@ class Rol extends BaseController
         }    
         $rolModel = model(RolModel::class); 
         $datos = array(           
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
         );       
         return view('administracion/rol/nuevo', $datos);
    
@@ -58,7 +58,7 @@ class Rol extends BaseController
         $rolModel = model(RolModel::class);        
         $datos = array(
             "rol" => $rolModel->find($id),
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
         );
         return view('administracion/rol/editar', $datos);    
     }

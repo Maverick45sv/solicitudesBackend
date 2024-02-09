@@ -20,7 +20,7 @@ class Telefono extends BaseController
         $datos = array(
             "todos" => $telefonoModel->buscarTodos($id),
             "persona" => $personaModel->find($id),
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
         );
         return view('administracion/telefono/index', $datos);
     }
@@ -34,7 +34,7 @@ class Telefono extends BaseController
         $personaModel = model(PersonaModel::class);
         $tipoModel = model(TipoModel::class); 
         $datos = array(           
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
             "persona" => $personaModel->find($id),
             "tipo" => $tipoModel->findAll(),
         );       
@@ -71,7 +71,7 @@ class Telefono extends BaseController
         $telefono = $telefonoModel->find($id);
         
         $datos = array(           
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
             "telefono" => $telefono,
             "persona" => $personaModel->find($telefono->id_persona),
             "tipo" => $tipoModel->findAll(),

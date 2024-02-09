@@ -16,7 +16,7 @@ class Menu extends BaseController
         $menuModel = model(MenuModel::class);
         $datos = array(
             "todos" => $menuModel->findAll(),
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
         );
         return view('administracion/menu/index', $datos);
     }
@@ -29,7 +29,7 @@ class Menu extends BaseController
         }    
         $menuModel = model(MenuModel::class); 
         $datos = array(           
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
             "padre" => $menuModel->findAll(),
         );       
         return view('administracion/menu/nuevo', $datos);
@@ -63,7 +63,7 @@ class Menu extends BaseController
         $datos = array(
             "menu" => $menuModel->find($id),
             "padre" => $menuModel->findAll(),
-            "menup" => menu(),
+            "menup" => menu($session->get('idusuario')),
         );
         return view('administracion/menu/editar', $datos);    
     }

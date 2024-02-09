@@ -35,7 +35,7 @@ class Usuario extends BaseController
         $personaModel = model(PersonaModel::class);   
         $correoModel = model(CorreoModel::class);             
         $datos = array(           
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
             "persona" => $personaModel->find($id),  
             "correos" => $correoModel->where('id_persona', $id)->findAll(),          
         );       
@@ -61,7 +61,7 @@ class Usuario extends BaseController
         ); 
         if ($usuarioModel->save($data) === false) {
             $datos = array(           
-                "menu" => menu(),
+                "menu" => menu($session->get('idusuario')),
                 "persona" => $personaModel->find($this->request->getPost('persona')),  
                 "correos" => $correoModel->where('id_persona', $this->request->getPost('persona'))->findAll(), 
                 'errors' => $usuarioModel->errors(),         
@@ -86,7 +86,7 @@ class Usuario extends BaseController
         $urolModel = model(UsuarioRolModel::class);   
         $usuario = $usuarioModel->find($id);     
         $datos = array(           
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
             "usuario" => $usuario,
             "persona" => $personaModel->find($usuario->id_persona),
             "correos" => $correoModel->where('id_persona', $usuario->id_persona)->findAll(),

@@ -16,7 +16,7 @@ class Sexo extends BaseController
         $sexoModel = model(SexoModel::class);
         $datos = array(
             "todos" => $sexoModel->findAll(),
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
         );
         return view('administracion/sexo/index', $datos);
     }
@@ -29,7 +29,7 @@ class Sexo extends BaseController
         }    
         $sexoModel = model(SexoModel::class); 
         $datos = array(           
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
         );       
         return view('administracion/sexo/nuevo', $datos);
    
@@ -56,7 +56,7 @@ class Sexo extends BaseController
         $sexoModel = model(SexoModel::class);        
         $datos = array(
             "sexo" => $sexoModel->find($id),
-            "menu" => menu(),
+            "menu" => menu($session->get('idusuario')),
         );
         return view('administracion/sexo/editar', $datos);    
     }
