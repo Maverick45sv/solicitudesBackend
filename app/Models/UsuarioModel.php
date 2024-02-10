@@ -23,8 +23,8 @@ class UsuarioModel extends Model {
 
     // Validation
     protected $validationRules      = [
-        'nombre'     => 'required|max_length[30]|alpha_numeric_space|min_length[3]|is_unique[usuario.nombre]',
-        'correo'        => 'required|max_length[254]|valid_email|is_unique[usuario.correo]',        
+        'nombre'     => 'required|max_length[30]|min_length[3]|is_unique[usuario.nombre]',
+        'correo'        => 'required|max_length[254]|valid_email',     //|is_unique[usuario.correo]   
     ];
     protected $validationMessages   = [
         'nombre' => [

@@ -30,7 +30,7 @@ class Inicio extends BaseController
             ];
             $session->set($newdata);
             $datos=array(
-                "menu" => menu(),
+                "menu" => menu($session->get('idusuario')),
                 "usuario" => $validar
             );
             return view('inicio', $datos);

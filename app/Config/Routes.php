@@ -91,4 +91,5 @@ $routes->group('/admin/persona', static function ($routes) {
     $routes->post('usuario/save', [Usuario::class, 'guardar']);
     $routes->post('usuario/update', [Usuario::class, 'actualizar']);
     $routes->get('usuario/delete_rol/(:num)', [Usuario::class, 'eliminarRol']);
+    $routes->get('usuario/resetear/(:num)', [Usuario::class, 'resetea']);
 });

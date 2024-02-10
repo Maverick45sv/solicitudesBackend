@@ -16,7 +16,7 @@
         <input type="hidden"  name="persona" value="<?= $persona->id ?>">
         <div class="form-group">
             <label for="nombre">Nombre de Usuario:</label>
-            <input type="text" class="form-control" name="nombre" placeholder="Nombre de usuario" >
+            <input type="text" class="form-control" name="nombre" placeholder="Nombre de usuario" value="<?= $usuario ?>">
         </div>  
         <div class="form-group">
             <label for="correo">Correo:</label>

@@ -28,7 +28,7 @@ class Email extends BaseConfig
     /**
      * SMTP Server Hostname
      */
-    public string $SMTPHost = 'smtp-relay.gmail.com';
+    public string $SMTPHost = 'smtp.gmail.com';
 
     /**
      * SMTP Username
@@ -77,12 +77,12 @@ class Email extends BaseConfig
     /**
      * Type of mail, either 'text' or 'html'
      */
-    public string $mailType = 'text';
+    public string $mailType = 'html';
 
     /**
      * Character set (utf-8, iso-8859-1, etc.)
      */
-    public string $charset = 'UTF-8';
+    public string $charset = 'iso-8859-1';
 
     /**
      * Whether to validate the email address

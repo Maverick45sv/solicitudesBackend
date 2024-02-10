@@ -33,10 +33,14 @@ class Usuario extends BaseController
             return redirect()->route('/');
         }    
         $personaModel = model(PersonaModel::class);   
-        $correoModel = model(CorreoModel::class);             
+        $correoModel = model(CorreoModel::class); 
+        $persona =  $personaModel->find($id);
+        $array=explode(' ', $persona->nombre);
+        $array1=explode(' ', $persona->apellido);          
         $datos = array(           
             "menu" => menu($session->get('idusuario')),
             "persona" => $personaModel->find($id),  
+            "usuario" => trim($array[0]).".".trim($array1[0]),
             "correos" => $correoModel->where('id_persona', $id)->findAll(),          
         );       
         return view('administracion/usuario/nuevo', $datos);   
@@ -60,15 +64,28 @@ class Usuario extends BaseController
             'clave' => $clave,
         ); 
         if ($usuarioModel->save($data) === false) {
+            $persona =  $personaModel->find($this->request->getPost('persona'));
+            $array=explode(' ', $persona->nombre);
+            $array1=explode(' ', $persona->apellido);   
             $datos = array(           
                 "menu" => menu($session->get('idusuario')),
                 "persona" => $personaModel->find($this->request->getPost('persona')),  
                 "correos" => $correoModel->where('id_persona', $this->request->getPost('persona'))->findAll(), 
+                "usuario" => trim($array[0]).".".trim($array1[0]),
                 'errors' => $usuarioModel->errors(),         
             );   
             return view('administracion/usuario/nuevo', $datos);
         }
-        //$usuarioModel->insert($data);
+        
+        $titulo = "Nuevo usuario Sistema de Solicitudes UPES";
+        $mensaje = "Buen dia <br><br> Se ha creado su usuario 
+        para el sistema de solicitudes de registro academico UPES.<br><br>
+        <ul>
+            Su usuario es: <b>".$this->request->getPost('nombre')."</b> <br><br>
+            Su clave es: <b>".$clave."</b> <br><br>
+        </ul>
+        Este es un mensaje Automatico, por favor no trate de contestarlo.";
+        $mail = enviar_mail([$correo->correo], $titulo, $mensaje);
         return redirect()->to('admin/persona/usuario/'.$this->request->getPost('persona'));
           
     }
@@ -137,5 +154,18 @@ class Usuario extends BaseController
         $urolModel = model(UsuarioRolModel::class);
         $urolModel->delete($id);
         return $this->response->setJson(['msg'=>'ok']);     
+    }
+
+    public function resetea($id){
+        $usuarioModel = model(UsuarioModel::class);
+        $usuario = $usuarioModel->find($id);     
+        $clave = generarContrasenia(6);
+        $titulo = "Cambio de contrasenia Sistema de Solicitudes UPES";
+        $mensaje = "Buen dia <br><br> Se ha Reestablecido su contrasenia 
+        para el sistema de solicitudes de registro academico UPES.<br><br>
+        Su nueva clave es: <b>".$clave."</b> <br><br>
+        Este es un mensaje Automatico, por favor no trate de contestarlo.";
+        $mail = enviar_mail([$usuario->correo], $titulo, $mensaje);
+        return $this->response->setJson(['msg'=>$mail]);     
     }
 }

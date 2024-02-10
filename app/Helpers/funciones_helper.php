@@ -4,10 +4,19 @@ use \App\Models\RolMenuModel;
 use \App\Models\UsuarioRolModel;
 //FUNCION PARA VALIDAR SI EL USUARIO ESTA LOGUEADO
 
-function validar($session){
-    if (!$session->get('usuario')){
-        return redirect()->route('/');
+function enviar_mail($to, $titulo, $mensaje){
+    $email = \Config\Services::email();   
+    foreach($to as $data){
+        $email->clear();
+        $email->setFrom('registro.academico@upes.edu.sv', 'Registro Academico UPES');
+        $email->setTo($data);
+    // $email->setCC('another@another-example.com');
+    // $email->setBCC('them@their-example.com');
+        $email->setSubject($titulo);
+        $email->setMessage($mensaje);
+        $email->send();
     }
+    return $email->printDebugger();
 }
 
 function menu($usuario){
