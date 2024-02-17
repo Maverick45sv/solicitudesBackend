@@ -14,8 +14,18 @@
 <body>
     <!-- menu -->
     <?= $this->renderSection('menu') ?>
-     
+    <!-- <img src="<?= base_url('public/img/02.jpg');?>" alt="">-->
+    <div class="card">
+  <div class="card-header">
+    Featured
+  </div>
+  <div class="card-body">
     <?= $this->renderSection('content') ?>
+  </div>
+</div>
+    
+
+
 </body>
 <script src="<?= base_url('public/js/jquery3_7_1.js')?>"></script>
 <script src="<?= base_url('public/bootstrap/js/bootstrap.min.js')?>"></script>

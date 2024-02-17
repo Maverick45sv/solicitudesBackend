@@ -11,6 +11,8 @@ use App\Controllers\administracion\correo;
 use App\Controllers\administracion\telefono;
 use App\Controllers\administracion\usuario;
 use App\Controllers\administracion\menu;
+use App\Controllers\academico\asignatura;
+use App\Controllers\academico\periodo;
 
 /**
  * @var RouteCollection $routes
@@ -92,4 +94,23 @@ $routes->group('/admin/persona', static function ($routes) {
     $routes->post('usuario/update', [Usuario::class, 'actualizar']);
     $routes->get('usuario/delete_rol/(:num)', [Usuario::class, 'eliminarRol']);
     $routes->get('usuario/resetear/(:num)', [Usuario::class, 'resetea']);
+});
+
+
+$routes->group('/academico/asignatura', static function ($routes) {
+    $routes->get('/', [Asignatura::class, 'inicio']);
+    $routes->get('new/', [Asignatura::class, 'nuevo']);
+    $routes->post('save/', [Asignatura::class, 'guardar']);
+    $routes->get('edit/(:num)', [Asignatura::class, 'editar']);
+    $routes->post('update/', [Asignatura::class, 'actualizar']);
+    $routes->get('delete/(:num)', [Asignatura::class, 'eliminar']);
+});
+
+$routes->group('/academico/periodo', static function ($routes) {
+    $routes->get('/', [Periodo::class, 'inicio']);
+    $routes->get('new/', [Periodo::class, 'nuevo']);
+    $routes->post('save/', [Periodo::class, 'guardar']);
+    $routes->get('edit/(:num)', [Periodo::class, 'editar']);
+    $routes->post('update/', [Periodo::class, 'actualizar']);
+    $routes->get('delete/(:num)', [Periodo::class, 'eliminar']);
 });

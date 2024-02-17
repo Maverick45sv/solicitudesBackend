@@ -27,7 +27,7 @@ function menu($usuario){
     //var_dump($primerN);
     $html = '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="http://localhost/solicitudesbackend/">Inicio</a>
+                <a class="navbar-brand" href="'.base_url().'">Inicio</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
@@ -41,7 +41,7 @@ function menu($usuario){
         if($segundoN){
             $html .= '<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">';
             foreach($segundoN as $nivel2){
-                $html .= '<li><a class="dropdown-item" href="'.$nivel2->enlace.'">'.$nivel2->nombre.'</a></li>';
+                $html .= '<li><a class="dropdown-item" href="' . base_url($nivel2->enlace) . '">'.$nivel2->nombre.'</a></li>';
             }
             $html .= "</ul>";
         }
