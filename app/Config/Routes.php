@@ -13,6 +13,11 @@ use App\Controllers\administracion\usuario;
 use App\Controllers\administracion\menu;
 use App\Controllers\academico\asignatura;
 use App\Controllers\academico\periodo;
+use App\Controllers\telemetria\accion;
+use App\Controllers\telemetria\estacion;
+use App\Controllers\telemetria\proceso;
+use App\Controllers\telemetria\procesoEstacion;
+use App\Controllers\telemetria\procesoEstacionAccion;
 
 /**
  * @var RouteCollection $routes
@@ -106,6 +111,7 @@ $routes->group('/academico/asignatura', static function ($routes) {
     $routes->get('delete/(:num)', [Asignatura::class, 'eliminar']);
 });
 
+/***** MODULO ACADEMICO *****/
 $routes->group('/academico/periodo', static function ($routes) {
     $routes->get('/', [Periodo::class, 'inicio']);
     $routes->get('new/', [Periodo::class, 'nuevo']);
@@ -113,4 +119,47 @@ $routes->group('/academico/periodo', static function ($routes) {
     $routes->get('edit/(:num)', [Periodo::class, 'editar']);
     $routes->post('update/', [Periodo::class, 'actualizar']);
     $routes->get('delete/(:num)', [Periodo::class, 'eliminar']);
+});
+
+/***** MODULO DE TELEMETRIA *****/
+$routes->group('/telemetria/accion', static function ($routes) {
+    $routes->get('/', [Accion::class, 'inicio']);
+    $routes->get('new/', [Accion::class, 'nuevo']);
+    $routes->post('save/', [Accion::class, 'guardar']);
+    $routes->get('edit/(:num)', [Accion::class, 'editar']);
+    $routes->post('update/', [Accion::class, 'actualizar']);
+    $routes->get('delete/(:num)', [Accion::class, 'eliminar']);
+});
+
+$routes->group('/telemetria/estacion', static function ($routes) {
+    $routes->get('/', [Estacion::class, 'inicio']);
+    $routes->get('new/', [Estacion::class, 'nuevo']);
+    $routes->post('save/', [Estacion::class, 'guardar']);
+    $routes->get('edit/(:num)', [Estacion::class, 'editar']);
+    $routes->post('update/', [Estacion::class, 'actualizar']);
+    $routes->get('delete/(:num)', [Estacion::class, 'eliminar']);
+});
+
+$routes->group('/telemetria/proceso', static function ($routes) {
+    $routes->get('/', [Proceso::class, 'inicio']);
+    $routes->get('new/', [Proceso::class, 'nuevo']);
+    $routes->post('save/', [Proceso::class, 'guardar']);
+    $routes->get('edit/(:num)', [Proceso::class, 'editar']);
+    $routes->post('update/', [Proceso::class, 'actualizar']);
+    $routes->get('delete/(:num)', [Proceso::class, 'eliminar']);
+});
+
+$routes->group('/telemetria/procesoEstacion', static function ($routes) {
+    $routes->get('list/(:num)', [ProcesoEstacion::class, 'inicio']);
+    $routes->get('new/(:num)', [ProcesoEstacion::class, 'nuevo']);
+    $routes->post('save/', [ProcesoEstacion::class, 'guardar']);
+    $routes->get('edit/(:num)', [ProcesoEstacion::class, 'editar']);
+    $routes->post('update/', [ProcesoEstacion::class, 'actualizar']);
+    $routes->get('delete/(:num)', [ProcesoEstacion::class, 'eliminar']);
+});
+
+$routes->group('/telemetria/procesoEstacionAccion', static function ($routes) {
+    $routes->get('list/(:num)', [ProcesoEstacionAccion::class, 'inicio']);   
+    $routes->post('save/', [ProcesoEstacionAccion::class, 'guardar']);
+    $routes->get('delete/(:num)', [ProcesoEstacionAccion::class, 'eliminar']);
 });

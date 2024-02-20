@@ -10,7 +10,7 @@
             <p><i class="bi-x-octagon-fill"></i> <?= esc($error) ?></p>
         <?php endforeach ?>
         </div>
-<?php endif ?>
+    <?php endif ?>
     <form action="<?= base_url('admin/persona/usuario/save');?>" method="post">
         <?= csrf_field() ?>
         <input type="hidden"  name="persona" value="<?= $persona->id ?>">
