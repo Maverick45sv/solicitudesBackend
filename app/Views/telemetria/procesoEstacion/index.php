@@ -6,7 +6,7 @@
     <h2>Registro Estacion de Proceso <?= $proceso->nombre ?></h2>
     <div class="row" >
         <div class="col text-right">
-            <a href="<?= base_url('telemetria/procesoEstacion/new/'.$proceso->id) ?>" class="btn btn-success "><i class="bi bi-cloud-plus"></i> Nuevo Registro</a>
+            <a href="<?= base_url('telemetria/proceso/estacion/new/'.$proceso->id) ?>" class="btn btn-success "><i class="bi bi-cloud-plus"></i> Nuevo Registro</a>
         </div>
     </div>
     <br><br>
@@ -30,7 +30,7 @@
                         <td><?= $data->ruta ?></td>                       
                         <td>
                             <button type="button" class="btn btn-success" onclick="show(<?= $data->id ?>)"><i class="bi bi-signpost-2-fill"></i></button>
-                            <a href="<?= base_url('telemetria/procesoEstacion/edit/'. $data->id) ?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                            <a href="<?= base_url('telemetria/proceso/estacion/edit/'. $data->id) ?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
                             <button onclick="Eliminar(<?= $data->id ?>)" class="btn btn-danger"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>           
@@ -61,7 +61,7 @@
 
         function show(id) {
             $.ajax({
-                url: "<?= base_url('telemetria/procesoEstacionAccion/list');?>/"+id,          
+                url: "<?= base_url('telemetria/proceso/estacion/accion');?>/"+id,          
                 type: "get",
                 dataType: "html",
                 //data: 
@@ -86,7 +86,7 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "<?= base_url('telemetria/procesoEstacion/delete');?>/"+id,          
+                        url: "<?= base_url('telemetria/proceso/estacion/delete');?>/"+id,          
                         type: "get",
                         dataType: "json",
                         //data: 

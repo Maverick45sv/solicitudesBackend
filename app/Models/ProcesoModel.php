@@ -11,7 +11,7 @@ class ProcesoModel extends Model {
     protected $useAutoIncrement = true;
     protected $returnType     = 'object';
     protected $useSoftDeletes = false; 
-    protected $allowedFields = ['codigo','nombre','descripcion','verificar_cupo']; 
+    protected $allowedFields = ['codigo','nombre','descripcion','verificar_cupo','color']; 
     protected bool $allowEmptyInserts = false;
 
     // Dates

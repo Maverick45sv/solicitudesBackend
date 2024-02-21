@@ -28,6 +28,10 @@
                 <input type="checkbox"  name="cupo" value="1"> Verificar
             <?php endif; ?>        
         </div>
+        <div class="form-group">
+            <label for="nombre">Color</label>
+            <input type="color"  name="color" value="<?= $proceso->color ?>">
+        </div>   
         <br><br>
         <input class="btn btn-success" type="submit" value="Modificar">
     </form>

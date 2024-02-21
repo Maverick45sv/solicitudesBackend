@@ -11,8 +11,8 @@
         <?php endforeach ?>
         </div>
     <?php endif ?>
-    <a href="<?= base_url('telemetria/procesoEstacion/list/'.$proceso->id) ?>" class="btn btn-success" ><i class="bi bi-arrow-return-left"></i> Regresar</a><br><br>
-    <form action="<?= base_url('telemetria/procesoEstacion/save');?>" method="post">
+    <a href="<?= base_url('telemetria/proceso/estacion/'.$proceso->id) ?>" class="btn btn-success" ><i class="bi bi-arrow-return-left"></i> Regresar</a><br><br>
+    <form action="<?= base_url('telemetria/proceso/estacion/save');?>" method="post">
         <?= csrf_field() ?>
         <input type="hidden" name="id_proceso" value="<?= $proceso->id ?>">
         <div class="form-group">

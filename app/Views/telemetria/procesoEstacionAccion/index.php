@@ -6,7 +6,7 @@
         </div>
     </div>  
     <div class="row" id="contenedor" style="display:none">  
-        <form action="<?= base_url('telemetria/procesoEstacionAccion/save');?>" method="post">
+        <form action="<?= base_url('telemetria/proceso/estacion/accion/save');?>" method="post">
             <?= csrf_field() ?>
             <input type="hidden" name="id_origen" value="<?= $proceso_estacion->id ?>">
             <input type="hidden" name="id_proceso" value="<?= $proceso->id ?>">
@@ -122,7 +122,7 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "<?= base_url('telemetria/procesoEstacionAccion/delete');?>/"+id,          
+                        url: "<?= base_url('telemetria/proceso/estacion/accion/delete');?>/"+id,          
                         type: "get",
                         dataType: "json",
                         //data: 

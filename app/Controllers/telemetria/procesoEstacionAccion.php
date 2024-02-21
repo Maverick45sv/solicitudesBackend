@@ -57,7 +57,7 @@ class ProcesoEstacionAccion extends BaseController
             'interno' => $inter,
         ); 
         $procesoEstacionAccionModel->insert($data);
-        return redirect()->to('telemetria/procesoEstacion/list/'.$this->request->getPost('id_proceso'));          
+        return redirect()->to('telemetria/proceso/estacion/accion/'.$this->request->getPost('id_proceso'));          
     }
    
 

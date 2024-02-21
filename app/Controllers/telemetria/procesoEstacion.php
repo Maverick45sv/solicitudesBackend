@@ -69,7 +69,7 @@ class ProcesoEstacion extends BaseController
             );   
             return view('telemetria/procesoEstacion/nuevo', $datos);    
         }
-        return redirect()->to('telemetria/procesoEstacion/list/'.$this->request->getPost('id_proceso'));          
+        return redirect()->to('telemetria/proceso/estacion/'.$this->request->getPost('id_proceso'));          
     }
 
     public function editar($id)
@@ -107,7 +107,7 @@ class ProcesoEstacion extends BaseController
         ); 
         $id = $this->request->getPost('id');
         $procesoEstacionModel->update($id, $data);
-        return redirect()->to('telemetria/procesoEstacion//list/'.$this->request->getPost('id_proceso'));          
+        return redirect()->to('telemetria/proceso/estacion/'.$this->request->getPost('id_proceso'));          
     }
 
     public function eliminar($id)

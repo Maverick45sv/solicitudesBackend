@@ -18,6 +18,7 @@
                 <td>Nombre</td>
                 <td>Descripcion</td>
                 <td>Verificar Cupo</td>
+                <td>Color</td>
                 <td>Acciones</td>
             </tr>
         </thead>
@@ -38,8 +39,9 @@
                                 NO
                             <?php endif; ?>                             
                         </td>
+                        <td><input type="color"  name="color" value="<?= $data->color ?>" disabled></td>
                         <td>
-                            <a href="procesoEstacion/list/<?= $data->id ?>" class="btn btn-success"><i class="bi bi-list-ol"></i></a>
+                            <a href="proceso/estacion/<?= $data->id ?>" class="btn btn-success"><i class="bi bi-list-ol"></i></a>
                             <a href="proceso/edit/<?= $data->id ?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
                             <button onclick="Eliminar(<?= $data->id ?>)" class="btn btn-danger"><i class="bi bi-trash"></i></button>
                         </td>

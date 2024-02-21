@@ -23,6 +23,10 @@
             <label for="descripcion">Cupo Inscripcion</label><br>
             <input type="checkbox"  name="cupo" value="1"> Verificar
         </div>
+        <div class="form-group">
+            <label for="nombre">Color</label>
+            <input type="color"  name="color" >
+        </div>   
         <br><br>
         <input class="btn btn-success" type="submit" value="Guardar">
     </form>

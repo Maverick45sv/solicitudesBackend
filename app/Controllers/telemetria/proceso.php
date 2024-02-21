@@ -50,7 +50,8 @@ class Proceso extends BaseController
             'codigo' => $this->request->getPost('codigo'),
             'nombre' => $this->request->getPost('nombre'),
             'descripcion' => $this->request->getPost('descripcion'),
-            'verificar_cupo' => $cupo
+            'verificar_cupo' => $cupo,
+            'color' => $this->request->getPost('color'),
         ); 
         $procesoModel->insert($data);
         return redirect()->to('telemetria/proceso/');          
@@ -85,7 +86,8 @@ class Proceso extends BaseController
             'codigo' => $this->request->getPost('codigo'),
             'nombre' => $this->request->getPost('nombre'),
             'descripcion' => $this->request->getPost('descripcion'),
-            'verificar_cupo' => $cupo
+            'verificar_cupo' => $cupo,
+            'color' => $this->request->getPost('color'),
         ); 
         $id = $this->request->getPost('id');
         $procesoModel->update($id, $data);

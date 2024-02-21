@@ -4,8 +4,8 @@
 <?= $this->endSection() ?>
 <?= $this->section('content') ?>
     <h2>Editar Registro ProcesoEstacion</h2>
-    <a href="<?= base_url('telemetria/procesoEstacion/list/' . $procesoEstacion->id);?>" class="btn btn-success" ><i class="bi bi-arrow-return-left"></i> Regresar</a><br><br>
-    <form action="<?= base_url('telemetria/procesoEstacion/update');?>" method="post">
+    <a href="<?= base_url('telemetria/proceso/estacion/' . $procesoEstacion->id);?>" class="btn btn-success" ><i class="bi bi-arrow-return-left"></i> Regresar</a><br><br>
+    <form action="<?= base_url('telemetria/proceso/estacion/update');?>" method="post">
     <input type="hidden" name="id" value="<?= $procesoEstacion->id ?>">
     <input type="hidden" name="id_proceso" value="<?= $procesoEstacion->id_proceso ?>">
         <?= csrf_field() ?>        
