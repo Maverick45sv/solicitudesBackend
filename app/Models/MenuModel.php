@@ -57,7 +57,7 @@ class menuModel extends Model {
                         if($query3){
                             $array = $array  ."<ul>";
                             foreach($query3 as $data3){
-                                $array = $array  . "<li>" .$data3->nombre . "</li>";
+                                $array = $array  . "<li>" .$data3->nombre . "</li>"; 
                             }
                             $array = $array  ."</ul>";
                         }                        
@@ -75,6 +75,6 @@ class menuModel extends Model {
    function buscarCompleto(){
     $sql1="SELECT m.id, m.nombre, m.descripcion, n.nombre as padre 
     FROM menu m JOIN menu n on m.padre=n.id ";
-    return $this->db->query($sql1)->getResult();
+    return $this->db->query($sql1)->getResult(); 
    }
 }

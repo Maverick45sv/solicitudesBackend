@@ -38,5 +38,10 @@ class FacultadModel extends Model {
     protected $beforeDelete   = [];
     protected $afterDelete    = []; */
   
+    function buscarTodos(){
+        $sql="SELECT facultad.* FROM facultad" ;
+        $query = $this->db->query($sql);
+        return $query->getResult();
    
+   }
 }

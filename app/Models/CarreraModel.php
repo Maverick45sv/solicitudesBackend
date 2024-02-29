@@ -37,6 +37,19 @@ class CarreraModel extends Model {
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = []; */
-  
-   
+
+    function buscarTodos(){
+        $sql="SELECT carrera.*,  facultad.nombre as facultadn
+        FROM carrera JOIN facultad on carrera.id_facultad=facultad.id" ;
+        $query = $this->db->query($sql);
+        return $query->getResult();
+   }
+
+   function buscarFacultad(){
+    $sql1="SELECT facultad.id as idp, facultad.nombre as facultadp 
+           FROM facultad
+           ORDER BY facultad.id;";
+    $query = $this->db->query($sql1);
+    return $query ->getResultArray();
+}
 }

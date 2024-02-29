@@ -20,7 +20,7 @@
             <input type="text" class="form-control" name="descripcion" placeholder="Descripcion">
         </div>
         <div class="form-group">
-            <label for="padre">Padre:</label>
+            <label for="padre">Padre:</label> 
             <select name="padre" class="form-control">
                 <?php foreach ($padre as $data): ?>
                     <option value="<?= $data->id ?>"><?= $data->nombre ?> (<?= $data->descripcion ?>)</option>

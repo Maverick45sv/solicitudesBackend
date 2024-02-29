@@ -13,6 +13,8 @@ use App\Controllers\administracion\usuario;
 use App\Controllers\administracion\menu;
 use App\Controllers\academico\asignatura;
 use App\Controllers\academico\periodo;
+use App\Controllers\academico\carrera;
+use App\Controllers\academico\facultad;
 use App\Controllers\telemetria\accion;
 use App\Controllers\telemetria\estacion;
 use App\Controllers\telemetria\proceso;
@@ -120,6 +122,24 @@ $routes->group('/academico/periodo', static function ($routes) {
     $routes->get('edit/(:num)', [Periodo::class, 'editar']);
     $routes->post('update/', [Periodo::class, 'actualizar']);
     $routes->get('delete/(:num)', [Periodo::class, 'eliminar']);
+});
+
+$routes->group('/academico/carrera', static function ($routes) {
+    $routes->get('/', [Carrera::class, 'inicio']);
+    $routes->get('new/', [Carrera::class, 'nuevo']);
+    $routes->post('save/', [Carrera::class, 'guardar']);
+    $routes->get('edit/(:num)', [Carrera::class, 'editar']);
+    $routes->post('update/', [Carrera::class, 'actualizar']);
+    $routes->get('delete/(:num)', [Carrera::class, 'eliminar']);
+});
+
+$routes->group('/academico/facultad', static function ($routes) {
+    $routes->get('/', [Facultad::class, 'inicio']);
+    $routes->get('new/', [Facultad::class, 'nuevo']);
+    $routes->post('save/', [Facultad::class, 'guardar']);
+    $routes->get('edit/(:num)', [Facultad::class, 'editar']);
+    $routes->post('update/', [Facultad::class, 'actualizar']);
+    $routes->get('delete/(:num)', [Facultad::class, 'eliminar']);
 });
 
 $routes->group('/academico/calendario', static function ($routes) {
