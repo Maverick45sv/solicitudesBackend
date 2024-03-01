@@ -15,6 +15,7 @@ use App\Controllers\academico\asignatura;
 use App\Controllers\academico\periodo;
 use App\Controllers\academico\carrera;
 use App\Controllers\academico\facultad;
+use App\Controllers\academico\CategoriaMotivo;
 use App\Controllers\telemetria\accion;
 use App\Controllers\telemetria\estacion;
 use App\Controllers\telemetria\proceso;
@@ -140,6 +141,15 @@ $routes->group('/academico/facultad', static function ($routes) {
     $routes->get('edit/(:num)', [Facultad::class, 'editar']);
     $routes->post('update/', [Facultad::class, 'actualizar']);
     $routes->get('delete/(:num)', [Facultad::class, 'eliminar']);
+});
+
+$routes->group('/academico/categoriamotivo', static function ($routes) {
+    $routes->get('/', [CategoriaMotivo::class, 'inicio']);
+    $routes->get('new/', [CategoriaMotivo::class, 'nuevo']);
+    $routes->post('save/', [CategoriaMotivo::class, 'guardar']);
+    $routes->get('edit/(:num)', [CategoriaMotivo::class, 'editar']);
+    $routes->post('update/', [CategoriaMotivo::class, 'actualizar']);
+    $routes->get('delete/(:num)', [CategoriaMotivo::class, 'eliminar']);
 });
 
 $routes->group('/academico/calendario', static function ($routes) {

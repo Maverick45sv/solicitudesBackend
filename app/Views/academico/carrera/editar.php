@@ -20,7 +20,11 @@
             <label for="facultad">Facultad:</label>
             <select name="opcionFacultad" class="form-control">
                 <?php foreach ($datosf as $data): ?>
-                    <option value="<?= $data['idp'] ?>"> <?= $data['facultadp']?></option>
+                    <?php if ($data ->idp == $carrera ->id): ?>
+                        <option value="<?= $data ->id?>" selected><?= $data->facultadp ?></option>
+                    <?php else: ?>
+                        <option value="<?= $data->idp ?>"><?= $data->facultadp ?></option>
+                    <?php endif ?>
                 <?php endforeach ?>
             </select>
         </div>

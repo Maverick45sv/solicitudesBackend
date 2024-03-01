@@ -29,7 +29,7 @@
                     <?php else: ?>
                         <option value="<?= $data->id ?>"><?= $data->nombre ?> (<?= $data->descripcion ?>)</option>
                     <?php endif ?>
-                <?php endforeach ?>    
+                <?php endforeach ?>     
             </select>
         </div>  
         <br><br>

@@ -50,6 +50,6 @@ class CarreraModel extends Model {
            FROM facultad
            ORDER BY facultad.id;";
     $query = $this->db->query($sql1);
-    return $query ->getResultArray();
+    return $query ->getResult();
 }
 }

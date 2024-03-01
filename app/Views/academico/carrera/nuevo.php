@@ -20,7 +20,7 @@
             <label for="facultad">Facultad:</label>
             <select name="opcionFacultad" class="form-control">
                 <?php foreach ($datosf as $data): ?>
-                    <option value="<?= $data['idp'] ?>"> <?= $data['facultadp']?></option>
+                    <option value="<?= $data ->idp ?>"> <?= $data ->facultadp?></option>
                 <?php endforeach ?>
             </select>
         </div> 
