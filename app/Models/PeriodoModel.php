@@ -11,7 +11,7 @@ class PeriodoModel extends Model {
     protected $useAutoIncrement = true;
     protected $returnType     = 'object';
     protected $useSoftDeletes = false; 
-    protected $allowedFields = ['codigo', 'anio', 'inicio', 'fin', 'id_usuario']; 
+    protected $allowedFields = ['codigo', 'anio', 'inicio', 'fin', 'id_usuario'];  
     protected bool $allowEmptyInserts = false;
 
     // Dates

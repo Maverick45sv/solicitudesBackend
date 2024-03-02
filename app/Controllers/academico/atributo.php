@@ -3,9 +3,9 @@
 namespace App\Controllers\academico;
 
 use App\Controllers\BaseController;
-use \App\Models\CategoriaMotivoModel;
+use \App\Models\AtributoModel;
 
-class CategoriaMotivo extends BaseController
+class Atributo extends BaseController
 {
     public function inicio()
     {        
@@ -13,12 +13,12 @@ class CategoriaMotivo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }       
-        $categoriamotivoModel = model(CategoriaMotivoModel::class);
+        $atributoModel = model(AtributoModel::class);
         $datos = array(
-            "todos" => $categoriamotivoModel->findAll(),
+            "todos" => $atributoModel->findAll(),
             "menu" => menu($session->get('idusuario')),
         );
-        return view('academico/categoriamotivo/index', $datos);
+        return view('academico/atributo/index', $datos);
     }
 
     public function nuevo()
@@ -27,11 +27,11 @@ class CategoriaMotivo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $tipoModel = model(CategoriaMotivoModel::class); 
+        $tipoModel = model(AtributoModel::class); 
         $datos = array(           
             "menu" => menu($session->get('idusuario')),
         );       
-        return view('academico/categoriamotivo/nuevo', $datos);
+        return view('academico/atributo/nuevo', $datos);
    
     }
 
@@ -41,12 +41,12 @@ class CategoriaMotivo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $tipoModel = model(CategoriaMotivoModel::class);
+        $tipoModel = model(AtributoModel::class);
         $data = array(
             'nombre' => $this->request->getPost('nombre'),        
         ); 
         $tipoModel->insert($data);
-        return redirect()->to('academico/categoriamotivo/');          
+        return redirect()->to('academico/atributo/');          
     }
 
     public function editar($id)
@@ -55,12 +55,12 @@ class CategoriaMotivo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $tipoModel = model(CategoriaMotivoModel::class);        
+        $tipoModel = model(AtributoModel::class);        
         $datos = array(
-            "categoriamotivo" => $tipoModel->find($id),
+            "atributo" => $tipoModel->find($id),
             "menu" => menu($session->get('idusuario')),
         );
-        return view('academico/categoriamotivo/editar', $datos);    
+        return view('academico/atributo/editar', $datos);    
     }
 
     public function actualizar()
@@ -69,13 +69,13 @@ class CategoriaMotivo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $tipoModel = model(CategoriaMotivoModel::class);
+        $tipoModel = model(AtributoModel::class);
         $data = array(
             'nombre' => $this->request->getPost('nombre'),       
         ); 
         $id = $this->request->getPost('id');
         $tipoModel->update($id, $data);
-        return redirect()->to('academico/categoriamotivo/');          
+        return redirect()->to('academico/atributo/');          
     }
 
     public function eliminar($id)
@@ -84,7 +84,7 @@ class CategoriaMotivo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }        
-        $tipoModel = model(CategoriaMotivoModel::class);  
+        $tipoModel = model(AtributoModel::class);  
         $tipoModel->delete($id);
         return $this->response->setJson(['msg'=>'ok']);     
     }

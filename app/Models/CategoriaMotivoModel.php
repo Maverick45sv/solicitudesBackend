@@ -37,12 +37,5 @@ class CategoriaMotivoModel extends Model {
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = []; */
-  
-    function buscarTodos()
-    {
-        $sql="SELECT * FROM categoria_motivo";
-        $query = $this->db->query($sql);
-        return $query->getResult();
-    }
    
 }

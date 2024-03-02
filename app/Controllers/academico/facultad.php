@@ -15,7 +15,7 @@ class Facultad extends BaseController
         }       
         $facultadModel = model(FacultadModel::class);
         $datos = array(
-            "todos" => $facultadModel->buscarTodos(),
+            "todos" => $facultadModel->findAll(),
             "menu" => menu($session->get('idusuario')),
         );
         return view('academico/facultad/index', $datos);
@@ -33,7 +33,7 @@ class Facultad extends BaseController
         );       
         return view('academico/facultad/nuevo', $datos);
    
-    }
+    }  
 
     public function guardar()
     {

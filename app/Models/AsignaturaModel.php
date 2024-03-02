@@ -12,7 +12,7 @@ class AsignaturaModel extends Model {
     protected $returnType     = 'object';
     protected $useSoftDeletes = false; 
     protected $allowedFields = ['nombre']; 
-    protected bool $allowEmptyInserts = false;
+    protected bool $allowEmptyInserts = false; 
 
     // Dates
     //protected $useTimestamps = true;
