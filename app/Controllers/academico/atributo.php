@@ -43,7 +43,8 @@ class Atributo extends BaseController
         }    
         $tipoModel = model(AtributoModel::class);
         $data = array(
-            'nombre' => $this->request->getPost('nombre'),        
+            'nombre' => $this->request->getPost('nombre'),
+            'tipo' => $this->request->getPost('tipo'),        
         ); 
         $tipoModel->insert($data);
         return redirect()->to('academico/atributo/');          
@@ -71,7 +72,8 @@ class Atributo extends BaseController
         }    
         $tipoModel = model(AtributoModel::class);
         $data = array(
-            'nombre' => $this->request->getPost('nombre'),       
+            'nombre' => $this->request->getPost('nombre'),
+            'tipo' => $this->request->getPost('tipo'),          
         ); 
         $id = $this->request->getPost('id');
         $tipoModel->update($id, $data);

@@ -13,7 +13,7 @@
         </div>
         <div class="form-group">
             <label for="tipo">Tipo</label>
-            <input type="text" class="form-control" name="nombre" placeholder="Nombre">
+            <input type="text" class="form-control" name="tipo" placeholder="Nombre">
         </div>
         <br><br>
         <input class="btn btn-success" type="submit" value="Guardar">
