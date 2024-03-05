@@ -17,6 +17,8 @@ use App\Controllers\academico\carrera;
 use App\Controllers\academico\facultad;
 use App\Controllers\academico\categoriamotivo;
 use App\Controllers\academico\atributo;
+use App\Controllers\academico\archivo;
+use App\Controllers\academico\tipodocumento;
 use App\Controllers\telemetria\accion;
 use App\Controllers\telemetria\estacion;
 use App\Controllers\telemetria\proceso;
@@ -160,6 +162,24 @@ $routes->group('/academico/atributo', static function ($routes) {
     $routes->get('edit/(:num)', [Atributo::class, 'editar']);
     $routes->post('update/', [Atributo::class, 'actualizar']);
     $routes->get('delete/(:num)', [Atributo::class, 'eliminar']);
+});
+
+$routes->group('/academico/archivo', static function ($routes) {
+    $routes->get('/', [Archivo::class, 'inicio']);
+    $routes->get('new/', [Archivo::class, 'nuevo']);
+    $routes->post('save/', [Archivo::class, 'guardar']);
+    $routes->get('edit/(:num)', [Archivo::class, 'editar']);
+    $routes->post('update/', [Archivo::class, 'actualizar']);
+    $routes->get('delete/(:num)', [Archivo::class, 'eliminar']);
+});
+
+$routes->group('/academico/tipodocumento', static function ($routes) {
+    $routes->get('/', [TipoDocumento::class, 'inicio']);
+    $routes->get('new/', [TipoDocumento::class, 'nuevo']);
+    $routes->post('save/', [TipoDocumento::class, 'guardar']);
+    $routes->get('edit/(:num)', [TipoDocumento::class, 'editar']);
+    $routes->post('update/', [TipoDocumento::class, 'actualizar']);
+    $routes->get('delete/(:num)', [TipoDocumento::class, 'eliminar']);
 });
 
 $routes->group('/academico/calendario', static function ($routes) {

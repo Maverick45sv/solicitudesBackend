@@ -27,7 +27,7 @@ class Atributo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $tipoModel = model(AtributoModel::class); 
+        $atributoModel = model(AtributoModel::class); 
         $datos = array(           
             "menu" => menu($session->get('idusuario')),
         );       
@@ -41,12 +41,12 @@ class Atributo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $tipoModel = model(AtributoModel::class);
+        $atributoModel = model(AtributoModel::class);
         $data = array(
             'nombre' => $this->request->getPost('nombre'),
             'tipo' => $this->request->getPost('tipo'),        
         ); 
-        $tipoModel->insert($data);
+        $atributoModel->insert($data);
         return redirect()->to('academico/atributo/');          
     }
 
@@ -56,9 +56,9 @@ class Atributo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $tipoModel = model(AtributoModel::class);        
+        $atributoModel = model(AtributoModel::class);        
         $datos = array(
-            "atributo" => $tipoModel->find($id),
+            "atributo" => $atributoModel->find($id),
             "menu" => menu($session->get('idusuario')),
         );
         return view('academico/atributo/editar', $datos);    
@@ -70,13 +70,13 @@ class Atributo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $tipoModel = model(AtributoModel::class);
+        $atributoModel = model(AtributoModel::class);
         $data = array(
             'nombre' => $this->request->getPost('nombre'),
             'tipo' => $this->request->getPost('tipo'),          
         ); 
         $id = $this->request->getPost('id');
-        $tipoModel->update($id, $data);
+        $atributoModel->update($id, $data);
         return redirect()->to('academico/atributo/');          
     }
 
@@ -86,8 +86,8 @@ class Atributo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }        
-        $tipoModel = model(AtributoModel::class);  
-        $tipoModel->delete($id);
+        $atributoModel = model(AtributoModel::class);  
+        $atributoModel->delete($id);
         return $this->response->setJson(['msg'=>'ok']);     
     }
 }

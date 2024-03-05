@@ -27,7 +27,7 @@ class CategoriaMotivo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $tipoModel = model(CategoriaMotivoModel::class); 
+        $categoriamotivoModel = model(CategoriaMotivoModel::class); 
         $datos = array(           
             "menu" => menu($session->get('idusuario')),
         );       
@@ -41,11 +41,11 @@ class CategoriaMotivo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $tipoModel = model(CategoriaMotivoModel::class);
+        $categoriamotivoModel = model(CategoriaMotivoModel::class);
         $data = array(
             'nombre' => $this->request->getPost('nombre'),        
         ); 
-        $tipoModel->insert($data);
+        $categoriamotivoModel->insert($data);
         return redirect()->to('academico/categoriamotivo/');          
     }
 
@@ -55,9 +55,9 @@ class CategoriaMotivo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $tipoModel = model(CategoriaMotivoModel::class);        
+        $categoriamotivoModel = model(CategoriaMotivoModel::class);        
         $datos = array(
-            "categoriamotivo" => $tipoModel->find($id),
+            "categoriamotivo" => $categoriamotivoModel->find($id),
             "menu" => menu($session->get('idusuario')),
         );
         return view('academico/categoriamotivo/editar', $datos);    
@@ -69,12 +69,12 @@ class CategoriaMotivo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $tipoModel = model(CategoriaMotivoModel::class);
+        $categoriamotivoModel = model(CategoriaMotivoModel::class);
         $data = array(
             'nombre' => $this->request->getPost('nombre'),       
         ); 
         $id = $this->request->getPost('id');
-        $tipoModel->update($id, $data);
+        $categoriamotivoModel->update($id, $data);
         return redirect()->to('academico/categoriamotivo/');          
     }
 
@@ -84,8 +84,8 @@ class CategoriaMotivo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }        
-        $tipoModel = model(CategoriaMotivoModel::class);  
-        $tipoModel->delete($id);
+        $categoriamotivoModel = model(CategoriaMotivoModel::class);  
+        $categoriamotivoModel->delete($id);
         return $this->response->setJson(['msg'=>'ok']);     
     }
 }

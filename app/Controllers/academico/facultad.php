@@ -27,7 +27,7 @@ class Facultad extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $tipoModel = model(FacultadModel::class); 
+        $facultadModel = model(FacultadModel::class); 
         $datos = array(           
             "menu" => menu($session->get('idusuario')),
         );       
@@ -41,11 +41,11 @@ class Facultad extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/'); 
         }    
-        $tipoModel = model(FacultadModel::class);
+        $facultadModel = model(FacultadModel::class);
         $data = array(
             'nombre' => $this->request->getPost('nombre'),        
         ); 
-        $tipoModel->insert($data);
+        $facultadModel->insert($data);
         return redirect()->to('academico/facultad/');          
     }
 
@@ -55,9 +55,9 @@ class Facultad extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $tipoModel = model(FacultadModel::class);        
+        $facultadModel = model(FacultadModel::class);        
         $datos = array(
-            "facultad" => $tipoModel->find($id),
+            "facultad" => $facultadModel->find($id),
             "menu" => menu($session->get('idusuario')),
         );
         return view('academico/facultad/editar', $datos);    
@@ -69,13 +69,13 @@ class Facultad extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $tipoModel = model(FacultadModel::class);
+        $facultadModel = model(FacultadModel::class);
         $data = array(
             'id' => $this->request->getPost('id'),
             'nombre' => $this->request->getPost('nombre')     
         ); 
         $id = $this->request->getPost('id');
-        $tipoModel->update($id, $data);
+        $facultadModel->update($id, $data);
         return redirect()->to('academico/facultad/');          
     }
 
@@ -85,8 +85,8 @@ class Facultad extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }        
-        $tipoModel = model(FacultadModel::class);  
-        $tipoModel->delete($id);
+        $facultadModel = model(FacultadModel::class);  
+        $facultadModel->delete($id);
         return $this->response->setJson(['msg'=>'ok']);     
     }
 }

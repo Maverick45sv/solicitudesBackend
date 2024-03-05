@@ -3,22 +3,23 @@
 namespace App\Controllers\academico;
 
 use App\Controllers\BaseController;
-use \App\Models\PeriodoModel;
+use \App\Models\TipoDocumentoModel;
 
-class Periodo extends BaseController
+class TipoDocumento extends BaseController 
 {
+
     public function inicio()
     {        
         $session = session();
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }       
-        $periodoModel = model(PeriodoModel::class);
+        $TipoDocumentoModel = model(TipoDocumentoModel::class);
         $datos = array(
-            "todos" => $periodoModel->buscarTodos(),
+            "todos" => $TipoDocumentoModel->findAll(),
             "menu" => menu($session->get('idusuario')),
         );
-        return view('academico/periodo/index', $datos);
+        return view('academico/tipodocumento/index', $datos);
     }
 
     public function nuevo()
@@ -27,12 +28,14 @@ class Periodo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $periodoModel = model(PeriodoModel::class); 
+        $TipoDocumentoModel = model(TipoDocumentoModel::class);
+
         $datos = array(           
             "menu" => menu($session->get('idusuario')),
-        );       
-        return view('academico/periodo/nuevo', $datos);
-   
+            "todos" => $TipoDocumentoModel-> findAll(),
+        );
+
+        return view('academico/tipodocumento/nuevo', $datos);
     }
 
     public function guardar()
@@ -41,16 +44,12 @@ class Periodo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $periodoModel = model(PeriodoModel::class);
+        $TipoDocumentoModel = model(TipoDocumentoModel::class);
         $data = array(
-            'codigo' => $this->request->getPost('codigo'),
-            'anio' => $this->request->getPost('anio'),
-            'inicio' => $this->request->getPost('inicio'),
-            'fin' => $this->request->getPost('fin'),
-            'id_usuario' => $session->get('idusuario')        
+            'nombre' => $this->request->getPost('nombre'),      
         ); 
-        $periodoModel->insert($data);
-        return redirect()->to('academico/periodo/');          
+        $TipoDocumentoModel->insert($data);
+        return redirect()->to('academico/tipodocumento/');          
     }
 
     public function editar($id)
@@ -59,12 +58,12 @@ class Periodo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $periodoModel = model(PeriodoModel::class);        
+        $TipoDocumentoModel = model(TipoDocumentoModel::class);       
         $datos = array(
-            "periodo" => $periodoModel->find($id),
+            "tipodocumento" => $TipoDocumentoModel->find($id),
             "menu" => menu($session->get('idusuario')),
         );
-        return view('academico/periodo/editar', $datos);    
+        return view('academico/tipodocumento/editar', $datos);    
     }
 
     public function actualizar()
@@ -73,16 +72,13 @@ class Periodo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $periodoModel = model(PeriodoModel::class);
+        $TipoDocumentoModel = model(TipoDocumentoModel::class);
         $data = array(
-            'codigo' => $this->request->getPost('codigo'),
-            'anio' => $this->request->getPost('anio'),
-            'inicio' => $this->request->getPost('inicio'),
-            'fin' => $this->request->getPost('fin')       
+            'nombre' => $this->request->getPost('nombre'),      
         ); 
         $id = $this->request->getPost('id');
-        $periodoModel->update($id, $data);
-        return redirect()->to('academico/periodo/');          
+        $TipoDocumentoModel->update($id, $data);
+        return redirect()->to('academico/tipodocumento/');          
     }
 
     public function eliminar($id)
@@ -91,8 +87,8 @@ class Periodo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }        
-        $periodoModel = model(PeriodoModel::class);  
-        $periodoModel->delete($id);
+        $TipoDocumentoModel = model(TipoDocumentoModel::class);  
+        $TipoDocumentoModel->delete($id);
         return $this->response->setJson(['msg'=>'ok']);     
     }
 }

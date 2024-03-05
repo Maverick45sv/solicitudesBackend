@@ -3,9 +3,9 @@
 namespace App\Controllers\academico;
 
 use App\Controllers\BaseController;
-use \App\Models\CarreraModel;
+use \App\Models\ArchivoModel;
 
-class Carrera extends BaseController 
+class Archivo extends BaseController 
 {
 
     public function inicio()
@@ -14,12 +14,12 @@ class Carrera extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }       
-        $CarreraModel = model(CarreraModel::class);
+        $ArchivoModel = model(ArchivoModel::class);
         $datos = array(
-            "todos" => $CarreraModel->buscarTodos(),
+            "todos" => $ArchivoModel->findAll(),
             "menu" => menu($session->get('idusuario')),
         );
-        return view('academico/carrera/index', $datos);
+        return view('academico/archivo/index', $datos);
     }
 
     public function nuevo()
@@ -28,14 +28,14 @@ class Carrera extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $carreraModel = model(CarreraModel::class);
+        $archivoModel = model(ArchivoModel::class);
 
         $datos = array(           
             "menu" => menu($session->get('idusuario')),
-            "datosf" => $carreraModel-> buscarFacultad(),
+            "todos" => $archivoModel-> findAll(),
         );
 
-        return view('academico/carrera/nuevo', $datos);
+        return view('academico/archivo/nuevo', $datos);
     }
 
     public function guardar()
@@ -44,14 +44,15 @@ class Carrera extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $carreraModel = model(CarreraModel::class);
+        $archivoModel = model(ArchivoModel::class);
         $data = array(
             'nombre' => $this->request->getPost('nombre'),
-            'codigo' => $this->request->getPost('codigo'),
-            'id_facultad' => $this->request->getPost('opcionFacultad'),       
+            'peso' => $this->request->getPost('peso'),
+            'creado' => date('Y-m-d H:i:s'),
+            'url' => $this->request->getPost('url'),      
         ); 
-        $carreraModel->insert($data);
-        return redirect()->to('academico/carrera/');          
+        $archivoModel->insert($data);
+        return redirect()->to('academico/archivo/');          
     }
 
     public function editar($id)
@@ -60,15 +61,15 @@ class Carrera extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $carreraModel = model(CarreraModel::class);       
+        $archivoModel = model(ArchivoModel::class);       
         $datos = array(
-            "carrera" => $carreraModel->find($id),
+            "archivo" => $archivoModel->find($id),
             "menu" => menu($session->get('idusuario')),
             'nombre' => $this->request->getPost('nombre'),
-            'codigo' => $this->request->getPost('codigo'),
-            "datosf" => $carreraModel-> buscarFacultad(), 
+            'peso' => $this->request->getPost('peso'),
+            'url' => $this->request->getPost('url'),
         );
-        return view('academico/carrera/editar', $datos);    
+        return view('academico/archivo/editar', $datos);    
     }
 
     public function actualizar()
@@ -77,15 +78,16 @@ class Carrera extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $carreraModel = model(CarreraModel::class);
+        $archivoModel = model(ArchivoModel::class);
         $data = array(
             'nombre' => $this->request->getPost('nombre'),
-            'codigo' => $this->request->getPost('codigo'),
-            'id_facultad' => $this->request->getPost('opcionFacultad'),      
+            'peso' => $this->request->getPost('peso'),
+            'creado' => date('Y-m-d H:i:s'),
+            'url' => $this->request->getPost('url'),      
         ); 
         $id = $this->request->getPost('id');
-        $carreraModel->update($id, $data);
-        return redirect()->to('academico/carrera/');          
+        $archivoModel->update($id, $data);
+        return redirect()->to('academico/archivo/');          
     }
 
     public function eliminar($id)
@@ -94,8 +96,8 @@ class Carrera extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }        
-        $carreraModel = model(CarreraModel::class);  
-        $carreraModel->delete($id);
+        $archivoModel = model(ArchivoModel::class);  
+        $archivoModel->delete($id);
         return $this->response->setJson(['msg'=>'ok']);     
     }
 }
