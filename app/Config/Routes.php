@@ -23,6 +23,8 @@ use App\Controllers\telemetria\accion;
 use App\Controllers\telemetria\estacion;
 use App\Controllers\telemetria\proceso;
 use App\Controllers\telemetria\procesoEstacion;
+use App\Controllers\telemetria\procesoAtributo;
+use App\Controllers\telemetria\procesoTipoDocumento;
 use App\Controllers\telemetria\procesoEstacionAccion;
 use App\Controllers\telemetria\procesoCalendario;
 
@@ -227,8 +229,15 @@ $routes->group('/telemetria/proceso', static function ($routes) {
     $routes->get('estacion/delete/(:num)', [ProcesoEstacion::class, 'eliminar']);
     $routes->get('estacion/accion/(:num)', [ProcesoEstacionAccion::class, 'inicio']);   
     $routes->post('estacion/accion/save/', [ProcesoEstacionAccion::class, 'guardar']);
-    $routes->get('estacion/accion/delete/(:num)', [ProcesoEstacionAccion::class, 'eliminar']);    
-    
+    $routes->get('estacion/accion/delete/(:num)', [ProcesoEstacionAccion::class, 'eliminar']); 
+    $routes->get('atributo/(:num)', [ProcesoAtributo::class, 'inicio']);
+    $routes->get('atributo/new/(:num)', [ProcesoAtributo::class, 'nuevo']);
+    $routes->post('atributo/save/', [ProcesoAtributo::class, 'guardar']);
+    $routes->get('atributo/delete/(:num)', [ProcesoAtributo::class, 'eliminar']);    
+    $routes->get('tipodocumento/(:num)', [ProcesoTipoDocumento::class, 'inicio']);
+    $routes->get('tipodocumento/new/(:num)', [ProcesoTipoDocumento::class, 'nuevo']);
+    $routes->post('tipodocumento/save/', [ProcesoTipoDocumento::class, 'guardar']);
+    $routes->get('tipodocumento/delete/(:num)', [ProcesoTipoDocumento::class, 'eliminar']);   
 });
 
 

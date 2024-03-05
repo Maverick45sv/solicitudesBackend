@@ -11,7 +11,7 @@ class TipoDocumentoModel extends Model {
     protected $useAutoIncrement = true;
     protected $returnType     = 'object';
     protected $useSoftDeletes = false; 
-    protected $allowedFields = ['nombre']; 
+    protected $allowedFields = ['id_proceso','id_tipo_documento','id_usuario']; 
     protected bool $allowEmptyInserts = false;
 
     // Dates

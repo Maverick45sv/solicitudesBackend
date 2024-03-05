@@ -4,14 +4,14 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ProcesoAtributoModel extends Model {
+class ProcesoTipoDocumentoModel extends Model {
    
-    protected $table = 'proceso_atributo';
+    protected $table = 'proceso_tipo_documento';
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
     protected $returnType     = 'object';
     protected $useSoftDeletes = false; 
-    protected $allowedFields = ['id_proceso','id_atributo']; 
+    protected $allowedFields = ['id_proceso','id_tipo_documento','id_usuario']; 
     protected bool $allowEmptyInserts = false;
 
     // Dates
@@ -38,5 +38,14 @@ class ProcesoAtributoModel extends Model {
     protected $beforeDelete   = [];
     protected $afterDelete    = []; */
   
+    function buscarTodosXProceso($id){
+        $sql="SELECT proceso_tipo_documento.*, tipo_documento.nombre as documento 
+        FROM proceso_tipo_documento JOIN tipo_documento on proceso_tipo_documento.id_tipo_documento=tipo_documento.id 
+        JOIN proceso on proceso_tipo_documento.id_proceso=proceso.id 
+        WHERE proceso.id=$id";
+        $query = $this->db->query($sql);
+        return $query->getResult();
+   
+   }
    
 }
