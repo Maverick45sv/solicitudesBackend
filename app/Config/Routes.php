@@ -12,6 +12,8 @@ use App\Controllers\administracion\telefono;
 use App\Controllers\administracion\usuario;
 use App\Controllers\administracion\menu;
 use App\Controllers\academico\asignatura;
+use App\Controllers\academico\horario;
+use App\Controllers\academico\oferta;
 use App\Controllers\academico\periodo;
 use App\Controllers\academico\carrera;
 use App\Controllers\academico\facultad;
@@ -111,6 +113,9 @@ $routes->group('/admin/persona', static function ($routes) {
 });
 
 
+
+/***** MODULO ACADEMICO *****/
+
 $routes->group('/academico/asignatura', static function ($routes) {
     $routes->get('/', [Asignatura::class, 'inicio']);
     $routes->get('new/', [Asignatura::class, 'nuevo']);
@@ -120,7 +125,25 @@ $routes->group('/academico/asignatura', static function ($routes) {
     $routes->get('delete/(:num)', [Asignatura::class, 'eliminar']);
 });
 
-/***** MODULO ACADEMICO *****/
+
+$routes->group('/academico/oferta', static function ($routes) {
+    $routes->get('/', [Oferta::class, 'inicio']);
+    $routes->get('new/', [Oferta::class, 'nuevo']);
+    $routes->post('save/', [Oferta::class, 'guardar']);
+    $routes->get('edit/(:num)', [Oferta::class, 'editar']);
+    $routes->post('update/', [Oferta::class, 'actualizar']);
+    $routes->get('delete/(:num)', [Oferta::class, 'eliminar']);
+});
+
+$routes->group('/academico/horario', static function ($routes) {
+    $routes->get('/', [Horario::class, 'inicio']);
+    $routes->get('new/', [Horario::class, 'nuevo']);
+    $routes->post('save/', [Horario::class, 'guardar']);
+    $routes->get('edit/(:num)', [Horario::class, 'editar']);
+    $routes->post('update/', [Horario::class, 'actualizar']);
+    $routes->get('delete/(:num)', [Horario::class, 'eliminar']);
+});
+
 $routes->group('/academico/periodo', static function ($routes) {
     $routes->get('/', [Periodo::class, 'inicio']);
     $routes->get('new/', [Periodo::class, 'nuevo']);

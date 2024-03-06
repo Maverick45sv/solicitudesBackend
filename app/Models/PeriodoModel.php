@@ -45,4 +45,6 @@ class PeriodoModel extends Model {
         return $query->getResult();
    
    }
+
+  
 }
