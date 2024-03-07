@@ -165,17 +165,29 @@ class Oferta extends BaseController
             } else{
                 $id_asignatura = $asig->id;
             }
-            $data = array(
-                'id_asignatura' => $id_asignatura,
-                'id_periodo' => $periodo->id,
-                'inscritos' => $data['INSCRITOS'],
-                'aula' => $data['AULA'],
-                'seccion' => $data['SECCION'],
-                'horario' => $data['HORARIO'],
-            ); 
-            $ofertaModel->insert($data);
+            $where="id_asignatura = '" . $id_asignatura . "' and seccion = " . $data['SECCION'];
+            $valid=$ofertaModel->where($where)->first();
+            if(!$valid){
+                $data = array(
+                    'id_asignatura' => $id_asignatura,
+                    'id_periodo' => $periodo->id,
+                    'inscritos' => $data['INSCRITOS'],
+                    'aula' => $data['AULA'],
+                    'seccion' => $data['SECCION'],
+                    'horario' => $data['HORARIO'],
+                ); 
+                $ofertaModel->insert($data);
+            }else{
+                $data = array(                   
+                    'inscritos' => $this->request->getPost('inscritos'),
+                    'aula' => $this->request->getPost('aula'),                   
+                    'horario' => $this->request->getPost('dia') . " / " . $this->request->getPost('hora'),
+                );                
+                $ofertaModel->update($valid->id, $data);
+            }
+           
         }
 	  	
-       // return redirect()->to('academico/oferta/');   
+        return redirect()->to('academico/oferta/');   
     }
 }
