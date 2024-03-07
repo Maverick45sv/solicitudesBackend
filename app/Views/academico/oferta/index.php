@@ -7,7 +7,7 @@
     <div class="row" >
         <div class="col text-right">
             <a href="oferta/new" class="btn btn-success "><i class="bi bi-cloud-plus"></i> Nuevo Registro</a>
-            <a href="oferta/subir" class="btn btn-primary "><i class="bi bi-cloud-upload-fill"></i> Subir Archivo</a>
+            <button  class="btn btn-primary " onclick="subirArchivo()"><i class="bi bi-cloud-upload-fill"></i> Subir Archivo</button>
         </div>
     </div>
     <br><br>
@@ -48,7 +48,39 @@
             ?>
         </tbody>
     </table>
+     <!-- Modal -->
+     <div class="modal fade" id="AccionesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Archivo de Inscripciones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>            
+            </div>
+            </div>
+        </div>
+    </div>
     <script>
+
+        function subirArchivo() {
+            $.ajax({
+                url: "<?= base_url('academico/oferta/upload');?>",          
+                type: "get",
+                dataType: "html",
+                //data: 
+                success: function(data) { 
+                    $("#modal-body").html(data);
+                    let myModal = new bootstrap.Modal(document.getElementById('AccionesModal'),{})
+                    myModal.show();
+                }
+            });
+        }    
+
         function Eliminar(id){
             Swal.fire({
                 title: "Esta seguro de Eliminar este registro?",

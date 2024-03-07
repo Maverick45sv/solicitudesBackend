@@ -133,6 +133,8 @@ $routes->group('/academico/oferta', static function ($routes) {
     $routes->get('edit/(:num)', [Oferta::class, 'editar']);
     $routes->post('update/', [Oferta::class, 'actualizar']);
     $routes->get('delete/(:num)', [Oferta::class, 'eliminar']);
+    $routes->get('upload/', [Oferta::class, 'subir']);
+    $routes->post('process/', [Oferta::class, 'procesar']);
 });
 
 $routes->group('/academico/horario', static function ($routes) {

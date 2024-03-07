@@ -3,10 +3,11 @@
 namespace App\Controllers\academico;
 
 use App\Controllers\BaseController;
-use \App\Models\OfertaModel;
-use \App\Models\PeriodoModel;
-use \App\Models\HorarioModel;
-use \App\Models\AsignaturaModel;
+use App\Models\OfertaModel;
+use App\Models\PeriodoModel;
+use App\Models\HorarioModel;
+use App\Models\AsignaturaModel;
+use App\Libraries\Csvimport;
 
 class Oferta extends BaseController
 {
@@ -113,5 +114,68 @@ class Oferta extends BaseController
         $ofertaModel = model(OfertaModel::class);  
         $ofertaModel->delete($id);
         return $this->response->setJson(['msg'=>'ok']);     
+    }
+
+    public function subir()
+    {        
+        $session = session();
+        if (!$session->get('usuario')){
+            return redirect()->route('/');
+        }       
+        $periodoModel = model(PeriodoModel::class);
+        $datos = array(    
+            "periodo" => $periodoModel->findAll() 
+        );  
+        return view('academico/oferta/subir', $datos);
+    }
+
+    public function procesar()
+    {        
+        $session = session();
+        if (!$session->get('usuario')){
+            return redirect()->route('/');
+        }     
+        //llamo libreria propia para leer archivo  
+        $this->mycsv = new Csvimport();
+        $ofertaModel = model(OfertaModel::class); 
+        $periodoModel = model(PeriodoModel::class);
+        $asignaturaModel = model(AsignaturaModel::class);
+        $periodo=$periodoModel->find($this->request->getPost('periodo'));
+        helper('date');
+        //ocupo la libreria de archivos
+        $file = new \CodeIgniter\Files\File($this->request->getFile('archivo'));
+        //saco la extension del archivo
+        $ext = $file->guessExtension();
+        $nombre=date('d-m-Y(H-m-i)',now());
+        //muevo el archivo a su locacion final
+        $file = $file->move(WRITEPATH . "uploads/oferta/", $nombre.".".$ext);
+        //ocupo libreria para transformar todo en array
+        $csv_data = $this->mycsv->parse_file(WRITEPATH . "uploads/oferta/".$nombre.".".$ext);
+      /* var_dump($csv_data);
+        foreach($csv_data as $data){
+            echo $data['ASIGNATURA'];
+        }*/
+        foreach($csv_data as $data){
+            $where="nombre = '".\utf8_decode($data['ASIGNATURA'])."'";
+            $asig=$asignaturaModel->where($where)->first();
+            if(!$asig){
+                $dat=array('nombre'=>$data['ASIGNATURA']);
+                $asignaturaModel->insert($dat);
+                $id_asignatura = $asignaturaModel->getInsertID();
+            } else{
+                $id_asignatura = $asig->id;
+            }
+            $data = array(
+                'id_asignatura' => $id_asignatura,
+                'id_periodo' => $periodo->id,
+                'inscritos' => $data['INSCRITOS'],
+                'aula' => $data['AULA'],
+                'seccion' => $data['SECCION'],
+                'horario' => $data['HORARIO'],
+            ); 
+            $ofertaModel->insert($data);
+        }
+	  	
+       // return redirect()->to('academico/oferta/');   
     }
 }
