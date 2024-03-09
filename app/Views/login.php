@@ -7,14 +7,8 @@
     <title>Sistema de solicitudes</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <!-- Your custom styles -->
-    <link rel="stylesheet" type="text/css" href="<?= base_url('public/sweetalert/sweet.css'); ?>">
-
-    <!-- Facebook SDK -->
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
-    <!-- Google SDK -->
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <link rel="stylesheet" type="text/css" href="<?= base_url('public/bootstrap/css/bootstrap.min.css');?>" >
+     
 </head>
 
 <body class="bg-light">
@@ -27,7 +21,7 @@
                         <div class="row g-0">
 
                             <div class="col-md-6 col-lg-5 d-none d-md-block">
-                                <img src="<?= base_url('public/image/image2.png') ?>" alt="login form"
+                                <img src="<?= base_url('img/image2.png') ?>" alt="login form"
                                     class="img-fluid" style="border-radius: 1rem 0 0 1rem;" width="408"
                                     height="613" />
                             </div>

@@ -179,9 +179,9 @@ class Oferta extends BaseController
                 $ofertaModel->insert($data);
             }else{
                 $data = array(                   
-                    'inscritos' => $this->request->getPost('inscritos'),
-                    'aula' => $this->request->getPost('aula'),                   
-                    'horario' => $this->request->getPost('dia') . " / " . $this->request->getPost('hora'),
+                    'inscritos' => $data['INSCRITOS'],
+                    'aula' => $data['AULA'],              
+                    'horario' => $data['HORARIO'],
                 );                
                 $ofertaModel->update($valid->id, $data);
             }

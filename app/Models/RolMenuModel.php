@@ -67,7 +67,7 @@ class RolMenuModel extends Model {
                $sql="SELECT menu.*
                FROM rol_menu JOIN rol on rol_menu.id_rol=rol.id 
                JOIN menu on rol_menu.id_menu=menu.id
-               WHERE rol.id = " . $rol . " AND menu.padre=" . $padre;
+               WHERE rol.id = " . $rol . " AND menu.padre=" . $padre ." ORDER BY menu.nombre";
                $query = $this->db->query($sql);
                return $query->getResult();   
           }
