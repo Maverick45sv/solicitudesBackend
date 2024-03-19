@@ -142,16 +142,18 @@ class Oferta extends BaseController
         $asignaturaModel = model(AsignaturaModel::class);
         $periodo=$periodoModel->find($this->request->getPost('periodo'));
         helper('date');
-        //ocupo la libreria de archivos
+        //ocupo la libreria de archivos 
         $file = new \CodeIgniter\Files\File($this->request->getFile('archivo'));
         //saco la extension del archivo
         $ext = $file->guessExtension();
+        $size = $file->getSize();
         $nombre=date('d-m-Y(H-m-i)',now());
         //muevo el archivo a su locacion final
         $file = $file->move(WRITEPATH . "uploads/oferta/", $nombre.".".$ext);
         //ocupo libreria para transformar todo en array
         $csv_data = $this->mycsv->parse_file(WRITEPATH . "uploads/oferta/".$nombre.".".$ext);
-      /* var_dump($csv_data);
+        /*helper('filesystem');
+        var_dump(get_filenames(WRITEPATH  . 'uploads/'));
         foreach($csv_data as $data){
             echo $data['ASIGNATURA'];
         }*/
