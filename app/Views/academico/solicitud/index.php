@@ -101,7 +101,6 @@
                     success: function(response) 
                     {
                         actualizarTabla(response.filtro);
-                        console.log('Respuesta del servidor:', response);
                     },
                     error: function(xhr, status, error) 
                     {
@@ -117,12 +116,10 @@
             url: "<?= base_url('academico/solicitud/data');?>",
             type: 'GET',
             success: function(response) {
-                // Actualizar la tabla con todos los datos
                 actualizarTabla(response.todos);
                 $('#proceso').val('');
                 $('#periodo').val('');
                 $('#accion').val('');
-                console.log('Respuesta del servidor:', response);
             },
             error: function(xhr, status, error) 
             {

@@ -65,30 +65,6 @@ class SolicitudModel extends Model {
 
     $query = $this->db->query($sql);
     return $query->getRow();   
-}
-
-   function buscarPeriodo(){
-    $sql="SELECT id, anio
-    FROM periodo";
-
-    $query = $this->db->query($sql);
-    return $query->getResult();   
-    }
-
-    function buscarAccion(){
-    $sql="SELECT id, nombre
-    FROM accion";
-
-    $query = $this->db->query($sql);
-    return $query->getResult();   
-    }
-
-    function buscarProceso(){
-    $sql="SELECT id, nombre 
-    FROM proceso";
-
-    $query = $this->db->query($sql);
-    return $query->getResult();   
     }
 
     function obtenerDatosFiltrados($proceso, $periodo, $accion)

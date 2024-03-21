@@ -5,8 +5,8 @@ namespace App\Controllers\academico;
 use App\Controllers\BaseController;
 use App\Models\SolicitudModel;
 use App\Models\PeriodoModel;
-use App\Models\HorarioModel;
-use App\Models\AsignaturaModel;
+use App\Models\ProcesoModel;
+use App\Models\AccionModel;
 use App\Libraries\Csvimport;
 
 class Solicitud extends BaseController
@@ -18,11 +18,15 @@ class Solicitud extends BaseController
             return redirect()->route('/');
         }       
         $SolicitudModel = model(SolicitudModel::class);
+        $AccionModel = model(AccionModel::class);
+        $PeriodoModel = model(PeriodoModel::class);
+        $ProcesoModel = model(ProcesoModel::class);
+
         $datos = array(
             "todos" => $SolicitudModel->buscarTodos(),
-            "todosPeriodo" => $SolicitudModel->buscarPeriodo(),
-            "todosProceso" => $SolicitudModel->buscarProceso(),
-            "todosAccion" => $SolicitudModel->buscarAccion(),
+            "todosPeriodo" => $PeriodoModel->findAll(),
+            "todosProceso" => $ProcesoModel->findAll(),
+            "todosAccion" => $AccionModel->findAll(),
             "menu" => menu($session->get('idusuario')),
         );
         return view('academico/solicitud/index', $datos);
@@ -35,10 +39,12 @@ class Solicitud extends BaseController
             return redirect()->route('/');
         }    
         $SolicitudModel = model(SolicitudModel::class); 
+        $AccionModel = model(AccionModel::class);
+        
         $datos = array(    
             "solicitud" => $SolicitudModel->DatosEdit($id),
             "menu" => menu($session->get('idusuario')),
-            "estado" => $SolicitudModel->buscarAccion(),
+            "estado" => $AccionModel->findAll(),
         );  
         return view('academico/solicitud/editar', $datos);    
     }
@@ -50,6 +56,7 @@ class Solicitud extends BaseController
             return redirect()->route('/');
         }    
         $SolicitudModel = model(SolicitudModel::class);
+
         $data = array(
             'idProceso' => $this->request->getPost('idproceso'),
             'idEstado' => $this->request->getPost('estado'),
