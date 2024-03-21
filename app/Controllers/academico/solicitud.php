@@ -37,7 +37,7 @@ class Solicitud extends BaseController
         $session=session();
         if (!$session->get('usuario')){
             return redirect()->route('/');
-        }    
+        }     
         $SolicitudModel = model(SolicitudModel::class); 
         $AccionModel = model(AccionModel::class);
         
@@ -46,7 +46,7 @@ class Solicitud extends BaseController
             "menu" => menu($session->get('idusuario')),
             "estado" => $AccionModel->findAll(),
         );  
-        return view('academico/solicitud/editar', $datos);    
+        return view('academico/solicitud/editar', $datos);     
     }
 
     public function actualizar()
@@ -54,19 +54,19 @@ class Solicitud extends BaseController
         $session=session();
         if (!$session->get('usuario')){
             return redirect()->route('/');
-        }    
-        $SolicitudModel = model(SolicitudModel::class);
+        } 
 
-        $data = array(
-            'idProceso' => $this->request->getPost('idproceso'),
-            'idEstado' => $this->request->getPost('estado'),
-            'idPersona' => $this->request->getPost('idpersona'),
-            'iseriodo' => $this->request->getPost('idperiodo'),
-        ); 
-
+        $solicitudModel = model(SolicitudModel::class);
         $id = $this->request->getPost('id');
-        $SolicitudModel->update($id, $data);
-        return redirect()->to('academico/solicitud/');          
+        $data = array(
+            'id_proceso' => $this->request->getPost('idproceso'),
+            'id_accion' => $this->request->getPost('idestados'),
+            'id_persona' => $this->request->getPost('idpersona'),
+            'id_periodo' => $this->request->getPost('idperiodo')
+            );
+ 
+        $result = $solicitudModel->update($id, $data);
+        return redirect()->to('academico/solicitud/');
     }
 
     public function eliminar($id)

@@ -6,6 +6,7 @@
     <h2>Registro de Solicitudes</h2></br>
     <div class="row" ></br>
         <div class="form-group" style = "display:flex" style="justify-content:center" style="width:100%">
+        <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
             <div class="col text-right" style = "width:25%">
                 <label for="periodo"  style = "margin:10px">Periodo:</label><br>
                 <select id="periodo" name="periodo" class="form-select" style = "width:80%"> 
@@ -50,6 +51,7 @@
                 <td>Proceso</td>
                 <td>Persona</td>
                 <td>Periodo</td>
+                <td>Fecha y Hora</td>
                 <td>Estado</td>
                 <td>Acciones</td>
             </tr>
@@ -64,6 +66,7 @@
                         <td><?= $data->nombreProceso ?></td>
                         <td><?= $data->nombrePersona ?></td>
                         <td><?= $data->periodoAnio ?></td>
+                        <td><?= date('d-m-Y (h:i a)', strtotime($data-> fecha))?></td>
                         <td><?= $data->nombreAccion ?></td>
                         <td>
                             <a href="solicitud/edit/<?= $data->id ?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
@@ -129,6 +132,21 @@
     });
         }) 
 
+    function formatearFecha(fecha) {
+    var fechaObj = new Date(fecha);
+    var dia = fechaObj.getDate();
+    var mes = fechaObj.getMonth() + 1;
+    var año = fechaObj.getFullYear();
+    var horas = fechaObj.getHours();
+    var minutos = fechaObj.getMinutes();
+    var am_pm = horas >= 12 ? 'PM' : 'AM';
+    horas = horas % 12;
+    horas = horas ? horas : 12; // El reloj en el formato 12 horas
+    minutos = minutos < 10 ? '0' + minutos : minutos;
+    var horaFormateada = horas + ':' + minutos + ' ' + am_pm;
+    return dia + '-' + mes + '-' + año + ' (' + horaFormateada + ')';
+}
+
     // Función para actualizar la tabla con los datos filtrados y todos los datos
         function actualizarTabla(datos) {
         // Limpiar la tabla
@@ -142,6 +160,7 @@
             filaHtml += '<td>' + fila.nombreProceso + '</td>';
             filaHtml += '<td>' + fila.nombrePersona + '</td>';
             filaHtml += '<td>' + fila.periodoAnio + '</td>';
+            filaHtml += '<td>' + formatearFecha(fila.fecha) + '</td>';
             filaHtml += '<td>' + fila.nombreAccion + '</td>';
             filaHtml += '<td>';
             filaHtml += '<a href="solicitud/edit/' + fila.id + ' " class="btn btn-primary" style = "margin:2px"><i class="bi bi-pencil-square"></i></a>';

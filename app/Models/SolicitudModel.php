@@ -41,7 +41,7 @@ class SolicitudModel extends Model {
     function buscarTodos(){
         $sql="SELECT s.id as id, p.id as idProceso, a.id as idAccion, per.id as idPeriodo,  
        pe.id as idPersona, p.nombre as nombreProceso, a.nombre as nombreAccion, 
-        pe.nombre as nombrePersona, per.anio as periodoAnio 
+        pe.nombre as nombrePersona, per.anio as periodoAnio, s.creado as fecha
         FROM solicitud s
         JOIN proceso p on s.id_proceso = p.id 
         JOIN accion a on s.id_accion = a.id
@@ -55,7 +55,7 @@ class SolicitudModel extends Model {
    function DatosEdit($id){
     $sql="SELECT s.id as id, p.id as idProceso, a.id as idAccion, per.id as idPeriodo, pe.id as idPersona,
     p.nombre as nombreProceso, a.nombre as nombreAccion, 
-    pe.nombre as nombrePersona, per.anio as periodoAnio 
+    pe.nombre as nombrePersona, per.anio as periodoAnio, s.creado as fecha
     FROM solicitud s
     JOIN proceso p on s.id_proceso = p.id 
     JOIN accion a on s.id_accion = a.id
@@ -77,7 +77,7 @@ class SolicitudModel extends Model {
 
         $builder -> select('solicitud.id as id, proceso.id as idProceso, accion.id as idAccion, 
         periodo.id as idPeriodo, proceso.nombre as nombreProceso, accion.nombre as nombreAccion, 
-        persona.nombre as nombrePersona, periodo.anio as periodoAnio');
+        persona.nombre as nombrePersona, periodo.anio as periodoAnio, solicitud.creado as fecha');
 
         // Aplicar filtros
         if(!empty($proceso))
