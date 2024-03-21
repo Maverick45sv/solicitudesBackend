@@ -12,7 +12,7 @@
                 <select id="periodo" name="periodo" class="form-select" style = "width:80%"> 
                     <option value="">---</option> 
                     <?php foreach ($todosPeriodo as $data): ?>
-                        <option value="<?= $data ->id ?>"> <?= $data ->anio?></option>
+                        <option value="<?= $data ->id ?>"> <?= $data ->codigo?> - <?= $data ->anio?></option>
                     <?php endforeach ?> 
                 </select>
             </div>
@@ -50,7 +50,7 @@
                 <td>Id</td>
                 <td>Proceso</td>
                 <td>Persona</td>
-                <td>Periodo</td>
+                <td>Ciclo</td>
                 <td>Fecha y Hora</td>
                 <td>Estado</td>
                 <td>Acciones</td>
@@ -65,12 +65,11 @@
                         <td><?= $data->id ?></td>
                         <td><?= $data->nombreProceso ?></td>
                         <td><?= $data->nombrePersona ?></td>
-                        <td><?= $data->periodoAnio ?></td>
+                        <td><?= $data->periodoCodigo ?> - <?= $data->periodoAnio ?></td>
                         <td><?= date('d-m-Y (h:i a)', strtotime($data-> fecha))?></td>
                         <td><?= $data->nombreAccion ?></td>
                         <td>
-                            <a href="solicitud/edit/<?= $data->id ?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
-                            <button onclick="Eliminar(<?= $data->id ?>)" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                            <a href="solicitud/edit/<?= $data->id ?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>                           
                         </td>
                     </tr>           
             <?php 
@@ -164,7 +163,6 @@
             filaHtml += '<td>' + fila.nombreAccion + '</td>';
             filaHtml += '<td>';
             filaHtml += '<a href="solicitud/edit/' + fila.id + ' " class="btn btn-primary" style = "margin:2px"><i class="bi bi-pencil-square"></i></a>';
-            filaHtml += '<button onclick="Eliminar(' + fila.id + ')" class="btn btn-danger" style = "margin:2px"> <i class="bi bi-trash"></i></button>';
             filaHtml += '</td>';
             // Agregar más celdas si es necesario
             filaHtml += '</tr>';
@@ -173,30 +171,6 @@
             $('#tablaDatos tbody').append(filaHtml);
         });
     }
-        //-- ----------------------------------------------- -->
-        function Eliminar(id){
-            Swal.fire({
-                title: "Esta seguro de Eliminar este registro?",
-                text: "La eliminacion es permanente!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Confirmar",
-                cancelButtonText: "Cancelar"
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: "<?= base_url('academico/oferta/delete');?>/"+id,          
-                        type: "get",
-                        dataType: "json",
-                        //data: 
-                        success: function(data) { 
-                            location.reload();
-                        }
-                    });
-                }
-            });
-        }
+       
     </script>
 <?= $this->endSection() ?>

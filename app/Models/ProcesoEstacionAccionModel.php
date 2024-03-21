@@ -52,4 +52,16 @@ class ProcesoEstacionAccionModel extends Model {
         $query = $this->db->query($sql);
         return $query->getResult();   
    }
+
+   function BuscarAccionXorigen($id){
+        $sql="SELECT pea.id as id, accion.nombre as nombre
+        FROM proceso_estacion_accion pea
+        JOIN proceso_estacion pest on pea.id_proceso_estacion_origen=pest.id 
+        JOIN estacion est on pest.id_estacion=est.id
+        JOIN accion on pea.id_accion=accion.id
+        WHERE pea.id_proceso_estacion_origen=$id
+        ";       
+        $query = $this->db->query($sql);
+        return $query->getResult();   
+    }
 }

@@ -3,42 +3,73 @@
     <?= $menu ?>
 <?= $this->endSection() ?>
 <?= $this->section('content') ?> 
-    <h2>Editar Registro Oferta Academica</h2>
-    <a href="<?= base_url('academico/solicitud');?>" class="btn btn-success" ><i class="bi bi-arrow-return-left"></i> Regresar</a><br><br>
-    <form action="<?= base_url('academico/solicitud/update');?>" method="post">
-    <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
-    <input type="hidden" id="id" name="id" value="<?= $solicitud->id ?>">
-        <div class="form-group">    
-            <label for="proceso">Proceso:</label> 
-            <input type="hidden" id="idproceso" name="idproceso" value="<?= $solicitud->idProceso ?>">
-            <input type="text" class="form-control" name="proceso" placeholder="nombreProceso" value="<?= $solicitud->nombreProceso?>" readonly>
-        </div> 
-        <div class="form-group">
-            <label for="persona">Persona:</label>
-            <input type="hidden" id="idpersona"name="idpersona" value="<?= $solicitud->idPersona ?>">
-            <input type="text" class="form-control" name="persona" placeholder="nombrePersona" value="<?= $solicitud->nombrePersona ?>" readonly>
-        </div> 
-        <div class="form-group"> 
-            <label for="periodo">Periodo:</label>
-            <input type="hidden" id="idperiodo" name="idperiodo" value="<?= $solicitud->idPeriodo ?>">
-            <input type="text" class="form-control" name="periodo" placeholder="periodoAnio" value="<?= $solicitud->periodoAnio ?>" readonly>
-        </div> 
-        <div class="form-group"> 
-            <label for="Nfecha">Fecha:</label>
-            <input type="text" class="form-control" id="Nfecha" name="Nfecha" placeholder="nfecha" value="<?= date('d-m-Y (h:i a)', strtotime($solicitud->fecha)) ?>" readonly>
-        </div> 
-        <div class="form-group">
-            <label for="idestados">Estado:</label>
-            <select id= "idestados" name="idestados" class="form-control">
-                <?php foreach ($estado as $data): ?>
-                    <option value="<?= $data->id ?>" <?php echo ($data->id == $solicitud->idAccion) ? 'selected' : ''; ?>>
-                    <?= $data->nombre?>
-                    </option>
-                <?php endforeach ?>
-            </select>
-        </div> 
-        <br><br>
-        <input class="btn btn-success" id="Modificar" type="submit" value="Modificar">
-    </form>
+<div class="row">
+    <div class="col-md-6">
+        <a href="<?= base_url('academico/solicitud');?>" class="btn btn-success" ><i class="bi bi-arrow-return-left"></i> Regresar</a><br><br>
+            <div class="card  mb-3">
+                <div class="card-header text-white bg-info">
+                    Datos de la Solicitud
+                </div>
+                <div class="card-body">
+                    <p>Proceso: <?= $solicitud->nombreProceso?><br>
+                    Persona: <?= $solicitud->nombrePersona ?><br>
+                    Periodo: <?= $solicitud->periodoAnio ?><br>
+                    Fecha Creado: <?= date('d-m-Y (h:i a)', strtotime($solicitud->fecha)) ?><br>
+                    Estado Actual:  <b><?= $bitacoraA->accion ?></b><br>
+                    Estacion Actual:  <b><?= $bitacoraA->estacion ?></b><br>
+                    </p>
+                </div>
+            </div>   
+    </div>
+    <div class="col-md-6"> 
+        <h4>Agregar Bitacora</h4>   
+        <form action="<?= base_url('academico/solicitud/update');?>" method="post">
+        <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+        <input type="hidden" id="id" name="id" value="<?= $solicitud->id ?>">
+            <div class="form-group">
+                <label for="idestados">Nuevo Estado:</label>
+                <select id= "idestados" name="idestados" class="form-control">
+                    <?php foreach ($estado as $data): ?>
+                        <option value="<?= $data->id ?>" ><?= $data->nombre?></option>
+                    <?php endforeach ?>
+                </select>
+            </div>  
+            <div class="form-group">
+                <label for="idestados">Comentario:</label>
+                <textarea name="comentario" class="form-control" cols="20" rows="5"></textarea>
+               
+            </div>       
+            <br><br>
+            <input class="btn btn-success" id="Agregarr" type="submit" value="Agregar">
+        </form>
+    </div>   
+</div> 
+<hr>
+<div class="row">
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Creado</th>
+                <th>Accion</th>
+                <th>Usuario</th>
+                <th>Comentario</th>
+                <th>Activa</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($bitacora as $data): ?>
+            <tr <?php if ($data->activa){ echo 'class="bg-info"'; }; ?> >
+                <td><?= $data->id ?></td>
+                <td><?= date('d-m-Y (h:i a)', strtotime($data->creado)) ?></td>
+                <td><?= $data->accion ?></td>
+                <td><?= $data->usuario ?></td>
+                <td><?= $data->comentario ?></td>
+                <td><?= $data->activa ?></td>
+            </tr>
+            <?php endforeach ?>
+        </tbody>               
+    </table>
+</div>
 <?= $this->endSection() ?>
 

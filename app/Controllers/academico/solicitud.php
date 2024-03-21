@@ -6,8 +6,9 @@ use App\Controllers\BaseController;
 use App\Models\SolicitudModel;
 use App\Models\PeriodoModel;
 use App\Models\ProcesoModel;
+use App\Models\ProcesoEstacionAccionModel;
 use App\Models\AccionModel;
-use App\Libraries\Csvimport;
+use App\Models\BitacoraModel;
 
 class Solicitud extends BaseController
 {
@@ -39,12 +40,17 @@ class Solicitud extends BaseController
             return redirect()->route('/');
         }     
         $SolicitudModel = model(SolicitudModel::class); 
-        $AccionModel = model(AccionModel::class);
+        $bitacoraModel = model(BitacoraModel::class); 
+        $procesoaccionModel = model(ProcesoEstacionAccionModel::class);
+        $bitacoraA = $bitacoraModel->buscarBitacoraActivaSolicitud($id);
+        $acciones = $procesoaccionModel->BuscarAccionXorigen($bitacoraA->origen);
         
         $datos = array(    
             "solicitud" => $SolicitudModel->DatosEdit($id),
             "menu" => menu($session->get('idusuario')),
-            "estado" => $AccionModel->findAll(),
+            "estado" => $acciones,
+            "bitacora" => $bitacoraModel->buscarBitacoraSolicitud($id),
+            "bitacoraA"=>$bitacoraA,
         );  
         return view('academico/solicitud/editar', $datos);     
     }
@@ -57,16 +63,30 @@ class Solicitud extends BaseController
         } 
 
         $solicitudModel = model(SolicitudModel::class);
-        $id = $this->request->getPost('id');
-        $data = array(
-            'id_proceso' => $this->request->getPost('idproceso'),
-            'id_accion' => $this->request->getPost('idestados'),
-            'id_persona' => $this->request->getPost('idpersona'),
-            'id_periodo' => $this->request->getPost('idperiodo')
-            );
- 
+        $bitacoraModel = model(BitacoraModel::class); 
+        $procesoaccionModel = model(ProcesoEstacionAccionModel::class);
+        $id = $this->request->getPost('id');        
+        $pea = $procesoaccionModel->find($this->request->getPost('idestados'));
+        //actualizo solicitud
+        $data = array(           
+            'id_accion' => $pea->id_accion,           
+            ); 
         $result = $solicitudModel->update($id, $data);
-        return redirect()->to('academico/solicitud/');
+        //actualizo bitacora anterior
+        $bit =  $bitacoraModel->buscarBitacoraActivaSolicitud($id);   
+        $data= array('activa'=>0);
+        $result =  $bitacoraModel->update($bit->id, $data);
+        //creo nueva bitacora
+        $data=array(
+            'id_proceso_estacion_accion' => $this->request->getPost('idestados'),
+            'activa' => 1,
+            'comentario' => $this->request->getPost('comentario'),
+            'id_solicitud' => $id,
+            'id_usuario' => $session->get('idusuario')
+        );
+        $bitacoraModel->insert($data);
+
+        return redirect()->to('academico/solicitud/edit/' . $id);
     }
 
     public function eliminar($id)
