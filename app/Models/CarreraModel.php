@@ -46,7 +46,7 @@ class CarreraModel extends Model {
    }
 
    function buscarFacultad(){
-    $sql1="SELECT facultad.id as idp, facultad.nombre as facultadp 
+    $sql1="SELECT facultad.id as idp, facultad.nombre as facultadp
            FROM facultad
            ORDER BY facultad.id;";
     $query = $this->db->query($sql1);

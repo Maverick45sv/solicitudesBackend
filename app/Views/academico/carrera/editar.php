@@ -7,7 +7,7 @@
     <a href="<?= base_url('academico/carrera');?>" class="btn btn-success" ><i class="bi bi-arrow-return-left"></i> Regresar</a><br><br>
     <form action="<?= base_url('academico/carrera/update');?>" method="post">
     <input type="hidden" name="id" value="<?= $carrera->id ?>">
-        <?= csrf_field() ?>
+        <?= csrf_field() ?> 
         <div class="form-group">
             <label for="nombre">Nombre</label>
             <input type="text" class="form-control" name="nombre" placeholder="Nombre" value="<?= $carrera->nombre ?>">
@@ -20,11 +20,9 @@
             <label for="facultad">Facultad:</label>
             <select name="opcionFacultad" class="form-control">
                 <?php foreach ($datosf as $data): ?>
-                    <?php if ($data ->idp == $carrera ->id): ?>
-                        <option value="<?= $data ->id?>" selected><?= $data->facultadp ?></option>
-                    <?php else: ?>
-                        <option value="<?= $data->idp ?>"><?= $data->facultadp ?></option>
-                    <?php endif ?>
+                    <option value="<?= $data->idp ?>" <?php echo ($data->idp == $carrera ->id_facultad) ? 'selected' : ''; ?>>
+                    <?= $data->facultadp ?>
+                    </option>
                 <?php endforeach ?>
             </select>
         </div>

@@ -14,6 +14,7 @@ use App\Controllers\administracion\menu;
 use App\Controllers\academico\asignatura;
 use App\Controllers\academico\horario;
 use App\Controllers\academico\oferta;
+use App\Controllers\academico\solicitud;
 use App\Controllers\academico\periodo;
 use App\Controllers\academico\carrera;
 use App\Controllers\academico\facultad;
@@ -135,6 +136,15 @@ $routes->group('/academico/oferta', static function ($routes) {
     $routes->get('delete/(:num)', [Oferta::class, 'eliminar']);
     $routes->get('upload/', [Oferta::class, 'subir']);
     $routes->post('process/', [Oferta::class, 'procesar']);
+});
+
+$routes->group('/academico/solicitud', static function ($routes) {
+    $routes->get('/', [Solicitud::class, 'inicio']);
+    $routes->get('edit/(:num)', [Solicitud::class, 'editar']);
+    $routes->post('update/', [Solicitud::class, 'actualizar']);
+    $routes->get('delete/(:num)', [Solicitud::class, 'eliminar']);
+    $routes->get('filter/', [Solicitud::class, 'filtrarDatos']);
+    $routes->get('data/', [Solicitud::class, 'TodoslosDatos']);
 });
 
 $routes->group('/academico/horario', static function ($routes) {

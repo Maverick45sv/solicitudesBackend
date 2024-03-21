@@ -66,7 +66,7 @@ class Carrera extends BaseController
             "menu" => menu($session->get('idusuario')),
             'nombre' => $this->request->getPost('nombre'),
             'codigo' => $this->request->getPost('codigo'),
-            "datosf" => $carreraModel-> buscarFacultad(), 
+            "datosf" => $carreraModel-> buscarFacultad(),
         );
         return view('academico/carrera/editar', $datos);    
     }

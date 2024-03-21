@@ -59,7 +59,7 @@ class Periodo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $periodoModel = model(PeriodoModel::class);        
+        $periodoModel = model(PeriodoModel::class);       
         $datos = array(
             "periodo" => $periodoModel->find($id),
             "menu" => menu($session->get('idusuario')),

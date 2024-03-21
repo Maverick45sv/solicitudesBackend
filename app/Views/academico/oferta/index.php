@@ -3,10 +3,10 @@
     <?= $menu ?>
 <?= $this->endSection() ?>
 <?= $this->section('content') ?>
-    <h2>Registro Oferta Academica</h2>
+    <h2>Registro solicitud Academica</h2>
     <div class="row" >
         <div class="col text-right">
-            <a href="oferta/new" class="btn btn-success "><i class="bi bi-cloud-plus"></i> Nuevo Registro</a>
+            <a href="solicitud/new" class="btn btn-success "><i class="bi bi-cloud-plus"></i> Nuevo Registro</a>
             <button  class="btn btn-primary " onclick="subirArchivo()"><i class="bi bi-cloud-upload-fill"></i> Subir Archivo</button>
         </div>
     </div>
@@ -38,14 +38,14 @@
                         <td><?= $data->seccion ?></td>
                         <td><?= $data->horario ?></td>
                         <td>
-                            <a href="oferta/edit/<?= $data->id ?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                            <a href="solicitud/edit/<?= $data->id ?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
                             <button onclick="Eliminar(<?= $data->id ?>)" class="btn btn-danger"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>           
             <?php 
                     endforeach;
                 endif;
-            ?>
+            ?> 
         </tbody>
     </table>
      <!-- Modal -->
@@ -65,7 +65,7 @@
             </div>
         </div>
     </div>
-    <script>
+    <script> 
 
         function subirArchivo() {
             $.ajax({
@@ -94,7 +94,7 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "<?= base_url('academico/oferta/delete');?>/"+id,          
+                        url: "<?= base_url('academico/solicitud/delete');?>/"+id,          
                         type: "get",
                         dataType: "json",
                         //data: 
