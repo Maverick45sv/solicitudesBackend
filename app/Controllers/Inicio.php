@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use \App\Models\UsuarioModel;
 use \App\Models\UsuarioRolModel;
+use \App\Models\SolicitudModel;
+use \App\Models\PeriodoModel;
 
 class Inicio extends BaseController
 {
@@ -12,7 +14,7 @@ class Inicio extends BaseController
         return view('login');
     }
 
-    public function inicio()
+    public function validar()
     {
         $usuarioModel = model(UsuarioModel::class);
         $usuariorolModel = model(UsuarioRolModel::class);
@@ -29,12 +31,28 @@ class Inicio extends BaseController
                 'email'     => $validar->correo
             ];
             $session->set($newdata);
-            $datos=array(
-                "menu" => menu($session->get('idusuario')),
-                "usuario" => $validar
-            );
-            return view('inicio', $datos);
+            return redirect()->to('/home');
         }       
         return redirect()->back();       
+    }
+
+    public function inicio(){
+        $usuarioModel = model(UsuarioModel::class);
+        $solicitudM = model(SolicitudModel::class);
+        $periodoM = model(PeriodoModel::class);
+
+        $session = session();
+        if (!$session->get('usuario')){
+            return redirect()->route('/');
+        }       
+        $vigente=$periodoM->buscarPeriodoVigente();
+        $datos=array(
+            "menu" => menu($session->get('idusuario')),  
+            "usuario" =>  $usuarioModel->find($session->get('idusuario')), 
+            "vigente" => $vigente,  
+            "tabla1" => $solicitudM->TableroSolicitud($vigente->id),
+            "tabla2" => $solicitudM->TableroSolicitudEstado($vigente->id),   
+        );
+        return view('inicio', $datos);
     }
 }

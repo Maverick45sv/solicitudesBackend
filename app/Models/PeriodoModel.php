@@ -46,5 +46,15 @@ class PeriodoModel extends Model {
    
    }
 
+   function buscarPeriodoVigente(){
+     helper('date');
+
+     $hoy=date('Y-m-d', now());
+     $sql="SELECT periodo.*
+     FROM periodo 
+     WHERE inicio <= '$hoy' and fin >= '$hoy'";    
+     $query = $this->db->query($sql);
+     return $query->getRow();
+   }
   
 }

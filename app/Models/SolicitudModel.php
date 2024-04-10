@@ -94,5 +94,33 @@ class SolicitudModel extends Model {
         }
             $query = $builder->get();
             return $query->getResult();   
-        }
+    }
+
+    function TableroSolicitud($periodo){
+        $sql="SELECT count(s.id) as cuenta, p.nombre as nombreProceso
+         FROM solicitud s
+         JOIN proceso p on s.id_proceso = p.id 
+         JOIN accion a on s.id_accion = a.id
+         JOIN periodo per on s.id_periodo = per.id
+         WHERE per.id = $periodo and a.nombre != 'FINALIZADA'
+         GROUP BY p.nombre
+         ";
+ 
+         $query = $this->db->query($sql);
+         return $query->getResult();   
+    }
+
+    function TableroSolicitudEstado($periodo){
+        $sql="SELECT count(s.id) as cuenta, a.nombre as accion
+         FROM solicitud s
+         JOIN proceso p on s.id_proceso = p.id 
+         JOIN accion a on s.id_accion = a.id
+         JOIN periodo per on s.id_periodo = per.id
+         WHERE per.id = $periodo and a.nombre != 'FINALIZADA'
+         GROUP BY a.nombre
+         ";
+ 
+         $query = $this->db->query($sql);
+         return $query->getResult();   
+    }
 }

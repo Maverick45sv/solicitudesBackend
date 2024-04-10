@@ -35,7 +35,8 @@ use App\Controllers\telemetria\procesoCalendario;
  * @var RouteCollection $routes
  */
 $routes->get('/', [Inicio::class, 'index']);
-$routes->post('/ingresar', [Inicio::class, 'inicio']);
+$routes->post('/ingresar', [Inicio::class, 'validar']);
+$routes->get('/home', [Inicio::class, 'inicio']);
 
 /***** MODULO DE ADMINISTRACION *****/
 $routes->group('/admin/sexo', static function ($routes) {

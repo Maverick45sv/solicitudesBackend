@@ -27,7 +27,7 @@ function menu($usuario){
     //var_dump($primerN);
     $html = '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="'.base_url().'">Inicio</a>
+                <a class="navbar-brand" href="'.base_url().'/home">Inicio</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
