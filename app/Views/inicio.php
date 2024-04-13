@@ -5,19 +5,13 @@
 <?= $this->section('content') ?>
       <h2>Bienvenido <?= $usuario->nombre ?></h2>  
       <h2>Periodo Vigente: <?= $vigente->codigo . " - " . $vigente->anio ?></h2> 
-    <script src="<?= base_url('public/chartist.js/dist/chartist.min.js') ?>"></script>
-    <link href="<?= base_url('public/chartist.js/dist/chartist.css') ?>" type="text/css" rel="stylesheet">
- 
+    
     <div class="row">
-      <div class="col-md-6">
-        <h3>Solicitudes por Proceso</h3>
-        <hr>
-        <div class="chart-P"></div>
+      <div class="col-md-6"> 
+        <canvas id="chart-P" style="width:100%;max-width:600px"></canvas>        
       </div>
-      <div class="col-md-6">
-      <h3>Solicitudes por Estado</h3>
-        <hr>
-      <div class="chart-E"></div>
+      <div class="col-md-6">     
+        <canvas id="chart-E" style="width:100%;max-width:600px"></canvas>     
       </div>
     </div>
   
@@ -25,39 +19,77 @@
     <?php 
     $label='';
     $serie='';
+    $color='';
     foreach($tabla1 as $data){
         $label=$label . '"' . $data->nombreProceso.'",';
         $serie=$serie . $data->cuenta.',';
+        $color=$color . '"' . $data->color.'",';
     }  
     $label2='';
     $serie2='';
     foreach($tabla2 as $data){
         $label2=$label2 . '"' . $data->accion.'",';
-        $serie2=$serie2 . $data->cuenta.',';
+        $serie2=$serie2 . $data->cuenta.',';        
     }  
     ?>
+
+   
+    <script src="<?= base_url('public/js/chart.js') ?>"></script>
     <script>
+       
 
-          let data = {
-            
-              labels: [<?= $label ?>],
-              series: [<?= $serie ?>]
-          };
-         
-          let options = {
-              width: 300,
-              height: 300
-          };
-          new Chartist.Pie('.chart-P', data, options);
-    
+        new Chart("chart-P", {
+          type: 'doughnut',
+          data: {
+            labels:[<?= $label ?>],           
+            datasets: [{
+              data: [<?= $serie ?>],
+              backgroundColor:[<?= $color ?>]
+          }],            
+        },
+        options: {
+            legend: {
+              display: true,
+              position: 'bottom',
+              labels: {
+                  fontColor: 'blue'
+              }
+            },
+            title: {
+                display: true,
+                fontSize: 22,
+                text: 'Solicitudes por Proceso'
+            }
+          }     
+      });
 
-          let data2 = {
-            
-            labels: [<?= $label2 ?>],
-            series: [<?= $serie2 ?>]
-        };        
-        
-        new Chartist.Pie('.chart-E', data2, options);
+              
+         new Chart("chart-E", {
+          type: 'doughnut',
+          data: {
+           labels:[<?= $label2 ?>],           
+          datasets: [{
+              data: [<?= $serie2 ?>],
+              backgroundColor:["#964CE0","#4CE07D","#47433D","#516157","#595161",
+              "#7A6E5B","#E0A54C","#805FA1","#5FA175"]
+          }],            
+        },
+        options: {
+            legend: {
+                display: true,
+                position: 'bottom',
+                labels: {
+                    fontColor: 'blue'
+                }
+            },
+            title: {
+                display: true,
+                fontSize: 22,
+                text: 'Solicitudes por Estado'
+            }
+          }     
+      });
+
   </script>
 
 <?= $this->endSection() ?>

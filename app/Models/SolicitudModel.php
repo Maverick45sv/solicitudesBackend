@@ -97,7 +97,7 @@ class SolicitudModel extends Model {
     }
 
     function TableroSolicitud($periodo){
-        $sql="SELECT count(s.id) as cuenta, p.nombre as nombreProceso
+        $sql="SELECT count(s.id) as cuenta, p.nombre as nombreProceso, p.color as color
          FROM solicitud s
          JOIN proceso p on s.id_proceso = p.id 
          JOIN accion a on s.id_accion = a.id
@@ -123,4 +123,15 @@ class SolicitudModel extends Model {
          $query = $this->db->query($sql);
          return $query->getResult();   
     }
+
+    function buscarPersonaBySolicitud($id){
+        $sql="SELECT pe.id as idPersona, pe.nombre as nombre, pe.apellido as apellido, 
+        correo.correo as correo
+        FROM solicitud s       
+        JOIN persona pe on s.id_persona = pe.id
+        JOIN correo  on correo.id_persona=pe.id ";
+
+        $query = $this->db->query($sql);
+        return $query->getResult();   
+   }
 }

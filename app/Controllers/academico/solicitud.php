@@ -85,7 +85,27 @@ class Solicitud extends BaseController
             'id_usuario' => $session->get('idusuario')
         );
         $bitacoraModel->insert($data);
-
+        if($pea->notificacion){
+            $AccionModel = model(AccionModel::class);
+            $accion = $AccionModel->find($pea->id_accion);
+            $correo = $solicitudModel->buscarPersonaBySolicitud($id);
+            if($correo){
+                foreach($correo as $data){
+                    $correos[]=$data->correo;
+                    $nombre=$data->apellido . " " . $data->nombre;
+                }                
+                //espacion para notificacion
+                $titulo = "Estado solicitud en Sistema de Solicitudes UPES";
+                $mensaje = "Buen dia <br><br> Se ha actualizado el estado de su solicitud.
+                <br><br>
+                <ul>
+                    Solicitante: <b>".$nombre."</b> <br>
+                    Nuevo Estado: <b>".$accion->nombre."</b> <br><br>            
+                </ul>
+                Este es un mensaje Automatico, por favor no trate de contestarlo.";
+                $mail = enviar_mail($correos, $titulo, $mensaje);
+            }
+        }
         return redirect()->to('academico/solicitud/edit/' . $id);
     }
 
