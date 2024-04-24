@@ -3,8 +3,8 @@
     <?= $menu ?>
 <?= $this->endSection() ?>
 <?= $this->section('content') ?>
-      <h2>Bienvenido <?= $usuario->nombre ?></h2>  
-      <h2>Periodo Vigente: <?= $vigente->codigo . " - " . $vigente->anio ?></h2> 
+  </br><h2 style="display: flex; justify-content: center">Bienvenido <?= $usuario->nombre ?></h2></br> 
+      <h2 style="display: flex; justify-content: center">Periodo Vigente: <?= $vigente->codigo . " - " . $vigente->anio ?></h2> 
     
     <div class="row">
       <div class="col-md-6"> 

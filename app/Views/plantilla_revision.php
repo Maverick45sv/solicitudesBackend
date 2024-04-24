@@ -16,7 +16,7 @@
     <div class="container-fluid">
         <div class="row">
             <!-- menu -->
-            <?= $this->renderSection('menu') ?>
+            <?= $this->renderSection('menu') ?> 
         </div>
         <div class="row">
             <div class="col-md-1">

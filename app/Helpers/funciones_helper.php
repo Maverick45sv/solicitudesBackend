@@ -47,6 +47,19 @@ function menu($usuario){
         }
         $html .= "</li>";
     }
+    // Agregar el botón de cierre de sesión y alineado a la derec
+    $html .= '</ul>
+                <div class="ms-auto">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                        <a class="nav-link" href="'.base_url().'Login" >Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>'; 
+
     $html.="</ul></div></div></nav>";    
     return $html;    
 }

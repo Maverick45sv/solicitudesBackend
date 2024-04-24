@@ -9,6 +9,8 @@ use App\Models\ProcesoModel;
 use App\Models\ProcesoEstacionAccionModel;
 use App\Models\AccionModel;
 use App\Models\BitacoraModel;
+use App\Models\solicitudProcesoAtributoModel;
+use App\Models\solicitudDocumentoArchivoModel;
 
 class Solicitud extends BaseController
 {
@@ -38,7 +40,7 @@ class Solicitud extends BaseController
         $session=session();
         if (!$session->get('usuario')){
             return redirect()->route('/');
-        }     
+        }       
         $SolicitudModel = model(SolicitudModel::class); 
         $bitacoraModel = model(BitacoraModel::class); 
         $procesoaccionModel = model(ProcesoEstacionAccionModel::class);
@@ -152,5 +154,41 @@ class Solicitud extends BaseController
 
         // Devolver los datos en formato JSON
         return $this->response->setJSON(['todos' => $datos]);
+    }
+
+    public function solicitudDocumentoArchivo($id)
+    {        
+        $session = session();
+        if (!$session->get('usuario')){
+            return redirect()->route('/');
+        }
+
+        $solicitudModel = model(SolicitudModel::class);
+        $solicitudDocumentoArchivoModel = model(SolicitudDocumentoArchivoModel::class);
+
+        $datos = array( 
+            "todos" => $solicitudDocumentoArchivoModel->buscarTodos($id),
+            "menu" => menu($session->get('idusuario'))
+        );
+
+        return view('academico/solicitud/soliDocumento', $datos);  
+    }
+
+    public function solicitudProcesoAtributo($id)
+    {        
+        $session = session();
+        if (!$session->get('usuario')){
+            return redirect()->route('/');
+        }
+
+        $solicitudModel = model(SolicitudModel::class);
+        $solicitudProcesoAtributoModel = model(SolicitudProcesoAtributoModel::class);
+
+        $datos = array(
+            "todos" => $solicitudProcesoAtributoModel->buscarTodos($id),
+            "menu" => menu($session->get('idusuario'))
+        );
+
+        return view('academico/solicitud/soliProcesoAtributo', $datos);  
     }
 }

@@ -55,4 +55,13 @@ class Inicio extends BaseController
         );
         return view('inicio', $datos);
     }
+
+    public function outLogin() 
+    {
+        $session = session();
+        $session->destroy();
+        
+        return view('login');
+    }
+ 
 }

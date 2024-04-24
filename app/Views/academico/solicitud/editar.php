@@ -28,7 +28,7 @@
         <input type="hidden" id="id" name="id" value="<?= $solicitud->id ?>">
             <div class="form-group">
                 <label for="idestados">Nuevo Estado:</label>
-                <select id= "idestados" name="idestados" class="form-control">
+                <select id= "idestados" name="idestados" class="form-select">
                     <?php foreach ($estado as $data): ?>
                         <option value="<?= $data->id ?>" ><?= $data->nombre?></option>
                     <?php endforeach ?>

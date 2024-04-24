@@ -9,7 +9,7 @@ class SolicitudProcesoAtributoModel extends Model {
     protected $table = 'solicitud_proceso_atributo';
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType     = 'object';
+    protected $returnType     = 'object'; 
     protected $useSoftDeletes = false; 
     protected $allowedFields = ['id_solicitud','id_proceso_atributo','valor']; 
     protected bool $allowEmptyInserts = false;
@@ -38,5 +38,16 @@ class SolicitudProcesoAtributoModel extends Model {
     protected $beforeDelete   = [];
     protected $afterDelete    = []; */
   
-   
+    function buscarTodos($idSoli)
+    {
+         $sql ="SELECT spa.valor as valor, a.nombre as nombre, a.tipo as tipo
+                from solicitud_proceso_atributo as spa
+                join solicitud as s ON spa.id_solicitud = s.id
+                join proceso_atributo as pa ON spa.id_proceso_atributo = pa.id
+                join atributo as a ON pa.id_atributo = a.id
+                where s.id= $idSoli";
+
+         $query = $this->db->query($sql);
+         return $query->getResult();    
+    }
 }

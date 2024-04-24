@@ -46,7 +46,8 @@ class SolicitudModel extends Model {
         JOIN proceso p on s.id_proceso = p.id 
         JOIN accion a on s.id_accion = a.id
         JOIN persona pe on s.id_persona = pe.id
-        JOIN periodo per on s.id_periodo = per.id";
+        JOIN periodo per on s.id_periodo = per.id
+        WHERE a.id != 9";
 
         $query = $this->db->query($sql);
         return $query->getResult();   
@@ -88,10 +89,21 @@ class SolicitudModel extends Model {
         {
             $builder->where('periodo.id', $periodo);
         }
-        if(!empty($accion))
-        {
+        if (!empty($accion)) {
             $builder->where('accion.id', $accion);
+            if ($accion == 9) 
+            {
+                
+            } 
+            else {
+                $builder->where('accion.id !=', 9); 
+            }
+        } 
+        else 
+        {
+            $builder->where('accion.id !=', 9); 
         }
+
             $query = $builder->get();
             return $query->getResult();   
     }

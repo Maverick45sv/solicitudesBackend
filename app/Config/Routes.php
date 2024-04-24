@@ -37,6 +37,7 @@ use App\Controllers\telemetria\procesoCalendario;
 $routes->get('/', [Inicio::class, 'index']);
 $routes->post('/ingresar', [Inicio::class, 'validar']);
 $routes->get('/home', [Inicio::class, 'inicio']);
+$routes->get('/Login', [Inicio::class, 'outLogin']);
 
 /***** MODULO DE ADMINISTRACION *****/
 $routes->group('/admin/sexo', static function ($routes) {
@@ -146,6 +147,9 @@ $routes->group('/academico/solicitud', static function ($routes) {
     $routes->get('delete/(:num)', [Solicitud::class, 'eliminar']);
     $routes->get('filter/', [Solicitud::class, 'filtrarDatos']);
     $routes->get('data/', [Solicitud::class, 'TodoslosDatos']);
+    $routes->get('document/(:num)', [Solicitud::class, 'solicitudDocumentoArchivo']);
+    $routes->get('attribute/(:num)', [Solicitud::class, 'solicitudProcesoAtributo']);
+
 });
 
 $routes->group('/academico/horario', static function ($routes) {

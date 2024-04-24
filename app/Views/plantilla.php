@@ -16,9 +16,6 @@
     <?= $this->renderSection('menu') ?>
     <!-- <img src="<?= base_url('public/img/02.jpg');?>" alt="">-->
     <div class="card">
-  <div class="card-header">
-    Featured
-  </div>
   <div class="card-body">
     <?= $this->renderSection('content') ?>
   </div>

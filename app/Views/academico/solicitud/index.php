@@ -5,7 +5,7 @@
 <?= $this->section('content') ?>
     <h2>Registro de Solicitudes</h2></br>
     <div class="row" ></br>
-        <div class="form-group" style = "display:flex" style="justify-content:center" style="width:100%">
+        <div class="form-group" style = "display:flex" style="justify-content:center" style="width:100%; top=5%;">
         <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
             <div class="col text-right" style = "width:25%">
                 <label for="periodo"  style = "margin:10px">Periodo:</label><br>
@@ -36,9 +36,9 @@
                     <?php endforeach ?> 
                 </select>
             </div>
-            <div class="col text-right" style="width:25%" >
-            <button  class="btn btn-success  " id="btnMostrarTodos" style = "margin-top:43px" style = "margin-right:10px"> Mostrar Todos</button>
-        </div>
+            <div class="col text-right" style="width: 25%; position: relative;">
+                <button class="btn btn-primary" id="btnMostrarTodos" style="position: absolute; bottom: 0; left: 22%; transform: translateX(-50%);">Mostrar Todos</button>
+            </div>
         </div>
 
 
@@ -69,7 +69,9 @@
                         <td><?= date('d-m-Y (h:i a)', strtotime($data-> fecha))?></td>
                         <td><?= $data->nombreAccion ?></td>
                         <td>
-                            <a href="solicitud/edit/<?= $data->id ?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>                           
+                            <a href="solicitud/edit/<?= $data->id ?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>  
+                            <a href="solicitud/document/<?= $data->id ?>" class="btn btn-info" title="Documentos"><i class="bi bi-file-earmark-plus"></i></a>
+                            <a href="solicitud/attribute/<?= $data->id ?>" class="btn btn-warning" title="Atributos"><i class="bi bi-terminal-plus"></i></a>                         
                         </td>
                     </tr>           
             <?php 
@@ -163,6 +165,8 @@
             filaHtml += '<td>' + fila.nombreAccion + '</td>';
             filaHtml += '<td>';
             filaHtml += '<a href="solicitud/edit/' + fila.id + ' " class="btn btn-primary" style = "margin:2px"><i class="bi bi-pencil-square"></i></a>';
+            filaHtml += '<a href="solicitud/document/' + fila.id + ' " class="btn btn-info" style = "margin:2px"><i class="bi bi-file-earmark-plus"></i></a>';
+            filaHtml += '<a href="solicitud/attribute/' + fila.id + ' " class="btn btn-warning" style = "margin:2px"><i class="bi bi-terminal-plus"></i></a>';
             filaHtml += '</td>';
             // Agregar más celdas si es necesario
             filaHtml += '</tr>';

@@ -52,7 +52,7 @@ class ProcesoEstacionAccionModel extends Model {
         $query = $this->db->query($sql);
         return $query->getResult();   
    }
-
+ 
    function BuscarAccionXorigen($id){
         $sql="SELECT pea.id as id, accion.nombre as nombre
         FROM proceso_estacion_accion pea
