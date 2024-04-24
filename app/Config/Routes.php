@@ -206,9 +206,8 @@ $routes->group('/academico/atributo', static function ($routes) {
     $routes->get('delete/(:num)', [Atributo::class, 'eliminar']);
 });
 
-$routes->group('/academico/archivo', static function ($routes) {
-    $routes->get('/', [Archivo::class, 'inicio']);
-    $routes->get('new/', [Archivo::class, 'nuevo']);
+$routes->group('/academico/archivo', static function ($routes) {   
+    $routes->get('new/(:num)', [Archivo::class, 'nuevo']);
     $routes->post('save/', [Archivo::class, 'guardar']);
     $routes->get('edit/(:num)', [Archivo::class, 'editar']);
     $routes->post('update/', [Archivo::class, 'actualizar']);

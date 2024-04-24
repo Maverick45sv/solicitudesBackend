@@ -48,7 +48,11 @@
                                             <input type="password" class="form-control" id="pass" name="pass" required>
                                         </div>
 
-                                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                                        <?php if ($mensaje): ?>
+                                            <div class="alert alert-danger" style="margin: 5px;">
+                                                <p><?= $mensaje ?></p>                       
+                                            </div>
+                                        <?php endif; ?>  
 
                                         <div class="pt-1 mb-4">
                                             <button class="btn btn-dark btn-lg btn-block" type="submit">Ingresar</button>

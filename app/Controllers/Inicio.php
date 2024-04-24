@@ -11,7 +11,7 @@ class Inicio extends BaseController
 {
     public function index(): string
     {
-        return view('login');
+        return view('login', ["mensaje"=>'']);
     }
 
     public function validar()
@@ -21,19 +21,32 @@ class Inicio extends BaseController
         $session = session();
         //$session->destroy();       
         $datos=array("usuario" => 0);  
-        $where="nombre = '".$this->request->getPost('user')."' AND clave= '".$this->request->getPost('pass')."'";
+        $estudi=0;
+        $ciphertext = \md5($this->request->getPost('pass'));     
+        $where="nombre = '".$this->request->getPost('user')."' AND clave= '" . $ciphertext . "'";
         $validar=$usuarioModel->where($where)->first(); 
         if($validar and $validar->activo){
-            
-            $newdata = [
-                'usuario'  => $validar->nombre,
-                'idusuario'  => $validar->id,
-                'email'     => $validar->correo
-            ];
-            $session->set($newdata);
-            return redirect()->to('/home');
+            $roles = $usuariorolModel->buscarRoles($validar->id);
+            foreach($roles as $data){
+                if($data->nombre != "ROLE_ESTUDIANTE"){
+                    $estudi=1;
+                }
+            }
+            if($estudi){
+                $newdata = [
+                    'usuario'  => $validar->nombre,
+                    'idusuario'  => $validar->id,
+                    'email'     => $validar->correo
+                ];
+                $session->set($newdata);
+                return redirect()->to('/home');
+            }else{
+                $mensaje="Usuario sin Permisos!!!";
+                return view('login', ["mensaje"=>$mensaje]); 
+            }    
         }       
-        return redirect()->back();       
+        $mensaje="Usuario/Contrasena Invalida!!!";
+        return view('login', ["mensaje"=>$mensaje]);      
     }
 
     public function inicio(){

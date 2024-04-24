@@ -11,7 +11,7 @@ class ArchivoModel extends Model {
     protected $useAutoIncrement = true;
     protected $returnType     = 'object';
     protected $useSoftDeletes = false; 
-    protected $allowedFields = ['nombre', 'peso', 'creado', 'url']; 
+    protected $allowedFields = ['creado', 'data']; 
     protected bool $allowEmptyInserts = false;
 
     // Dates

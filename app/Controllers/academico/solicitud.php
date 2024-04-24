@@ -168,6 +168,7 @@ class Solicitud extends BaseController
 
         $datos = array( 
             "todos" => $solicitudDocumentoArchivoModel->buscarTodos($id),
+            "solicitud" => $solicitudModel->find($id),
             "menu" => menu($session->get('idusuario'))
         );
 

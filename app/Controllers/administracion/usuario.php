@@ -61,7 +61,7 @@ class Usuario extends BaseController
             'nombre' => $this->request->getPost('nombre'),            
             'id_persona' => $this->request->getPost('persona'),
             'correo' => $correo->correo,
-            'clave' => $clave,
+            'clave' => \md5($clave),
         ); 
         if ($usuarioModel->save($data) === false) {
             $persona =  $personaModel->find($this->request->getPost('persona'));

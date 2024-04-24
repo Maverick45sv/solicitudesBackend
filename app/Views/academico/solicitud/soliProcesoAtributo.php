@@ -11,7 +11,7 @@
         <a href="<?= base_url('academico/solicitud');?>" class="btn btn-success" ><i class="bi bi-arrow-return-left"></i> Regresar</a><br><br>
         <div class="card mb-3">
             <div class="card-header text-white bg-info" style="text-align: center;">
-                <b>ATRIBUTOS DEL ESTUDIANTE</b>
+                <b>ATRIBUTOS DE LA SOLICITUD</b>
         </div>
         <div class="card-body">
             <table class="table table-bordered" id="tablaDatos">
@@ -23,16 +23,8 @@
                 </thead>
                 <tbody>
                     <?php foreach ($todos as $dato): ?>
-                        <tr>
-                            <td><strong>Nombre:</strong></td>
-                            <td><?= $dato->nombre ?></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tipo:</strong></td>
-                            <td><?= $dato->tipo ?></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Valor:</strong></td>
+                        <tr>                           
+                            <td><?= $dato->nombre ?></td>                      
                             <td><?= $dato->valor ?></td>
                         </tr>
                     <?php endforeach; ?>

@@ -40,8 +40,9 @@ class ProcesoTipoDocumentoModel extends Model {
   
     function buscarTodosXProceso($id){
         $sql="SELECT proceso_tipo_documento.*, tipo_documento.nombre as documento 
-        FROM proceso_tipo_documento JOIN tipo_documento on proceso_tipo_documento.id_tipo_documento=tipo_documento.id 
-        JOIN proceso on proceso_tipo_documento.id_proceso=proceso.id 
+        FROM proceso_tipo_documento 
+        JOIN tipo_documento on proceso_tipo_documento.id_tipo_documento=tipo_documento.id 
+        JOIN proceso on proceso_tipo_documento.id_proceso=proceso.id        
         WHERE proceso.id=$id";
         $query = $this->db->query($sql);
         return $query->getResult();

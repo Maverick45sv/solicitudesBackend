@@ -40,7 +40,7 @@ class SolicitudDocumentoArchivoModel extends Model {
   
     function buscarTodos($idSoli)
     {
-         $sql = "SELECT a.nombre as nombre, a.peso as peso, a.creado as creado, a.url as urlC, td.nombre as nombreTipo
+         $sql = "SELECT a.id, td.nombre as nombre,  a.creado as creado, a.data as imagen
                 FROM solicitud_documento_archivo as sda
                 JOIN solicitud as s ON sda.id_solicitud = s.id
                 JOIN proceso_tipo_documento as ptd ON sda.id_proceso_tipo_documento = ptd.id
