@@ -67,6 +67,7 @@ class Solicitud extends BaseController
         $solicitudModel = model(SolicitudModel::class);
         $bitacoraModel = model(BitacoraModel::class); 
         $procesoaccionModel = model(ProcesoEstacionAccionModel::class);
+        $AccionModel = model(AccionModel::class);
         $id = $this->request->getPost('id');        
         $pea = $procesoaccionModel->find($this->request->getPost('idestados'));
         //actualizo solicitud
@@ -79,10 +80,16 @@ class Solicitud extends BaseController
         $data= array('activa'=>0);
         $result =  $bitacoraModel->update($bit->id, $data);
         //creo nueva bitacora
+        if($this->request->getPost('comentario')){
+            $comentario =$this->request->getPost('comentario');
+        }else{
+            $accion=$AccionModel->find($pea->id_accion);
+            $comentario = "Solicitud actualizada al estado: " . $accion->nombre;
+        }
         $data=array(
             'id_proceso_estacion_accion' => $this->request->getPost('idestados'),
             'activa' => 1,
-            'comentario' => $this->request->getPost('comentario'),
+            'comentario' => $comentario,
             'id_solicitud' => $id,
             'id_usuario' => $session->get('idusuario')
         );
@@ -90,19 +97,27 @@ class Solicitud extends BaseController
         if($pea->notificacion){
             $AccionModel = model(AccionModel::class);
             $accion = $AccionModel->find($pea->id_accion);
-            $correo = $solicitudModel->buscarPersonaBySolicitud($id);
+            $correo = $solicitudModel->buscarRegistroAcademico($id);            
             if($correo){
                 foreach($correo as $data){
                     $correos[]=$data->correo;
                     $nombre=$data->apellido . " " . $data->nombre;
-                }                
+                }       
+                $correoE = $solicitudModel->buscarPersonaBySolicitud($id); 
+                if($correoE) {
+                    foreach($correoE as $data){
+                        $correos[]=$data->correo;
+                        $nombre=$data->apellido . " " . $data->nombre;
+                    }  
+                }       
                 //espacion para notificacion
                 $titulo = "Estado solicitud en Sistema de Solicitudes UPES";
                 $mensaje = "Buen dia <br><br> Se ha actualizado el estado de su solicitud.
                 <br><br>
                 <ul>
                     Solicitante: <b>".$nombre."</b> <br>
-                    Nuevo Estado: <b>".$accion->nombre."</b> <br><br>            
+                    Nuevo Estado: <b>".$accion->nombre."</b> <br>
+                    Comentario: <b>".$comentario."</b> <br><br>            
                 </ul>
                 Este es un mensaje Automatico, por favor no trate de contestarlo.";
                 $mail = enviar_mail($correos, $titulo, $mensaje);

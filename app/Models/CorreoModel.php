@@ -44,7 +44,8 @@ class CorreoModel extends Model {
         JOIN tipo on correo.id_tipo=tipo.id
         WHERE persona.id = " . $id_persona;
         $query = $this->db->query($sql);
-        return $query->getResult();
-   
+        return $query->getResult();   
    }
+
+  
 }

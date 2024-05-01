@@ -146,4 +146,16 @@ class SolicitudModel extends Model {
         $query = $this->db->query($sql);
         return $query->getResult();   
    }
+
+   function buscarRegistroAcademico(){
+        $sql="SELECT  pe.id as idPersona, pe.nombre as nombre, pe.apellido as apellido, 
+        correo.correo as correo
+        FROM correo JOIN persona pe on correo.id_persona=pe.id 
+        JOIN usuario on usuario.id_persona=pe.id
+        JOIN usuario_rol on usuario_rol.id_usuario=usuario.id
+        JOIN rol on usuario_rol.id_rol=rol.id
+        WHERE rol.nombre = 'ROLE_REGISTRO_ACADEMICO' ";
+        $query = $this->db->query($sql);
+        return $query->getResult();   
+    }
 }

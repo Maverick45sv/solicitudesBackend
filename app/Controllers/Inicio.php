@@ -73,8 +73,7 @@ class Inicio extends BaseController
     {
         $session = session();
         $session->destroy();
-        
-        return view('login');
+        return redirect()->route('/');       
     }
  
 }

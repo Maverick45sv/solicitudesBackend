@@ -73,7 +73,7 @@ class Archivo extends BaseController
         if (! $img->hasMoved()) {
             $filepath = WRITEPATH . 'uploads/'. $img->store();          
         }
-        echo $filepath;
+       // echo $filepath;
         $imgContent = file_get_contents($filepath);      
      
         $data = array(           

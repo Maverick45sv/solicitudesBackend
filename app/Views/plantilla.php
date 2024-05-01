@@ -15,11 +15,13 @@
     <!-- menu -->
     <?= $this->renderSection('menu') ?>
     <!-- <img src="<?= base_url('public/img/02.jpg');?>" alt="">-->
-    <div class="card">
-  <div class="card-body">
-    <?= $this->renderSection('content') ?>
-  </div>
-</div>
+    <div class="content">
+      <div class="card">
+        <div class="card-body">
+          <?= $this->renderSection('content') ?>
+        </div>
+      </div>
+    </div>
     
 
 

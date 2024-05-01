@@ -14,7 +14,7 @@
         </div>
         <div class="form-group">
             <label for="tipo">Tipo</label>
-            <input type="text" class="form-control" name="tipo" placeholder="Nombre" value="<?= $atributo->nombre ?>">
+            <input type="text" class="form-control" name="tipo" placeholder="Nombre" value="<?= $atributo->tipo ?>">
         </div>
         <br><br>
         <input class="btn btn-success" type="submit" value="Modificar">
