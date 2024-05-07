@@ -25,7 +25,13 @@
                     <?php foreach ($todos as $dato): ?>
                         <tr>                           
                             <td><?= $dato->nombre ?></td>                      
-                            <td><?= $dato->valor ?></td>
+                            <td>
+                                <?php if ($cupo and $asig and $dato->nombre == "Grupo_Destino"): ?>
+                                    <?= $asig->asignatura . " - Seccion: " . $asig->seccion . " - Horario: " . $asig->horario . " - Aula: " . $asig->aula ?>
+                                <?php else: ?>    
+                                    <?= $dato->valor ?>
+                                <?php endif ?>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

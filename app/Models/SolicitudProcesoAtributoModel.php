@@ -50,4 +50,16 @@ class SolicitudProcesoAtributoModel extends Model {
          $query = $this->db->query($sql);
          return $query->getResult();    
     }
+
+    function buscarXatributo($idSoli, $atributo)
+    {
+         $sql ="SELECT spa.valor as valor, a.nombre as nombre, a.tipo as tipo
+                from solicitud_proceso_atributo as spa
+                join solicitud as s ON spa.id_solicitud = s.id
+                join proceso_atributo as pa ON spa.id_proceso_atributo = pa.id
+                join atributo as a ON pa.id_atributo = a.id
+                where s.id= $idSoli AND a.nombre='$atributo' ";
+         $query = $this->db->query($sql);
+         return $query->getRow();    
+    }
 }

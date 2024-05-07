@@ -47,4 +47,15 @@ class OfertaModel extends Model {
         return $query->getResult();
    
    }
+
+   function buscarXid($id){
+    $sql="SELECT oferta.*, asignatura.nombre as asignatura, periodo.codigo as ciclo, periodo.anio as anio 
+    FROM oferta 
+    JOIN asignatura on oferta.id_asignatura=asignatura.id 
+    JOIN periodo on oferta.id_periodo=periodo.id
+    WHERE oferta.id=$id ";
+    $query = $this->db->query($sql);
+    return $query->getRow();
+
+}
 }

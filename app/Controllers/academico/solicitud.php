@@ -9,6 +9,7 @@ use App\Models\ProcesoModel;
 use App\Models\ProcesoEstacionAccionModel;
 use App\Models\AccionModel;
 use App\Models\BitacoraModel;
+use App\Models\OfertaModel;
 use App\Models\solicitudProcesoAtributoModel;
 use App\Models\solicitudDocumentoArchivoModel;
 
@@ -196,12 +197,21 @@ class Solicitud extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }
-
+        $asig=array();
         $solicitudModel = model(SolicitudModel::class);
+        $ProcesoModel = model(ProcesoModel::class);
+        $OfertaModel = model(OfertaModel::class);
+        $solicitud = $solicitudModel->find($id);
+        $proceso = $ProcesoModel->find($solicitud->id_proceso);       
         $solicitudProcesoAtributoModel = model(SolicitudProcesoAtributoModel::class);
-
+        if($proceso->verificar_cupo){              
+            $grupo =  $solicitudProcesoAtributoModel->buscarXatributo($solicitud->id, "Grupo_Destino");
+            $asig = $OfertaModel->buscarXid($grupo->valor);
+        }
         $datos = array(
             "todos" => $solicitudProcesoAtributoModel->buscarTodos($id),
+            "cupo"=>$proceso->verificar_cupo,
+            "asig"=>$asig,
             "menu" => menu($session->get('idusuario'))
         );
 
