@@ -73,3 +73,4 @@ function generarContrasenia($length){
     }
     return $key;
 }
+

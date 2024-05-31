@@ -2,6 +2,7 @@
 
 use CodeIgniter\Router\RouteCollection;
 use App\Controllers\Inicio;
+use App\Controllers\AcercaDe;
 use App\Controllers\administracion\sexo;
 use App\Controllers\administracion\genero;
 use App\Controllers\administracion\tipo;
@@ -38,6 +39,7 @@ $routes->get('/', [Inicio::class, 'index']);
 $routes->post('/ingresar', [Inicio::class, 'validar']);
 $routes->get('/home', [Inicio::class, 'inicio']);
 $routes->get('/Login', [Inicio::class, 'outLogin']);
+$routes->get('/acerca', [AcercaDe::class,'index']);
 
 /***** MODULO DE ADMINISTRACION *****/
 $routes->group('/admin/sexo', static function ($routes) {
@@ -277,7 +279,14 @@ $routes->group('/telemetria/proceso', static function ($routes) {
     $routes->get('tipodocumento/new/(:num)', [ProcesoTipoDocumento::class, 'nuevo']);
     $routes->post('tipodocumento/save/', [ProcesoTipoDocumento::class, 'guardar']);
     $routes->get('tipodocumento/delete/(:num)', [ProcesoTipoDocumento::class, 'eliminar']);   
+    
+
+    
 });
+
+
+
+
 
 
 
