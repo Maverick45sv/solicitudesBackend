@@ -1,9 +1,0 @@
-CRITICAL - 2024-02-01 20:54:37 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "inicio.php"
-in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
- 1 SYSTEMPATH\View\View.php(216): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('inicio.php')
- 2 SYSTEMPATH\Common.php(1178): CodeIgniter\View\View->render('inicio', [], true)
- 3 APPPATH\Controllers\Inicio.php(14): view('inicio')
- 4 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\Inicio->inicio()
- 5 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Inicio))
- 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
- 7 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()

@@ -1,12 +1,8 @@
 <?= $this->extend('plantilla') ?>
 <?= $this->section('menu') ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Acerca de Nosotros</title>
-</head>
-<body>
+    <?= $menu ?>
+<?= $this->endSection() ?>
+<?= $this->section('content') ?>
     <header>
         <h1>Acerca de Nosotros</h1>
     </header>
@@ -39,5 +35,4 @@
     <footer>
         <p>&copy; 2024 Pagina Reservada UPES Sitio Web.</p>
     </footer>
-</body>
-</html>
+    <?= $this->endSection() ?>

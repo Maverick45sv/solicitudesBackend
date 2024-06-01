@@ -4,8 +4,11 @@
 <?= $this->endSection() ?>
 <?= $this->section('content') ?>
   </br><h2 style="display: flex; justify-content: center">Bienvenido <?= $usuario->nombre ?></h2></br> 
-      <h2 style="display: flex; justify-content: center">Periodo Vigente: <?= $vigente->codigo . " - " . $vigente->anio ?></h2> 
-    
+      <?php if (is_object($vigente)): ?>
+        <h2 style="display: flex; justify-content: center">Periodo Vigente: <?= $vigente->codigo . " - " . $vigente->anio ?></h2> 
+      <?php else: ?>
+        <h2 style="display: flex; justify-content: center">Periodo Vigente: Fecha NO contemplada en ciclo Vigente</h2> 
+      <?php endif ?>
     <div class="row">
       <div class="col-md-6"> 
         <canvas id="chart-P" style="width:100%;max-width:600px"></canvas>        

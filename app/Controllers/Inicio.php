@@ -22,7 +22,9 @@ class Inicio extends BaseController
         //$session->destroy();       
         $datos=array("usuario" => 0);  
         $estudi=0;
-        $ciphertext = \md5($this->request->getPost('pass'));     
+        $ciphertext = \md5($this->request->getPost('pass')); 
+       /* $ciphertext = password_hash($this->request->getPost('pass'), PASSWORD_BCRYPT);    
+        echo $ciphertext;*/
         $where="nombre = '".$this->request->getPost('user')."' AND clave= '" . $ciphertext . "'";
         $validar=$usuarioModel->where($where)->first(); 
         if($validar and $validar->activo){
@@ -53,18 +55,24 @@ class Inicio extends BaseController
         $usuarioModel = model(UsuarioModel::class);
         $solicitudM = model(SolicitudModel::class);
         $periodoM = model(PeriodoModel::class);
+        $tabla1=array();
+        $tabla2=array();
 
         $session = session();
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }       
         $vigente=$periodoM->buscarPeriodoVigente();
+        if($vigente){
+            $tabla1=$solicitudM->TableroSolicitud($vigente->id);
+            $tabla2=$solicitudM->TableroSolicitudEstado($vigente->id);
+        }
         $datos=array(
             "menu" => menu($session->get('idusuario')),  
             "usuario" =>  $usuarioModel->find($session->get('idusuario')), 
             "vigente" => $vigente,  
-            "tabla1" => $solicitudM->TableroSolicitud($vigente->id),
-            "tabla2" => $solicitudM->TableroSolicitudEstado($vigente->id),   
+            "tabla1" => $tabla1,
+            "tabla2" =>  $tabla2
         );
         return view('inicio', $datos);
     }
