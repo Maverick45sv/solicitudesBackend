@@ -17,7 +17,6 @@
                 <td>Id</td>
                 <td>Ciclo</td>
                 <td>Asignatura</td>
-                <td>Inscritos</td>
                 <td>Aula</td>
                 <td>Seccion</td>
                 <td>Horario</td>
@@ -33,7 +32,6 @@
                         <td><?= $data->id ?></td>
                         <td><?= $data->asignatura ?></td>
                         <td><?= $data->ciclo ?> - <?= $data->anio ?></td>
-                        <td><?= $data->inscritos ?></td>
                         <td><?= $data->aula ?></td>
                         <td><?= $data->seccion ?></td>
                         <td><?= $data->horario ?></td>
@@ -94,7 +92,7 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "<?= base_url('academico/solicitud/delete');?>/"+id,          
+                        url: "<?= base_url('academico/oferta/delete');?>/"+id,          
                         type: "get",
                         dataType: "json",
                         //data: 

@@ -167,21 +167,19 @@ class Oferta extends BaseController
             } else{
                 $id_asignatura = $asig->id;
             }
-            $where="id_asignatura = '" . $id_asignatura . "' and seccion = " . $data['SECCION'];
+            $where="id_asignatura = '" . $id_asignatura . "' and seccion = '" . $data['SECCION'] . "' and id_periodo = " . $periodo->id;
             $valid=$ofertaModel->where($where)->first();
             if(!$valid){
                 $data = array(
                     'id_asignatura' => $id_asignatura,
-                    'id_periodo' => $periodo->id,
-                    'inscritos' => $data['INSCRITOS'],
+                    'id_periodo' => $periodo->id,                    
                     'aula' => $data['AULA'],
                     'seccion' => $data['SECCION'],
                     'horario' => $data['HORARIO'],
                 ); 
                 $ofertaModel->insert($data);
             }else{
-                $data = array(                   
-                    'inscritos' => $data['INSCRITOS'],
+                $data = array(  
                     'aula' => $data['AULA'],              
                     'horario' => $data['HORARIO'],
                 );                
