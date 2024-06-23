@@ -11,6 +11,7 @@ use App\Controllers\administracion\persona;
 use App\Controllers\administracion\correo;
 use App\Controllers\administracion\telefono;
 use App\Controllers\administracion\usuario;
+use App\Controllers\administracion\personaFacultad;
 use App\Controllers\administracion\menu;
 use App\Controllers\academico\asignatura;
 use App\Controllers\academico\horario;
@@ -31,6 +32,7 @@ use App\Controllers\telemetria\procesoAtributo;
 use App\Controllers\telemetria\procesoTipoDocumento;
 use App\Controllers\telemetria\procesoEstacionAccion;
 use App\Controllers\telemetria\procesoCalendario;
+use App\Controllers\telemetria\procesoRol;
 
 /**
  * @var RouteCollection $routes
@@ -115,6 +117,9 @@ $routes->group('/admin/persona', static function ($routes) {
     $routes->post('usuario/update', [Usuario::class, 'actualizar']);
     $routes->get('usuario/delete_rol/(:num)', [Usuario::class, 'eliminarRol']);
     $routes->get('usuario/resetear/(:num)', [Usuario::class, 'resetea']);
+    $routes->get('facultad/(:num)', [PersonaFacultad::class, 'inicio']);
+    $routes->post('facultad/save', [PersonaFacultad::class, 'guardar']);
+    $routes->get('facultad/delete/(:num)', [PersonaFacultad::class, 'eliminar']);
 });
 
 
@@ -278,7 +283,11 @@ $routes->group('/telemetria/proceso', static function ($routes) {
     $routes->get('tipodocumento/(:num)', [ProcesoTipoDocumento::class, 'inicio']);
     $routes->get('tipodocumento/new/(:num)', [ProcesoTipoDocumento::class, 'nuevo']);
     $routes->post('tipodocumento/save/', [ProcesoTipoDocumento::class, 'guardar']);
-    $routes->get('tipodocumento/delete/(:num)', [ProcesoTipoDocumento::class, 'eliminar']);   
+    $routes->get('tipodocumento/delete/(:num)', [ProcesoTipoDocumento::class, 'eliminar']); 
+    $routes->get('rol/(:num)', [ProcesoRol::class, 'inicio']);
+    $routes->get('rol/new/(:num)', [ProcesoRol::class, 'nuevo']);
+    $routes->post('rol/save/', [ProcesoRol::class, 'guardar']);   
+    $routes->get('rol/delete/(:num)', [ProcesoRol::class, 'eliminar']);  
     
 
     

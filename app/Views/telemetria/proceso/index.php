@@ -44,6 +44,7 @@
                             <a href="proceso/estacion/<?= $data->id ?>" class="btn btn-success" title="Estaciones"><i class="bi bi-list-ol"></i></a>
                             <a href="proceso/tipodocumento/<?= $data->id ?>" class="btn btn-info" title="Documentos"><i class="bi bi-file-earmark-plus"></i></a>
                             <a href="proceso/atributo/<?= $data->id ?>" class="btn btn-warning" title="Atributos"><i class="bi bi-terminal-plus"></i></a>
+                            <a href="proceso/rol/<?= $data->id ?>" class="btn btn-default" title="Roles"><i class="bi bi-person-rolodex"></i></a>
                             <a href="proceso/edit/<?= $data->id ?>" class="btn btn-primary" title="Modificar"><i class="bi bi-pencil-square"></i></a>
                             <button onclick="Eliminar(<?= $data->id ?>)" class="btn btn-danger" title="Eliminar"><i class="bi bi-trash"></i></button>
                         </td>

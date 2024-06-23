@@ -4,14 +4,14 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UsuarioRolModel extends Model {
+class ProcesoRolModel extends Model {
    
-    protected $table = 'usuario_rol';
+    protected $table = 'proceso_rol';
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
     protected $returnType     = 'object';
     protected $useSoftDeletes = false; 
-    protected $allowedFields = ['id_usuario', 'id_rol']; 
+    protected $allowedFields = ['id_proceso','id_rol']; 
     protected bool $allowEmptyInserts = false;
 
     // Dates
@@ -22,6 +22,14 @@ class UsuarioRolModel extends Model {
     //protected $deletedField  = 'deleted_at';
 
     /* Validation
+    protected $validationRules      = [
+        'ruta'     => 'required',
+       
+    ];
+    protected $validationMessages   = [
+           
+    ];
+    /*
     protected $validationRules      = [];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
@@ -38,21 +46,15 @@ class UsuarioRolModel extends Model {
     protected $beforeDelete   = [];
     protected $afterDelete    = []; */
   
-    function buscarRoles($id_usuario){
-        $sql="SELECT rol.nombre as nombre, usuario_rol.creado as creado, 
-         usuario_rol.id as id, rol.id as id_rol
-        FROM usuario_rol JOIN rol on usuario_rol.id_rol=rol.id 
-        JOIN usuario on usuario_rol.id_usuario=usuario.id
-        WHERE usuario.id = " . $id_usuario;
+    function buscarTodosXProceso($id){
+        $sql="SELECT proceso_rol.*, rol.nombre as rol 
+        FROM proceso_rol JOIN rol on proceso_rol.id_rol=rol.id 
+        JOIN proceso on proceso_rol.id_proceso=proceso.id 
+        WHERE proceso.id=$id";
         $query = $this->db->query($sql);
-        return $query->getResult();   
+        return $query->getResult();
+   
    }
 
-   function buscarRolesFaltantes($id_usuario){
-        $sql="SELECT * FROM rol WHERE id NOT IN 
-        (SELECT id_rol FROM usuario_rol WHERE id_usuario = $id_usuario)";
-        $query = $this->db->query($sql);
-        return $query->getResult();  
-   }
-   
+
 }

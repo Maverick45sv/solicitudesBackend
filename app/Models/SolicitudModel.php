@@ -38,7 +38,7 @@ class SolicitudModel extends Model {
     protected $beforeDelete   = [];
     protected $afterDelete    = []; */
   
-    function buscarTodos(){
+    function buscarTodos($roles){
         $sql="SELECT s.id as id, p.id as idProceso, a.id as idAccion, per.id as idPeriodo,  
        pe.id as idPersona, p.nombre as nombreProceso, a.nombre as nombreAccion, per.codigo as periodoCodigo,
         pe.nombre as nombrePersona, per.anio as periodoAnio, s.creado as fecha
@@ -47,7 +47,9 @@ class SolicitudModel extends Model {
         JOIN accion a on s.id_accion = a.id
         JOIN persona pe on s.id_persona = pe.id
         JOIN periodo per on s.id_periodo = per.id
-        WHERE a.id != 9";
+        JOIN proceso_rol pr on pr.id_proceso = p.id
+        JOIN rol r on pr.id_rol = r.id 
+        WHERE a.nombre != 'FINALIZADO' AND r.id IN ($roles)";
 
         $query = $this->db->query($sql);
         return $query->getResult();   
@@ -71,10 +73,14 @@ class SolicitudModel extends Model {
     function obtenerDatosFiltrados($proceso, $periodo, $accion)
     {
         $builder = $this-> db -> table('solicitud');
-        $builder -> join('proceso', 'solicitud.id_proceso = proceso.id');
-        $builder -> join('periodo', 'solicitud.id_periodo = periodo.id');
-        $builder -> join('persona', 'solicitud.id_persona = persona.id');
-        $builder -> join('accion', 'solicitud.id_accion = accion.id');
+        $builder->join('proceso', 'solicitud.id_proceso = proceso.id');
+        $builder->join('periodo', 'solicitud.id_periodo = periodo.id');
+        $builder->join('persona', 'solicitud.id_persona = persona.id');
+        $builder->join('accion', 'solicitud.id_accion = accion.id');
+        $builder->join('solicitud_carrera', 'solicitud.id = solicitud_carrera.id_solicitud');
+        $builder->join('carrera', 'carrera.id = solicitud_carrera.id_carrera');
+        $builder->join('facultad', 'facultad.id = carrera.id_facultad');
+        $builder->join('persona_facultad', 'facultad.id = persona_facultad.id_facultad');
 
         $builder -> select('solicitud.id as id, proceso.id as idProceso, accion.id as idAccion, 
         periodo.id as idPeriodo, proceso.nombre as nombreProceso, accion.nombre as nombreAccion, 

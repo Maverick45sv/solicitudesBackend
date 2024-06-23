@@ -3,11 +3,12 @@
 namespace App\Controllers\telemetria;
 
 use App\Controllers\BaseController;
-use \App\Models\ProcesoAtributoModel;
+use \App\Models\ProcesoRolModel;
 use \App\Models\ProcesoModel;
-use \App\Models\AtributoModel;
+use \App\Models\EstacionModel;
+use \App\Models\RolModel;
 
-class ProcesoAtributo extends BaseController
+class ProcesoRol extends BaseController
 {
     public function inicio($id)
     {        
@@ -15,15 +16,15 @@ class ProcesoAtributo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }       
-        $procesoAtributoModel = model(ProcesoAtributoModel::class);
+        $procesoRolModel = model(ProcesoRolModel::class);
         $procesoModel = model(ProcesoModel::class);
         $proceso = $procesoModel->find($id);
         $datos = array(
-            "todos" => $procesoAtributoModel->buscarTodosXProceso($id),
+            "todos" => $procesoRolModel->buscarTodosXProceso($id),
             "proceso" => $proceso,
             "menu" => menu($session->get('idusuario')),
         );
-        return view('telemetria/procesoAtributo/index', $datos);
+        return view('telemetria/procesoRol/index', $datos);
     }
 
     public function nuevo($id)
@@ -34,13 +35,13 @@ class ProcesoAtributo extends BaseController
         }    
         $procesoModel = model(ProcesoModel::class);
         $proceso = $procesoModel->find($id);
-        $AtributoModel = model(AtributoModel::class); 
+        $RolModel = model(RolModel::class); 
         $datos = array(   
             "proceso" => $proceso,    
-            "atributo" => $AtributoModel->findAll(),   
+            "roles" => $RolModel->findAll(),   
             "menu" => menu($session->get('idusuario')),
         );       
-        return view('telemetria/procesoAtributo/nuevo', $datos);
+        return view('telemetria/procesoRol/nuevo', $datos);
    
     }
 
@@ -50,36 +51,36 @@ class ProcesoAtributo extends BaseController
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }    
-        $procesoAtributoModel = model(ProcesoAtributoModel::class);
+        $procesoRolModel = model(ProcesoRolModel::class);
        
         $data = array(
             'id_proceso' => $this->request->getPost('id_proceso'),
-            'id_atributo' => $this->request->getPost('id_atributo'),           
+            'id_rol' => $this->request->getPost('id_rol'),
         ); 
-        if ($procesoAtributoModel->save($data) === false) {
+        if ($procesoRolModel->save($data) === false) {
             $procesoModel = model(ProcesoModel::class);
             $proceso = $procesoModel->find($this->request->getPost('id_proceso'));
-            $AtributoModel = model(AtributoModel::class); 
+            $RolModel = model(RolModel::class); 
             $datos = array(   
                 "proceso" => $proceso,    
-                "atributo" => $AtributoModel->findAll(),   
+                "roles" => $RolModel->findAll(),   
                 "menu" => menu($session->get('idusuario')),
-                'errors' => $procesoAtributoModel->errors(),   
+                'errors' => $procesoRolModel->errors(),   
             );   
-            return view('telemetria/procesoAtributo/nuevo', $datos);    
+            return view('telemetria/procesoRol/nuevo', $datos);    
         }
-        return redirect()->to('telemetria/proceso/atributo/'.$this->request->getPost('id_proceso'));          
+        return redirect()->to('telemetria/proceso/rol/'.$this->request->getPost('id_proceso'));          
     }
 
-  
+   
     public function eliminar($id)
     {
         $session=session();
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }        
-        $procesoAtributoModel = model(ProcesoAtributoModel::class);  
-        $procesoAtributoModel->delete($id);
+        $procesoRolModel = model(ProcesoRolModel::class);  
+        $procesoRolModel->delete($id);
         return $this->response->setJson(['msg'=>'ok']);     
     }
 }

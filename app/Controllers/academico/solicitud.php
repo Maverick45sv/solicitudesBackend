@@ -8,6 +8,7 @@ use App\Models\PeriodoModel;
 use App\Models\ProcesoModel;
 use App\Models\ProcesoEstacionAccionModel;
 use App\Models\AccionModel;
+use App\Models\UsuarioRolModel;
 use App\Models\BitacoraModel;
 use App\Models\OfertaModel;
 use App\Models\solicitudProcesoAtributoModel;
@@ -23,13 +24,22 @@ class Solicitud extends BaseController
         }       
         $SolicitudModel = model(SolicitudModel::class);
         $AccionModel = model(AccionModel::class);
+        $usuariorolModel = model(UsuarioRolModel::class);
         $PeriodoModel = model(PeriodoModel::class);
         $ProcesoModel = model(ProcesoModel::class);
-
+        $rol='';
+        $roles = $usuariorolModel->buscarRoles($session->get('idusuario'));
+        foreach($roles as $data){
+            if($rol){
+                $rol = $rol . ",";
+            }
+            $rol = $rol . $data->id_rol;
+        }
+       
         $datos = array(
-            "todos" => $SolicitudModel->buscarTodos(),
+            "todos" => $SolicitudModel->buscarTodos($rol),
             "todosPeriodo" => $PeriodoModel->findAll(),
-            "todosProceso" => $ProcesoModel->findAll(),
+            "todosProceso" => $ProcesoModel->BuscarXrol($rol),
             "todosAccion" => $AccionModel->findAll(),
             "menu" => menu($session->get('idusuario')),
         );

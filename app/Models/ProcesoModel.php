@@ -38,5 +38,12 @@ class ProcesoModel extends Model {
     protected $beforeDelete   = [];
     protected $afterDelete    = []; */
   
-   
+    function BuscarXrol($roles){
+        $sql="SELECT p.*
+        FROM proceso p JOIN proceso_rol pr on pr.id_proceso=p.id 
+        JOIN rol r on pr.id_rol=r.id
+        WHERE r.id IN ($roles) ";
+        $query = $this->db->query($sql);       
+        return $query->getResult();   
+   }
 }

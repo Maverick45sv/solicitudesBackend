@@ -4,14 +4,14 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UsuarioRolModel extends Model {
+class PersonaFacultadModel extends Model {
    
-    protected $table = 'usuario_rol';
+    protected $table = 'persona_facultad';
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
     protected $returnType     = 'object';
     protected $useSoftDeletes = false; 
-    protected $allowedFields = ['id_usuario', 'id_rol']; 
+    protected $allowedFields = ['id_persona', 'id_facultad']; 
     protected bool $allowEmptyInserts = false;
 
     // Dates
@@ -22,12 +22,22 @@ class UsuarioRolModel extends Model {
     //protected $deletedField  = 'deleted_at';
 
     /* Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
+    protected $validationRules      = [
+        'nombre'     => 'required|max_length[30]|min_length[3]|is_unique[usuario.nombre]',
+        'correo'        => 'required|max_length[254]|valid_email',     //|is_unique[usuario.correo]   
+    ];
+    protected $validationMessages   = [
+        'nombre' => [
+            'is_unique' => 'Ya existe un usuario con ese nombre. Por favor digite otro.',
+        ],
+        'correo' => [
+            'is_unique' => 'Ya existe un usuario con ese correo. Por favor seleccione otro.',
+        ],
+    ];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 
-    // Callbacks
+    /* Callbacks
     protected $allowCallbacks = true;
     protected $beforeInsert   = [];
     protected $afterInsert    = [];
@@ -38,21 +48,12 @@ class UsuarioRolModel extends Model {
     protected $beforeDelete   = [];
     protected $afterDelete    = []; */
   
-    function buscarRoles($id_usuario){
-        $sql="SELECT rol.nombre as nombre, usuario_rol.creado as creado, 
-         usuario_rol.id as id, rol.id as id_rol
-        FROM usuario_rol JOIN rol on usuario_rol.id_rol=rol.id 
-        JOIN usuario on usuario_rol.id_usuario=usuario.id
-        WHERE usuario.id = " . $id_usuario;
+    function buscarTodos($id){
+        $sql="SELECT facultad.*, persona_facultad.id as idpefac
+        FROM persona_facultad JOIN facultad on persona_facultad.id_facultad=facultad.id 
+        JOIN persona on persona_facultad.id_persona=persona.id
+        WHERE persona.id = " . $id;
         $query = $this->db->query($sql);
         return $query->getResult();   
    }
-
-   function buscarRolesFaltantes($id_usuario){
-        $sql="SELECT * FROM rol WHERE id NOT IN 
-        (SELECT id_rol FROM usuario_rol WHERE id_usuario = $id_usuario)";
-        $query = $this->db->query($sql);
-        return $query->getResult();  
-   }
-   
 }

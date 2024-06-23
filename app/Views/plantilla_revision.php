@@ -39,6 +39,11 @@
                                 </a>
                             </li>
                             <li>
+                                <a href="<?= base_url('admin/persona/facultad/'  . $persona->id) ?>" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="facultad">
+                                    <i class="bi-building fs-1"></i>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="<?= base_url('admin/persona/usuario/' . $persona->id) ?>" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="roles">
                                     <i class="bi-people fs-1"></i>
                                 </a>
