@@ -2,6 +2,10 @@
 
 use \App\Models\RolMenuModel;
 use \App\Models\UsuarioRolModel;
+use \App\Models\RolModel;
+use \App\Models\UsuarioModel;
+use \App\Models\SolicitudModel;
+use \App\Models\ProcesoNotificacionModel;
 //FUNCION PARA VALIDAR SI EL USUARIO ESTA LOGUEADO
 
 function enviar_mail($to, $titulo, $mensaje){
@@ -74,3 +78,47 @@ function generarContrasenia($length){
     return $key;
 }
 
+function Notificaciones($id, $id_solicitud, $accion, $comentario){
+    $usuariorol = new UsuarioRolModel();
+    $usuario = new UsuarioModel();
+    $rol = new RolModel();
+    $procesoNoti = new ProcesoNotificacionModel();
+    $solicitudModel = new SolicitudModel();
+    $nombre='';
+    $correos=array();
+    $correoE = $solicitudModel->buscarPersonaBySolicitud($id_solicitud);    
+    if($correoE) {
+        $nombre=$correoE->apellido . " " . $correoE->nombre;       
+    }       
+    $noti=$procesoNoti->where('id_proceso_estacion', $id)->findAll();
+    if($noti){ 
+        foreach($noti as $data){
+            $r=$rol->find($data->id_rol);
+            if($r->nombre != "ROLE_ESTUDIANTE"){                
+               $cs=$solicitudModel->buscarCorreosXRol($data->id_rol);
+               foreach($cs as $d){
+                if(!in_array($d->correo,$correos)){ 
+                    $correos[]=$d->correo;
+                }
+               }
+            }else{
+                if($correoE) {
+                    if(!in_array($correoE->correo,$correos)){ 
+                        $correos[]=$correoE->correo;
+                    }
+                }
+            }
+        }
+    }
+    //espacion para notificacion
+    $titulo = "Estado solicitud en Sistema de Solicitudes UPES";
+    $mensaje = "Buen dia <br><br> Se ha actualizado el estado de su solicitud.
+    <br><br>
+    <ul>
+        Solicitante: <b>".$nombre."</b> <br>
+        Nuevo Estado: <b>".$accion."</b> <br>
+        Comentario: <b>".$comentario."</b> <br><br>            
+    </ul>
+    Este es un mensaje Automatico, por favor no trate de contestarlo.";   
+    $mail = enviar_mail($correos, $titulo, $mensaje);
+}

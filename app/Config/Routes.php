@@ -33,6 +33,7 @@ use App\Controllers\telemetria\procesoTipoDocumento;
 use App\Controllers\telemetria\procesoEstacionAccion;
 use App\Controllers\telemetria\procesoCalendario;
 use App\Controllers\telemetria\procesoRol;
+use App\Controllers\telemetria\procesoNotificacion;
 
 /**
  * @var RouteCollection $routes
@@ -288,7 +289,9 @@ $routes->group('/telemetria/proceso', static function ($routes) {
     $routes->get('rol/new/(:num)', [ProcesoRol::class, 'nuevo']);
     $routes->post('rol/save/', [ProcesoRol::class, 'guardar']);   
     $routes->get('rol/delete/(:num)', [ProcesoRol::class, 'eliminar']);  
-    
+    $routes->get('notificacion/(:num)', [ProcesoNotificacion::class, 'inicio']);
+    $routes->post('notificacion/save/', [ProcesoNotificacion::class, 'guardar']);   
+    $routes->get('notificacion/delete/(:num)', [ProcesoNotificacion::class, 'eliminar']); 
 
     
 });

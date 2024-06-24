@@ -147,21 +147,22 @@ class SolicitudModel extends Model {
         correo.correo as correo
         FROM solicitud s       
         JOIN persona pe on s.id_persona = pe.id
-        JOIN correo  on correo.id_persona=pe.id ";
+        JOIN correo  on correo.id_persona=pe.id 
+        WHERE s.id=$id";
 
         $query = $this->db->query($sql);
-        return $query->getResult();   
+        return $query->getRow();   
    }
 
-   function buscarRegistroAcademico(){
+   function buscarCorreosXRol($id){
         $sql="SELECT  pe.id as idPersona, pe.nombre as nombre, pe.apellido as apellido, 
         correo.correo as correo
         FROM correo JOIN persona pe on correo.id_persona=pe.id 
         JOIN usuario on usuario.id_persona=pe.id
         JOIN usuario_rol on usuario_rol.id_usuario=usuario.id
         JOIN rol on usuario_rol.id_rol=rol.id
-        WHERE rol.nombre = 'ROLE_REGISTRO_ACADEMICO' ";
-        $query = $this->db->query($sql);
+        WHERE rol.id = $id ";
+        $query = $this->db->query($sql);        
         return $query->getResult();   
     }
 }
