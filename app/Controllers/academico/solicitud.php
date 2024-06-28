@@ -18,7 +18,7 @@ class Solicitud extends BaseController
 {
     public function inicio()
     {        
-        $session = session();
+        $session = session(); 
         if (!$session->get('usuario')){
             return redirect()->route('/');
         }       

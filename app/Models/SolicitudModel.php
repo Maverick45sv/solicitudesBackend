@@ -16,7 +16,7 @@ class SolicitudModel extends Model {
 
     // Dates
     //protected $useTimestamps = true;
-    //protected $dateFormat    = 'datetime';
+    //protected $dateFormat    = 'datetime'; 
     //protected $createdField  = 'creado';
     //protected $updatedField  = 'updated_at';
     //protected $deletedField  = 'deleted_at';
