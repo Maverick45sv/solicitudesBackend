@@ -9,7 +9,7 @@ use App\Models\ProcesoModel;
 use App\Models\ProcesoEstacionAccionModel;
 use App\Models\AccionModel;
 use App\Models\UsuarioRolModel;
-use App\Models\BitacoraModel;
+use App\Models\BitacoraModel; 
 use App\Models\OfertaModel;
 use App\Models\solicitudProcesoAtributoModel;
 use App\Models\solicitudDocumentoArchivoModel;
@@ -130,13 +130,23 @@ class Solicitud extends BaseController
             return redirect()->route('/');
         }
 
+        $usuariorolModel = model(UsuarioRolModel::class);
+        $rol='';
+        $roles = $usuariorolModel->buscarRoles($session->get('idusuario'));
+        foreach($roles as $data){
+            if($rol){
+                $rol = $rol . ",";
+            }
+            $rol = $rol . $data->id_rol;
+        }
+
         $solicitudModel = model(SolicitudModel::class);
         $request = \Config\Services::request();
         $proceso = intval($request->getGet('proceso'));
         $periodo = intval($request->getGet('periodo'));
         $accion = intval($request->getGet('accion'));
 
-        $datosFiltrados = $solicitudModel->obtenerDatosFiltrados($proceso, $periodo, $accion);
+        $datosFiltrados = $solicitudModel->obtenerDatosFiltrados($proceso, $periodo, $accion, $rol);
 
         // Devolver los datos filtrados en formato JSON
         return $this->response->setJSON(['filtro' => $datosFiltrados]);
@@ -149,9 +159,19 @@ class Solicitud extends BaseController
             return redirect()->route('/');
         }
 
+        $usuariorolModel = model(UsuarioRolModel::class);
+        $rol='';
+        $roles = $usuariorolModel->buscarRoles($session->get('idusuario'));
+        foreach($roles as $data){
+            if($rol){
+                $rol = $rol . ",";
+            }
+            $rol = $rol . $data->id_rol;
+        }
+
         $solicitudModel = model(SolicitudModel::class);
 
-        $datos = $solicitudModel->buscarTodos();
+        $datos = $solicitudModel->buscarTodos($rol);
 
         // Devolver los datos en formato JSON
         return $this->response->setJSON(['todos' => $datos]);

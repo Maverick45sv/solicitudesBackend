@@ -47,13 +47,33 @@ class SolicitudModel extends Model {
         JOIN accion a on s.id_accion = a.id
         JOIN persona pe on s.id_persona = pe.id
         JOIN periodo per on s.id_periodo = per.id
-        JOIN proceso_rol pr on pr.id_proceso = p.id
+        JOIN proceso_rol pr on p.id = pr.id_proceso
         JOIN rol r on pr.id_rol = r.id 
-        WHERE a.nombre != 'FINALIZADO' AND r.id IN ($roles)";
+        WHERE a.nombre != 'FINALIZADA' AND r.id IN ($roles)";
 
         $query = $this->db->query($sql);
         return $query->getResult();   
    }
+
+   function buscarTodosXY($roles, $facultadX){
+        $sql="SELECT s.id as id, p.id as idProceso, a.id as idAccion, per.id as idPeriodo,  
+        pe.id as idPersona, p.nombre as nombreProceso, a.nombre as nombreAccion, per.codigo as periodoCodigo,
+        pe.nombre as nombrePersona, per.anio as periodoAnio, s.creado as fecha
+        FROM solicitud s
+        JOIN solicitud_carrera sc on s.id = sc.id_solicitud 
+        JOIN carrera c on sc.id_carrera = c.id
+        JOIN facultad f on c.id_facultad = f.id
+        JOIN proceso p on s.id_proceso = p.id 
+        JOIN accion a on s.id_accion = a.id
+        JOIN persona pe on s.id_persona = pe.id
+        JOIN periodo per on s.id_periodo = per.id
+        JOIN proceso_rol pr on pr.id_proceso = p.id
+        JOIN rol r on pr.id_rol = r.id 
+        WHERE a.nombre != 'FINALIZADA' AND r.id IN ($roles) AND f.nombre = '$facultadX'";
+
+        $query = $this->db->query($sql);
+        return $query->getResult();   
+    }
 
    function DatosEdit($id){
     $sql="SELECT s.id as id, p.id as idProceso, a.id as idAccion, per.id as idPeriodo, pe.id as idPersona,
@@ -70,7 +90,7 @@ class SolicitudModel extends Model {
     return $query->getRow();   
     }
 
-    function obtenerDatosFiltrados($proceso, $periodo, $accion)
+    function obtenerDatosFiltrados($proceso, $periodo, $accion, $rol)
     {
         $builder = $this-> db -> table('solicitud');
         $builder->join('proceso', 'solicitud.id_proceso = proceso.id');
@@ -81,6 +101,8 @@ class SolicitudModel extends Model {
         $builder->join('carrera', 'carrera.id = solicitud_carrera.id_carrera');
         $builder->join('facultad', 'facultad.id = carrera.id_facultad');
         $builder->join('persona_facultad', 'facultad.id = persona_facultad.id_facultad');
+        $builder->join('proceso_rol',  'proceso.id = proceso_rol.id_proceso ');
+        $builder->join('rol', 'proceso_rol.id_rol = rol.id');
 
         $builder -> select('solicitud.id as id, proceso.id as idProceso, accion.id as idAccion, 
         periodo.id as idPeriodo, proceso.nombre as nombreProceso, accion.nombre as nombreAccion, 
@@ -109,6 +131,14 @@ class SolicitudModel extends Model {
         {
             $builder->where('accion.id !=', 9); 
         }
+
+            // Filtrar por rol
+        if (!empty($rol)) {
+            $builder->where('rol.id', $rol);
+        }
+
+        // Agrupar por campos únicos de solicitud
+        $builder->groupBy('solicitud.id, proceso.id, accion.id, periodo.id, persona.id');
 
             $query = $builder->get();
             return $query->getResult();   

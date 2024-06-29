@@ -54,5 +54,25 @@ class UsuarioRolModel extends Model {
         $query = $this->db->query($sql);
         return $query->getResult();  
    }
+
+   function buscarDatos($usuario)
+   {
+     $sql="SELECT id_persona
+           FROM usuario u
+           WHERE u.nombre ='$usuario'";
+        $query = $this->db->query($sql);
+        return $query->getRow(); 
+   }
+
+   function buscarSolicitudFacultad($id){
+     $sql="SELECT u.nombre AS usuario, f.nombre AS facultad
+         FROM usuario u 
+         JOIN persona p ON u.id_persona = p.id
+         JOIN persona_facultad pf ON p.id = pf.id_persona
+         JOIN facultad f ON pf.id_facultad = f.id
+         WHERE p.id = '$id'";
+     $query = $this->db->query($sql);        
+     return $query->getRow();   
+ }
    
 }
