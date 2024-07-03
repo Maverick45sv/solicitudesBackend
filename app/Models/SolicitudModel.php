@@ -90,9 +90,9 @@ class SolicitudModel extends Model {
     return $query->getRow();   
     }
 
-    function obtenerDatosFiltrados($proceso, $periodo, $accion, $rol)
+    function obtenerDatosFiltrados($proceso, $periodo, $accion, $rol, $facultad)
     {
-        $builder = $this-> db -> table('solicitud');
+        $builder = $this->db->table('solicitud');
         $builder->join('proceso', 'solicitud.id_proceso = proceso.id');
         $builder->join('periodo', 'solicitud.id_periodo = periodo.id');
         $builder->join('persona', 'solicitud.id_persona = persona.id');
@@ -101,47 +101,47 @@ class SolicitudModel extends Model {
         $builder->join('carrera', 'carrera.id = solicitud_carrera.id_carrera');
         $builder->join('facultad', 'facultad.id = carrera.id_facultad');
         $builder->join('persona_facultad', 'facultad.id = persona_facultad.id_facultad');
-        $builder->join('proceso_rol',  'proceso.id = proceso_rol.id_proceso ');
+        $builder->join('proceso_rol', 'proceso.id = proceso_rol.id_proceso');
         $builder->join('rol', 'proceso_rol.id_rol = rol.id');
 
-        $builder -> select('solicitud.id as id, proceso.id as idProceso, accion.id as idAccion, 
+        $builder->select('solicitud.id as id, proceso.id as idProceso, accion.id as idAccion, 
         periodo.id as idPeriodo, proceso.nombre as nombreProceso, accion.nombre as nombreAccion, 
         persona.nombre as nombrePersona, periodo.anio as periodoAnio, solicitud.creado as fecha');
 
         // Aplicar filtros
-        if(!empty($proceso))
-        {
+        if (!empty($proceso)) {
             $builder->where('proceso.id', $proceso);
         }
-        if(!empty($periodo))
-        {
+        if (!empty($periodo)) {
             $builder->where('periodo.id', $periodo);
         }
         if (!empty($accion)) {
             $builder->where('accion.id', $accion);
-            if ($accion == 9) 
-            {
-                
-            } 
-            else {
-                $builder->where('accion.id !=', 9); 
+            if ($accion != 9) {
+                $builder->where('accion.id !=', 9);
             }
-        } 
-        else 
-        {
-            $builder->where('accion.id !=', 9); 
+        } else {
+            $builder->where('accion.id !=', 9);
         }
 
-            // Filtrar por rol
-        if (!empty($rol)) {
-            $builder->where('rol.id', $rol);
+        // Filtrar por rol
+        if (!empty($rol)) 
+        {
+                $builder->where('rol.nombre', $rol);
+        }
+
+        // Filtrar por facultad si el rol es (ROLE_DECANO)
+        if ($rol == 'ROLE_DECANO' && !empty($facultad)) 
+        {
+            $builder->where('rol.nombre', $rol);
+            $builder->where('facultad.nombre', $facultad);
         }
 
         // Agrupar por campos únicos de solicitud
         $builder->groupBy('solicitud.id, proceso.id, accion.id, periodo.id, persona.id');
 
-            $query = $builder->get();
-            return $query->getResult();   
+        $query = $builder->get();
+        return $query->getResult();
     }
 
     function TableroSolicitud($periodo){

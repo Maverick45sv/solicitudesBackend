@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\SolicitudModel;
 use App\Models\PeriodoModel;
 use App\Models\ProcesoModel;
+use App\Models\RolModel;
 use App\Models\ProcesoEstacionAccionModel;
 use App\Models\AccionModel;
 use App\Models\UsuarioRolModel;
@@ -17,7 +18,7 @@ use App\Models\solicitudDocumentoArchivoModel;
 class Solicitud extends BaseController
 {
     public function inicio()
-    {        
+    {       
         $session = session(); 
         if (!$session->get('usuario')){
             return redirect()->route('/');
@@ -35,15 +36,80 @@ class Solicitud extends BaseController
             }
             $rol = $rol . $data->id_rol;
         }
-       
-        $datos = array(
-            "todos" => $SolicitudModel->buscarTodos($rol),
-            "todosPeriodo" => $PeriodoModel->findAll(),
-            "todosProceso" => $ProcesoModel->BuscarXrol($rol),
-            "todosAccion" => $AccionModel->findAll(),
-            "menu" => menu($session->get('idusuario')),
-        );
-        return view('academico/solicitud/index', $datos);
+
+        // Bucar id_persona y rol del usuario
+        $datosX = $usuariorolModel -> buscarDatos($session->get('idusuario'));
+
+        // Encontrar la facultad del usuario
+        $datosY = $usuariorolModel -> buscarSolicitudFacultad($datosX ->id_persona);
+
+        //Crear variable con ROLE_DECANO
+        $rolEncontrado = 'ROLE_DECANO';
+
+        // Mostar datos si es un decano por rol y facultad
+        if($rolEncontrado == $datosX->rol)
+        {
+            $datos = array(
+                "todos" => $SolicitudModel->buscarTodosXY($rol, $datosY->facultad),
+                "todosPeriodo" => $PeriodoModel->findAll(),
+                "todosProceso" => $ProcesoModel->BuscarXrol($rol),
+                "todosAccion" => $AccionModel->findAll(),
+                "menu" => menu($session->get('idusuario')),
+            );
+
+            return view('academico/solicitud/index', $datos);
+
+        }
+        else
+        {
+            $datos = array(
+                "todos" => $SolicitudModel->buscarTodos($rol),
+                "todosPeriodo" => $PeriodoModel->findAll(),
+                "todosProceso" => $ProcesoModel->BuscarXrol($rol),
+                "todosAccion" => $AccionModel->findAll(),
+                "menu" => menu($session->get('idusuario')),
+            );
+
+            return view('academico/solicitud/index', $datos);
+        }
+
+        //print($this->buscarRol());
+    }
+    
+    private function buscarRol()
+    {
+        $session = session(); 
+        if (!$session->get('usuario')){
+            return redirect()->route('/');
+        }       
+        $SolicitudModel = model(SolicitudModel::class);
+        $usuariorolModel = model(UsuarioRolModel::class);;
+        
+        // Bucar id_persona y rol del usuario
+        $datosX = $usuariorolModel -> buscarDatos($session->get('idusuario'));
+
+        // Encontrar la facultad del usuario
+        $datosY = $usuariorolModel -> buscarSolicitudFacultad($datosX ->id_persona);
+
+        return $datosX->rol;
+    }
+
+    private function buscarFacultad()
+    {
+        $session = session(); 
+        if (!$session->get('usuario')){
+            return redirect()->route('/');
+        }       
+        $SolicitudModel = model(SolicitudModel::class);
+        $usuariorolModel = model(UsuarioRolModel::class);;
+        
+        // Bucar id_persona y rol del usuario
+        $datosX = $usuariorolModel -> buscarDatos($session->get('idusuario'));
+
+        // Encontrar la facultad del usuario
+        $datosY = $usuariorolModel -> buscarSolicitudFacultad($datosX ->id_persona);
+
+        return $datosY->facultad;
     }
 
     public function editar($id)
@@ -57,7 +123,7 @@ class Solicitud extends BaseController
         $procesoaccionModel = model(ProcesoEstacionAccionModel::class);
         $bitacoraA = $bitacoraModel->buscarBitacoraActivaSolicitud($id);
         $acciones = $procesoaccionModel->BuscarAccionXorigen($bitacoraA->origen);
-        
+
         $datos = array(    
             "solicitud" => $SolicitudModel->DatosEdit($id),
             "menu" => menu($session->get('idusuario')),
@@ -65,7 +131,8 @@ class Solicitud extends BaseController
             "bitacora" => $bitacoraModel->buscarBitacoraSolicitud($id),
             "bitacoraA"=>$bitacoraA,
         );  
-        return view('academico/solicitud/editar', $datos);     
+        return view('academico/solicitud/editar', $datos);
+        //print($this->buscarRol());   
     }
 
     public function actualizar()
@@ -126,27 +193,33 @@ class Solicitud extends BaseController
     public function filtrarDatos()
     {        
         $session = session();
-        if (!$session->get('usuario')){
+        if (!$session->get('usuario')) {
             return redirect()->route('/');
         }
 
         $usuariorolModel = model(UsuarioRolModel::class);
-        $rol='';
-        $roles = $usuariorolModel->buscarRoles($session->get('idusuario'));
-        foreach($roles as $data){
-            if($rol){
-                $rol = $rol . ",";
-            }
-            $rol = $rol . $data->id_rol;
-        }
-
         $solicitudModel = model(SolicitudModel::class);
+
         $request = \Config\Services::request();
         $proceso = intval($request->getGet('proceso'));
         $periodo = intval($request->getGet('periodo'));
         $accion = intval($request->getGet('accion'));
 
-        $datosFiltrados = $solicitudModel->obtenerDatosFiltrados($proceso, $periodo, $accion, $rol);
+        //Crear variable con ROLE_DECANO
+        $rolEncontrado = 'ROLE_DECANO';
+
+        $facultadCX = $this->buscarFacultad();
+        $rolCX = $this->buscarRol();
+        
+        // Verificar si el usuario tiene el rol de decano
+        if ($rolCX == $rolEncontrado) 
+        {
+            $datosFiltrados = $solicitudModel->obtenerDatosFiltrados($proceso, $periodo, $accion, $rolCX, $facultadCX);
+        }
+        else 
+        {
+            $datosFiltrados = $solicitudModel->obtenerDatosFiltrados($proceso, $periodo, $accion, $rolCX, null);
+        }
 
         // Devolver los datos filtrados en formato JSON
         return $this->response->setJSON(['filtro' => $datosFiltrados]);
@@ -160,6 +233,8 @@ class Solicitud extends BaseController
         }
 
         $usuariorolModel = model(UsuarioRolModel::class);
+        $solicitudModel = model(SolicitudModel::class);
+
         $rol='';
         $roles = $usuariorolModel->buscarRoles($session->get('idusuario'));
         foreach($roles as $data){
@@ -169,11 +244,26 @@ class Solicitud extends BaseController
             $rol = $rol . $data->id_rol;
         }
 
-        $solicitudModel = model(SolicitudModel::class);
+        // Bucar id_persona y rol del usuario
+        $datosX = $usuariorolModel -> buscarDatos($session->get('idusuario'));
 
-        $datos = $solicitudModel->buscarTodos($rol);
+        // Encontrar la facultad del usuario
+        $datosY = $usuariorolModel -> buscarSolicitudFacultad($datosX ->id_persona);
 
-        // Devolver los datos en formato JSON
+        //Crear variable con ROLE_DECANO
+        $rolEncontrado = 'ROLE_DECANO';
+
+        // Mostrar datos si es un decano por rol y facultad
+        if ($rolEncontrado == $datosX->rol) 
+        {
+            $datos = $solicitudModel->buscarTodosXY($rol, $datosY->facultad);
+        } 
+        else 
+        {
+            $datos = $solicitudModel->buscarTodos($rol);
+        }
+
+        // Devolver todos los datos en formato JSON
         return $this->response->setJSON(['todos' => $datos]);
     }
 

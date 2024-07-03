@@ -57,9 +57,11 @@ class UsuarioRolModel extends Model {
 
    function buscarDatos($usuario)
    {
-     $sql="SELECT id_persona
-           FROM usuario u
-           WHERE u.nombre ='$usuario'";
+     $sql=" SELECT u.id_persona as id_persona, r.nombre as rol
+            FROM usuario u
+            inner JOIN usuario_rol ur ON u.id = ur.id_usuario
+            INNER JOIN rol r ON r.id = ur.id_rol
+            WHERE u.id ='$usuario'";
         $query = $this->db->query($sql);
         return $query->getRow(); 
    }

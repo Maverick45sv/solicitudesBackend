@@ -147,9 +147,7 @@
     var horaFormateada = horas + ':' + minutos + ' ' + am_pm;
     return dia + '-' + mes + '-' + año + ' (' + horaFormateada + ')';
 }
-
-    // Función para actualizar la tabla con los datos filtrados y todos los datos
-        function actualizarTabla(datos) {
+function actualizarTabla(datos) {
         // Limpiar la tabla
         $('#tablaDatos tbody').empty();
         
@@ -174,6 +172,7 @@
             // Agregar la fila a la tabla
             $('#tablaDatos tbody').append(filaHtml);
         });
+    // Función para actualizar la tabla con los datos filtrados y todos los datos
     }
        
     </script>
