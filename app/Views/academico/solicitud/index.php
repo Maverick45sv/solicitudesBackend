@@ -27,13 +27,13 @@
                 </select>
             </div>
 
-            <div class="col text-right" style = "width:25%">
-                <label for="proceso"  style = "margin:10px" >Estado:</label><br>
-                <select id="accion" name="proceso" class="form-select" style = "width:80%"> 
-                    <option value="">---</option> 
+            <div class="col text-right" style="width:25%">
+                <label for="proceso" style="margin:10px">Estado:</label><br>
+                <select id="accion" name="proceso" class="form-select" style="width:80%">
+                    <option value="">---</option>
                     <?php foreach ($todosAccion as $data): ?>
-                        <option value="<?= $data ->id ?>"> <?= $data -> nombre?></option>
-                    <?php endforeach ?> 
+                        <option value="<?= $data['id'] ?>"> <?= $data['nombre'] ?></option>
+                    <?php endforeach ?>
                 </select>
             </div>
             <div class="col text-right" style="width: 25%; position: relative;">
@@ -106,7 +106,7 @@
                     {
                         actualizarTabla(response.filtro);
                     },
-                    error: function(xhr, status, error) 
+                    error: function(xhr, status, error)  
                     {
                         console.error('Error en la solicitud AJAX:', error);
                     }

@@ -86,8 +86,8 @@ class Usuario extends BaseController
         </ul>
         Este es un mensaje Automatico, por favor no trate de contestarlo.";
         $mail = enviar_mail([$correo->correo], $titulo, $mensaje);
-        //return redirect()->to('admin/persona/usuario/'.$this->request->getPost('persona'));
-        echo($mensaje);
+        return redirect()->to('admin/persona/usuario/'.$this->request->getPost('persona'));
+        //echo($mensaje);
           
     }
 

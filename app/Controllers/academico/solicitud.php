@@ -10,6 +10,7 @@ use App\Models\RolModel;
 use App\Models\ProcesoEstacionAccionModel;
 use App\Models\AccionModel;
 use App\Models\UsuarioRolModel;
+use App\Models\EstacionRolModel;
 use App\Models\BitacoraModel; 
 use App\Models\OfertaModel;
 use App\Models\solicitudProcesoAtributoModel;
@@ -28,6 +29,9 @@ class Solicitud extends BaseController
         $usuariorolModel = model(UsuarioRolModel::class);
         $PeriodoModel = model(PeriodoModel::class);
         $ProcesoModel = model(ProcesoModel::class);
+        $estacionRolModel = model(EstacionRolModel::class);
+        $procesoEstacionAccionModel = model(ProcesoEstacionAccionModel::class);
+
         $rol='';
         $roles = $usuariorolModel->buscarRoles($session->get('idusuario'));
         foreach($roles as $data){
@@ -36,6 +40,27 @@ class Solicitud extends BaseController
             }
             $rol = $rol . $data->id_rol;
         }
+
+        //------------------------------------------------------------------------------
+        // Buscar estacion por rol
+        $estacion = $estacionRolModel -> estacionesXrol($rol);
+
+        // Objeto tiene una propiedad 'Estacion'
+        $estacionesNombres = array_map(function($e) {
+            return $e->Estacion;
+        }, $estacion);
+
+        //Acciones por la estación
+        $accionXestacion = $procesoEstacionAccionModel -> accionesXestacion($estacionesNombres);
+
+        // Objeto tiene una propiedad 'Acciones'
+        $accionesNombres = array_map(function($e) {
+            return [
+                'id' => $e->id_accion,
+                'nombre' => $e->nombre_accion
+            ];
+        }, $accionXestacion);
+        //------------------------------------------------------------------------------
 
         // Bucar id_persona y rol del usuario
         $datosX = $usuariorolModel -> buscarDatos($session->get('idusuario'));
@@ -50,10 +75,10 @@ class Solicitud extends BaseController
         if($rolEncontrado == $datosX->rol)
         {
             $datos = array(
-                "todos" => $SolicitudModel->buscarTodosXY($rol, $datosY->facultad),
+                "todos" => $SolicitudModel->buscarTodosXY($rol, $datosY->facultad, $accionesNombres),
                 "todosPeriodo" => $PeriodoModel->findAll(),
                 "todosProceso" => $ProcesoModel->BuscarXrol($rol),
-                "todosAccion" => $AccionModel->findAll(),
+                "todosAccion" => $accionesNombres,
                 "menu" => menu($session->get('idusuario')),
             );
 
@@ -63,17 +88,15 @@ class Solicitud extends BaseController
         else
         {
             $datos = array(
-                "todos" => $SolicitudModel->buscarTodos($rol),
+                "todos" => $SolicitudModel->buscarTodos($rol, $accionesNombres),
                 "todosPeriodo" => $PeriodoModel->findAll(),
                 "todosProceso" => $ProcesoModel->BuscarXrol($rol),
-                "todosAccion" => $AccionModel->findAll(),
+                "todosAccion" => $accionesNombres,
                 "menu" => menu($session->get('idusuario')),
             );
 
             return view('academico/solicitud/index', $datos);
         }
-
-        //print($this->buscarRol());
     }
     
     private function buscarRol()
@@ -83,7 +106,7 @@ class Solicitud extends BaseController
             return redirect()->route('/');
         }       
         $SolicitudModel = model(SolicitudModel::class);
-        $usuariorolModel = model(UsuarioRolModel::class);;
+        $usuariorolModel = model(UsuarioRolModel::class);
         
         // Bucar id_persona y rol del usuario
         $datosX = $usuariorolModel -> buscarDatos($session->get('idusuario'));
@@ -102,14 +125,25 @@ class Solicitud extends BaseController
         }       
         $SolicitudModel = model(SolicitudModel::class);
         $usuariorolModel = model(UsuarioRolModel::class);;
+
+        //Crear variable con ROLE_DECANO
+        $rolEncontrado = 'ROLE_DECANO';
         
         // Bucar id_persona y rol del usuario
         $datosX = $usuariorolModel -> buscarDatos($session->get('idusuario'));
 
         // Encontrar la facultad del usuario
         $datosY = $usuariorolModel -> buscarSolicitudFacultad($datosX ->id_persona);
+        $datoZ = '';
 
-        return $datosY->facultad;
+        if($datosX->rol == $rolEncontrado){
+            $datoZ = $datosY->facultad;
+        }
+        else{
+            $datoZ = 'No posee';
+        }
+
+        return $datoZ;
     }
 
     public function editar($id)
@@ -131,8 +165,7 @@ class Solicitud extends BaseController
             "bitacora" => $bitacoraModel->buscarBitacoraSolicitud($id),
             "bitacoraA"=>$bitacoraA,
         );  
-        return view('academico/solicitud/editar', $datos);
-        //print($this->buscarRol());   
+        return view('academico/solicitud/editar', $datos);  
     }
 
     public function actualizar()
@@ -199,11 +232,44 @@ class Solicitud extends BaseController
 
         $usuariorolModel = model(UsuarioRolModel::class);
         $solicitudModel = model(SolicitudModel::class);
+        $estacionRolModel = model(EstacionRolModel::class);
+        $procesoEstacionAccionModel = model(ProcesoEstacionAccionModel::class);
+
+        $rol='';
+        $roles = $usuariorolModel->buscarRoles($session->get('idusuario'));
+        foreach($roles as $data){
+            if($rol){
+                $rol = $rol . ",";
+            }
+            $rol = $rol . $data->id_rol;
+        }
 
         $request = \Config\Services::request();
         $proceso = intval($request->getGet('proceso'));
         $periodo = intval($request->getGet('periodo'));
         $accion = intval($request->getGet('accion'));
+
+        
+        //------------------------------------------------------------------------------
+        // Buscar estacion por rol
+        $estacion = $estacionRolModel -> estacionesXrol($rol);
+
+        // Objeto tiene una propiedad 'Estacion'
+        $estacionesNombres = array_map(function($e) {
+            return $e->Estacion;
+        }, $estacion);
+
+        //Acciones por la estación
+        $accionXestacion = $procesoEstacionAccionModel -> accionesXestacion($estacionesNombres);
+
+        // Objeto tiene una propiedad 'Acciones'
+        $accionesNombres = array_map(function($e) {
+            return [
+                'id' => $e->id_accion,
+                'nombre' => $e->nombre_accion
+            ];
+        }, $accionXestacion);
+        //------------------------------------------------------------------------------
 
         //Crear variable con ROLE_DECANO
         $rolEncontrado = 'ROLE_DECANO';
@@ -214,11 +280,11 @@ class Solicitud extends BaseController
         // Verificar si el usuario tiene el rol de decano
         if ($rolCX == $rolEncontrado) 
         {
-            $datosFiltrados = $solicitudModel->obtenerDatosFiltrados($proceso, $periodo, $accion, $rolCX, $facultadCX);
+            $datosFiltrados = $solicitudModel->obtenerDatosFiltrados($proceso, $periodo, $accion, $rolCX, $facultadCX, $accionesNombres);
         }
         else 
         {
-            $datosFiltrados = $solicitudModel->obtenerDatosFiltrados($proceso, $periodo, $accion, $rolCX, null);
+            $datosFiltrados = $solicitudModel->obtenerDatosFiltrados($proceso, $periodo, $accion, $rolCX, null, $accionesNombres);
         }
 
         // Devolver los datos filtrados en formato JSON
@@ -234,6 +300,8 @@ class Solicitud extends BaseController
 
         $usuariorolModel = model(UsuarioRolModel::class);
         $solicitudModel = model(SolicitudModel::class);
+        $estacionRolModel = model(EstacionRolModel::class);
+        $procesoEstacionAccionModel = model(ProcesoEstacionAccionModel::class);
 
         $rol='';
         $roles = $usuariorolModel->buscarRoles($session->get('idusuario'));
@@ -243,6 +311,27 @@ class Solicitud extends BaseController
             }
             $rol = $rol . $data->id_rol;
         }
+
+        //------------------------------------------------------------------------------
+        // Buscar estacion por rol
+        $estacion = $estacionRolModel -> estacionesXrol($rol);
+
+        // Objeto tiene una propiedad 'Estacion'
+        $estacionesNombres = array_map(function($e) {
+            return $e->Estacion;
+        }, $estacion);
+
+        //Acciones por la estación
+        $accionXestacion = $procesoEstacionAccionModel -> accionesXestacion($estacionesNombres);
+
+        // Objeto tiene una propiedad 'Acciones'
+        $accionesNombres = array_map(function($e) {
+            return [
+                'id' => $e->id_accion,
+                'nombre' => $e->nombre_accion
+            ];
+        }, $accionXestacion);
+        //------------------------------------------------------------------------------
 
         // Bucar id_persona y rol del usuario
         $datosX = $usuariorolModel -> buscarDatos($session->get('idusuario'));
@@ -256,11 +345,11 @@ class Solicitud extends BaseController
         // Mostrar datos si es un decano por rol y facultad
         if ($rolEncontrado == $datosX->rol) 
         {
-            $datos = $solicitudModel->buscarTodosXY($rol, $datosY->facultad);
+            $datos = $solicitudModel->buscarTodosXY($rol, $datosY->facultad, $accionesNombres);
         } 
         else 
         {
-            $datos = $solicitudModel->buscarTodos($rol);
+            $datos = $solicitudModel->buscarTodos($rol, $accionesNombres);
         }
 
         // Devolver todos los datos en formato JSON

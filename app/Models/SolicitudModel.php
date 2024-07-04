@@ -38,42 +38,82 @@ class SolicitudModel extends Model {
     protected $beforeDelete   = [];
     protected $afterDelete    = []; */
   
-    function buscarTodos($roles){
-        $sql="SELECT s.id as id, p.id as idProceso, a.id as idAccion, per.id as idPeriodo,  
-       pe.id as idPersona, p.nombre as nombreProceso, a.nombre as nombreAccion, per.codigo as periodoCodigo,
-        pe.nombre as nombrePersona, per.anio as periodoAnio, s.creado as fecha
-        FROM solicitud s
-        JOIN proceso p on s.id_proceso = p.id 
-        JOIN accion a on s.id_accion = a.id
-        JOIN persona pe on s.id_persona = pe.id
-        JOIN periodo per on s.id_periodo = per.id
-        JOIN proceso_rol pr on p.id = pr.id_proceso
-        JOIN rol r on pr.id_rol = r.id 
-        WHERE a.nombre != 'FINALIZADA' AND r.id IN ($roles)";
-
-        $query = $this->db->query($sql);
-        return $query->getResult();   
-   }
-
-   function buscarTodosXY($roles, $facultadX){
-        $sql="SELECT s.id as id, p.id as idProceso, a.id as idAccion, per.id as idPeriodo,  
-        pe.id as idPersona, p.nombre as nombreProceso, a.nombre as nombreAccion, per.codigo as periodoCodigo,
-        pe.nombre as nombrePersona, per.anio as periodoAnio, s.creado as fecha
-        FROM solicitud s
-        JOIN solicitud_carrera sc on s.id = sc.id_solicitud 
-        JOIN carrera c on sc.id_carrera = c.id
-        JOIN facultad f on c.id_facultad = f.id
-        JOIN proceso p on s.id_proceso = p.id 
-        JOIN accion a on s.id_accion = a.id
-        JOIN persona pe on s.id_persona = pe.id
-        JOIN periodo per on s.id_periodo = per.id
-        JOIN proceso_rol pr on pr.id_proceso = p.id
-        JOIN rol r on pr.id_rol = r.id 
-        WHERE a.nombre != 'FINALIZADA' AND r.id IN ($roles) AND f.nombre = '$facultadX'";
-
-        $query = $this->db->query($sql);
-        return $query->getResult();   
+    function buscarTodos($roles, $acciones) {
+        // Asegúrate de que $acciones es un array
+        if (!is_array($acciones)) {
+            $acciones = explode(',', $acciones);
+        }
+    
+        $builder = $this->db->table('solicitud s');
+        $builder->join('proceso p', 's.id_proceso = p.id');
+        $builder->join('accion a', 's.id_accion = a.id');
+        $builder->join('persona pe', 's.id_persona = pe.id');
+        $builder->join('periodo per', 's.id_periodo = per.id');
+        $builder->join('proceso_rol pr', 'p.id = pr.id_proceso');
+        $builder->join('rol r', 'pr.id_rol = r.id');
+        
+        $builder->select('s.id as id, p.id as idProceso, a.id as idAccion, per.id as idPeriodo,  
+                        pe.id as idPersona, p.nombre as nombreProceso, a.nombre as nombreAccion, 
+                        per.codigo as periodoCodigo, pe.nombre as nombrePersona, per.anio as periodoAnio, 
+                        s.creado as fecha');
+    
+        $builder->where("a.nombre != 'FINALIZADA'");
+        $builder->where('r.id', $roles);
+    
+        $builder->groupStart();
+        foreach ($acciones as $accion) {
+            $nombre = $accion['nombre']; // Acceder al nombre desde el array asociativo
+            $builder->orGroupStart()
+                    ->where('a.nombre', $nombre)
+                    ->groupEnd();
+        }
+        $builder->groupEnd();
+    
+        $query = $builder->get();
+        return $query->getResult();
     }
+    
+
+    function buscarTodosXY($roles, $facultadX, $acciones) {
+
+        // Asegúrate de que $acciones es un array
+        if (!is_array($acciones)) {
+            $acciones = explode(',', $acciones);
+        }
+        
+        $builder = $this->db->table('solicitud s');
+        $builder ->join('solicitud_carrera sc', 's.id = sc.id_solicitud');
+        $builder ->join('carrera c', 'sc.id_carrera = c.id');
+        $builder ->join('facultad f', 'c.id_facultad = f.id');
+        $builder ->join('proceso p', 's.id_proceso = p.id');
+        $builder ->join('accion a', 's.id_accion = a.id');
+        $builder ->join('persona pe', 's.id_persona = pe.id');
+        $builder ->join('periodo per', 's.id_periodo = per.id');
+        $builder ->join('proceso_rol pr', 'pr.id_proceso = p.id');
+        $builder ->join('rol r', 'pr.id_rol = r.id');
+
+        $builder ->select('s.id as id, p.id as idProceso, a.id as idAccion, per.id as idPeriodo,  
+                           pe.id as idPersona, p.nombre as nombreProceso, a.nombre as nombreAccion, 
+                           per.codigo as periodoCodigo, pe.nombre as nombrePersona, per.anio as periodoAnio, 
+                           s.creado as fecha');
+
+        $builder ->where("a.nombre != 'FINALIZADA'");
+        $builder ->where('r.id', $roles);
+        $builder ->where('f.nombre', $facultadX);
+
+        $builder->groupStart();
+        foreach ($acciones as $accion) {
+            $nombre = $accion['nombre']; // Acceder al nombre desde el array asociativo
+            $builder->orGroupStart()
+                    ->where('a.nombre', $nombre)
+                    ->groupEnd();
+        }
+        $builder->groupEnd();
+    
+        $query = $builder->get();
+        return $query->getResult();
+    }
+    
 
    function DatosEdit($id){
     $sql="SELECT s.id as id, p.id as idProceso, a.id as idAccion, per.id as idPeriodo, pe.id as idPersona,
@@ -90,8 +130,13 @@ class SolicitudModel extends Model {
     return $query->getRow();   
     }
 
-    function obtenerDatosFiltrados($proceso, $periodo, $accion, $rol, $facultad)
+    function obtenerDatosFiltrados($proceso, $periodo, $accion, $rol, $facultad, $acciones)
     {
+        // Asegúrate de que $acciones es un array
+        if (!is_array($acciones)) {
+            $acciones = explode(',', $acciones);
+        }
+
         $builder = $this->db->table('solicitud');
         $builder->join('proceso', 'solicitud.id_proceso = proceso.id');
         $builder->join('periodo', 'solicitud.id_periodo = periodo.id');
@@ -135,7 +180,16 @@ class SolicitudModel extends Model {
         {
             $builder->where('rol.nombre', $rol);
             $builder->where('facultad.nombre', $facultad);
+        } 
+
+        $builder->groupStart();
+        foreach ($acciones as $accion) {
+            $nombre = $accion['nombre']; // Acceder al nombre desde el array asociativo
+            $builder->orGroupStart()
+                    ->where('accion.nombre', $nombre)
+                    ->groupEnd();
         }
+        $builder->groupEnd();
 
         // Agrupar por campos únicos de solicitud
         $builder->groupBy('solicitud.id, proceso.id, accion.id, periodo.id, persona.id');

@@ -10,7 +10,7 @@
                     <?php endforeach ?>
                 </select>
             </div> 
-            <br> 
+            <br>  
             <div class="form-group">
                 <label for="periodo">Archivo a Cargar:</label>
                 <input name="archivo" type="file" class="form-control">

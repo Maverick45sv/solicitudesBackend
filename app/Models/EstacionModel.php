@@ -12,7 +12,7 @@ class EstacionModel extends Model {
     protected $returnType     = 'object';
     protected $useSoftDeletes = false; 
     protected $allowedFields = ['nombre']; 
-    protected bool $allowEmptyInserts = false;
+    protected bool $allowEmptyInserts = false; 
 
     // Dates
     //protected $useTimestamps = true;
@@ -38,5 +38,4 @@ class EstacionModel extends Model {
     protected $beforeDelete   = [];
     protected $afterDelete    = []; */
   
-   
 }
