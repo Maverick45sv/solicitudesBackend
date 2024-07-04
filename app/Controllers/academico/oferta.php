@@ -141,6 +141,7 @@ class Oferta extends BaseController
         $periodoModel = model(PeriodoModel::class);
         $asignaturaModel = model(AsignaturaModel::class);
         $periodo=$periodoModel->find($this->request->getPost('periodo'));
+        $tipo=$this->request->getPost('tipo');
         helper('date');
         //ocupo la libreria de archivos 
         $file = new \CodeIgniter\Files\File($this->request->getFile('archivo'));
@@ -167,13 +168,14 @@ class Oferta extends BaseController
             } else{
                 $id_asignatura = $asig->id;
             }
-            $where="id_asignatura = '" . $id_asignatura . "' and seccion = '" . $data['SECCION'] . "' and id_periodo = " . $periodo->id;
+            $where="id_asignatura = '" . $id_asignatura . "' and seccion = '" . $data['SECCION'] . "' and id_periodo = " . $periodo->id . " and tipo = '" . $tipo . "'";
             $valid=$ofertaModel->where($where)->first();
             if(!$valid){
                 $data = array(
                     'id_asignatura' => $id_asignatura,
                     'id_periodo' => $periodo->id,                    
                     'aula' => $data['AULA'],
+                    'tipo' => $tipo,
                     'seccion' => $data['SECCION'],
                     'horario' => $data['HORARIO'],
                 ); 

@@ -11,7 +11,7 @@ class OfertaModel extends Model {
     protected $useAutoIncrement = true;
     protected $returnType     = 'object';
     protected $useSoftDeletes = false; 
-    protected $allowedFields = ['id_periodo','id_asignatura','aula','horario','seccion']; 
+    protected $allowedFields = ['id_periodo','id_asignatura','aula','horario','seccion','tipo']; 
     protected bool $allowEmptyInserts = false;
 
     // Dates

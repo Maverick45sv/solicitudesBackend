@@ -17,6 +17,7 @@
                 <td>Id</td>
                 <td>Ciclo</td>
                 <td>Asignatura</td>
+                <td>Tipo</td>
                 <td>Aula</td>
                 <td>Seccion</td>
                 <td>Horario</td>
@@ -30,8 +31,9 @@
             ?>
                     <tr>
                         <td><?= $data->id ?></td>
-                        <td><?= $data->asignatura ?></td>
                         <td><?= $data->ciclo ?> - <?= $data->anio ?></td>
+                        <td><?= $data->asignatura ?></td>
+                        <td><?= $data->tipo ?></td>                        
                         <td><?= $data->aula ?></td>
                         <td><?= $data->seccion ?></td>
                         <td><?= $data->horario ?></td>

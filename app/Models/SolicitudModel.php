@@ -51,11 +51,12 @@ class SolicitudModel extends Model {
         $builder->join('periodo per', 's.id_periodo = per.id');
         $builder->join('proceso_rol pr', 'p.id = pr.id_proceso');
         $builder->join('rol r', 'pr.id_rol = r.id');
+        $builder->join('usuario', 'pe.id = usuario.id_persona');
         
         $builder->select('s.id as id, p.id as idProceso, a.id as idAccion, per.id as idPeriodo,  
                         pe.id as idPersona, p.nombre as nombreProceso, a.nombre as nombreAccion, 
                         per.codigo as periodoCodigo, pe.nombre as nombrePersona, per.anio as periodoAnio, 
-                        s.creado as fecha');
+                        s.creado as fecha, pe.apellido as apellidoPersona, usuario.nombre as carnet');
     
         $builder->where("a.nombre != 'FINALIZADA'");
         $builder->where('r.id', $roles);
@@ -91,11 +92,12 @@ class SolicitudModel extends Model {
         $builder ->join('periodo per', 's.id_periodo = per.id');
         $builder ->join('proceso_rol pr', 'pr.id_proceso = p.id');
         $builder ->join('rol r', 'pr.id_rol = r.id');
+        $builder->join('usuario', 'pe.id = usuario.id_persona');
 
         $builder ->select('s.id as id, p.id as idProceso, a.id as idAccion, per.id as idPeriodo,  
                            pe.id as idPersona, p.nombre as nombreProceso, a.nombre as nombreAccion, 
-                           per.codigo as periodoCodigo, pe.nombre as nombrePersona, per.anio as periodoAnio, 
-                           s.creado as fecha');
+                           per.codigo as periodoCodigo, pe.nombre as nombrePersona, pe.apellido as apellidoPersona, 
+                           per.anio as periodoAnio, s.creado as fecha, usuario.nombre as carnet');
 
         $builder ->where("a.nombre != 'FINALIZADA'");
         $builder ->where('r.id', $roles);
@@ -148,10 +150,12 @@ class SolicitudModel extends Model {
         $builder->join('persona_facultad', 'facultad.id = persona_facultad.id_facultad');
         $builder->join('proceso_rol', 'proceso.id = proceso_rol.id_proceso');
         $builder->join('rol', 'proceso_rol.id_rol = rol.id');
+        $builder->join('usuario', 'persona.id = usuario.id_persona');
 
         $builder->select('solicitud.id as id, proceso.id as idProceso, accion.id as idAccion, 
         periodo.id as idPeriodo, proceso.nombre as nombreProceso, accion.nombre as nombreAccion, 
-        persona.nombre as nombrePersona, periodo.anio as periodoAnio, solicitud.creado as fecha');
+        persona.nombre as nombrePersona, persona.apellido as apellidoPersona, periodo.anio as periodoAnio, 
+        solicitud.creado as fecha, usuario.nombre as carnet ');
 
         // Aplicar filtros
         if (!empty($proceso)) {

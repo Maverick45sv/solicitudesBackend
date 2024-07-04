@@ -58,13 +58,14 @@
         </thead>
         <tbody>
             <?php 
+               
                 if($todos): 
                     foreach($todos as $data):
             ?>
                     <tr>
                         <td><?= $data->id ?></td>
                         <td><?= $data->nombreProceso ?></td>
-                        <td><?= $data->nombrePersona ?></td>
+                        <td><?= $data->nombrePersona . ' ' . $data->apellidoPersona . ' (' . $data-> carnet . ')' ?></td>
                         <td><?= $data->periodoCodigo ?> - <?= $data->periodoAnio ?></td>
                         <td><?= date('d-m-Y (h:i a)', strtotime($data-> fecha))?></td>
                         <td><?= $data->nombreAccion ?></td>
@@ -76,7 +77,7 @@
                     </tr>           
             <?php 
                     endforeach;
-                endif;
+                endif; 
             ?> 
         </tbody>
     </table>
@@ -157,7 +158,7 @@ function actualizarTabla(datos) {
             // Construir cada celda de la fila con los datos recibidos
             filaHtml += '<td>' + fila.id + '</td>';
             filaHtml += '<td>' + fila.nombreProceso + '</td>';
-            filaHtml += '<td>' + fila.nombrePersona + '</td>';
+            filaHtml += '<td>' + fila.nombrePersona + ' ' + fila.apellidoPersona + ' (' + fila.carnet + ')</td>';
             filaHtml += '<td>' + fila.periodoAnio + '</td>';
             filaHtml += '<td>' + formatearFecha(fila.fecha) + '</td>';
             filaHtml += '<td>' + fila.nombreAccion + '</td>';

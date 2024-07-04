@@ -12,8 +12,14 @@
             </div> 
             <br>
             <div class="form-group">
+                Tipo de Oferta:
+                <input type="radio" name="tipo"  value="T" checked> Teorica 
+                <input type="radio" name="tipo"  value="L"> Laboratorios
+            </div> 
+            <div class="form-group">
                 <label for="periodo">Archivo a Cargar:</label>
                 <input name="archivo" type="file" class="form-control">
+            </div>    
                 <br><br>
             <input class="btn btn-success" type="submit" value="Procesar">
         </form>
