@@ -6,10 +6,10 @@
     <title>Sistema de solicitudes</title>
 
     <!-- incluir CSS -->
-    <link rel="stylesheet" type="text/css" href="<?= base_url('public/bootstrap/css/bootstrap.min.css');?>" >
-    <link rel="stylesheet" type="text/css" href="<?= base_url('public/datatable/datatables.min.css');?>" >
-    <link rel="stylesheet" type="text/css" href="<?= base_url('public/bootstrap/icons-1.11/font/bootstrap-icons.min.css');?>" >
-    <link rel="stylesheet" type="text/css" href="<?= base_url('public/sweetalert/sweet.css');?>" >
+    <link rel="stylesheet" type="text/css" href="<?= base_url('bootstrap/css/bootstrap.min.css');?>" >
+    <link rel="stylesheet" type="text/css" href="<?= base_url('datatable/datatables.min.css');?>" >
+    <link rel="stylesheet" type="text/css" href="<?= base_url('bootstrap/icons-1.11/font/bootstrap-icons.min.css');?>" >
+    <link rel="stylesheet" type="text/css" href="<?= base_url('sweetalert/sweet.css');?>" >
 </head>
 <body>
     
@@ -68,9 +68,9 @@
         </div>
     </div>    
 </body>
-<script src="<?= base_url('public/js/jquery3_7_1.js')?>"></script>
-<script src="<?= base_url('public/bootstrap/js/bootstrap.min.js')?>"></script>
-<script src="<?= base_url('public/datatable/datatables.min.js')?>"></script>
-<script src="<?= base_url('public/js/table.js')?>"></script>
-<script src="<?= base_url('public/sweetalert/sweet.js')?>"></script>
+<script src="<?= base_url('js/jquery3_7_1.js')?>"></script>
+<script src="<?= base_url('bootstrap/js/bootstrap.min.js')?>"></script>
+<script src="<?= base_url('datatable/datatables.min.js')?>"></script>
+<script src="<?= base_url('js/table.js')?>"></script>
+<script src="<?= base_url('sweetalert/sweet.js')?>"></script>
 </html>

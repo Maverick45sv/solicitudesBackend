@@ -6,15 +6,15 @@
     <title>Sistema de solicitudes</title>
 
     <!-- incluir CSS -->
-    <link rel="stylesheet" type="text/css" href="<?= base_url('public/bootstrap/css/bootstrap.min.css');?>" >
-    <link rel="stylesheet" type="text/css" href="<?= base_url('public/datatable/datatables.min.css');?>" >
-    <link rel="stylesheet" type="text/css" href="<?= base_url('public/bootstrap/icons-1.11/font/bootstrap-icons.min.css');?>" >
-    <link rel="stylesheet" type="text/css" href="<?= base_url('public/sweetalert/sweet.css');?>" >
+    <link rel="stylesheet" type="text/css" href="<?= base_url('bootstrap/css/bootstrap.min.css');?>" >
+    <link rel="stylesheet" type="text/css" href="<?= base_url('datatable/datatables.min.css');?>" >
+    <link rel="stylesheet" type="text/css" href="<?= base_url('bootstrap/icons-1.11/font/bootstrap-icons.min.css');?>" >
+    <link rel="stylesheet" type="text/css" href="<?= base_url('sweetalert/sweet.css');?>" >
 </head>
 <body>
     <!-- menu -->
     <?= $this->renderSection('menu') ?>
-    <!-- <img src="<?= base_url('public/img/02.jpg');?>" alt="">-->
+    <!-- <img src="<?= base_url('img/02.jpg');?>" alt="">-->
     <div class="card">
   <div class="card-header">
     Featured
@@ -27,9 +27,9 @@
 
 
 </body>
-<script src="<?= base_url('public/js/jquery3_7_1.js')?>"></script>
-<script src="<?= base_url('public/bootstrap/js/bootstrap.min.js')?>"></script>
-<script src="<?= base_url('public/fullcalendar/dist/index.global.min.js')?>"></script>
-<script src="<?= base_url('public/sweetalert/sweet.js')?>"></script>
-<script src="<?= base_url('public/js/calendar.js')?>"></script>
+<script src="<?= base_url('js/jquery3_7_1.js')?>"></script>
+<script src="<?= base_url('bootstrap/js/bootstrap.min.js')?>"></script>
+<script src="<?= base_url('fullcalendar/dist/index.global.min.js')?>"></script>
+<script src="<?= base_url('sweetalert/sweet.js')?>"></script>
+<script src="<?= base_url('js/calendar.js')?>"></script>
 </html>

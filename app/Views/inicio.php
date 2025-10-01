@@ -37,7 +37,7 @@
     ?>
 
    
-    <script src="<?= base_url('public/js/chart.js') ?>"></script>
+    <script src="<?= base_url('js/chart.js') ?>"></script>
     <script>
        
 

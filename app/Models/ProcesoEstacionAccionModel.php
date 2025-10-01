@@ -79,7 +79,7 @@ class ProcesoEstacionAccionModel extends Model {
         $builder->join('estacion es', 'pes.id_estacion = es.id');
         $builder->join('estacion est', 'pest.id_estacion = est.id');
         $builder->join('accion', 'pea.id_accion = accion.id');
-        $builder->groupBy('accion.nombre');
+        $builder->groupBy('accion.nombre, accion.id');
 
         // Agregar condiciones WHERE dinámicamente
         $builder->groupStart();

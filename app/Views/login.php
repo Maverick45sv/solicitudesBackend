@@ -7,12 +7,10 @@
     <title>Sistema de solicitudes</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" type="text/css" href="<?= base_url('public/bootstrap/css/bootstrap.min.css');?>" >
+    <link rel="stylesheet" type="text/css" href="<?= base_url('bootstrap/css/bootstrap.min.css');?>" >
      
 </head>
-
 <body class="bg-light">
-
     <section class="vh-100" style="background-color: #9A616D;">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -80,11 +78,11 @@
     </section>
 
     <!-- Bootstrap JS and other scripts -->
-    <script src="<?= base_url('public/js/jquery3_7_1.js') ?>"></script>
-    <script src="<?= base_url('public/bootstrap/js/bootstrap.min.js') ?>"></script>
-    <script src="<?= base_url('public/datatable/datatables.min.js') ?>"></script>
-    <script src="<?= base_url('public/js/table.js') ?>"></script>
-    <script src="<?= base_url('public/sweetalert/sweet.js') ?>"></script>
+    <script src="<?= base_url('js/jquery3_7_1.js') ?>"></script>
+    <script src="<?= base_url('bootstrap/js/bootstrap.min.js') ?>"></script>
+    <script src="<?= base_url('datatable/datatables.min.js') ?>"></script>
+    <script src="<?= base_url('js/table.js') ?>"></script>
+    <script src="<?= base_url('sweetalert/sweet.js') ?>"></script>
 
     <!-- Facebook and Google login scripts -->
     <script>

@@ -27,6 +27,7 @@ class Inicio extends BaseController
         echo $ciphertext;*/
         $where="nombre = '".$this->request->getPost('user')."' AND clave= '" . $ciphertext . "'";
         $validar=$usuarioModel->where($where)->first(); 
+        
         if($validar and $validar->activo){
             $roles = $usuariorolModel->buscarRoles($validar->id);
             foreach($roles as $data){
@@ -41,7 +42,7 @@ class Inicio extends BaseController
                     'email'     => $validar->correo
                 ];
                 $session->set($newdata);
-                return redirect()->to('/home');
+                return redirect()->to('home');
             }else{
                 $mensaje="Usuario sin Permisos!!!";
                 return view('login', ["mensaje"=>$mensaje]); 
